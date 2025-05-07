@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Registration: React.FC = () => {
+
+    const navigate = useNavigate();
    
     return (
     <>
@@ -9,6 +12,7 @@ const Registration: React.FC = () => {
             <input  type="text" name="name" placeholder="Full Name"/>
             <input  type="text" name="password" placeholder="Password"/>
             <input  type="text" name="email" placeholder="Email"/>
+            <button onClick={() => navigate("/Login")}>Go to Login Page</button>
         </form>
     
     </>);
