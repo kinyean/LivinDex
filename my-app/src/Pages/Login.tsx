@@ -54,7 +54,7 @@ const Login: React.FC = () => {
               />
             </svg>
             <div className="form-wrapper">
-              <form className="form" onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}>  
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
