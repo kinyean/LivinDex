@@ -12,7 +12,7 @@ const Registration: React.FC = () => {
             <input  type="text" name="name" placeholder="Full Name"/>
             <input  type="text" name="password" placeholder="Password"/>
             <input  type="text" name="email" placeholder="Email"/>
-            <button onClick={() => navigate("/Login")}>Go to Login Page</button>
+            <button onClick={() => navigate("/login")}>Go to Login Page</button>
         </form>
     
     </>);
