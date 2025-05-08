@@ -15,7 +15,7 @@ const Login: React.FC = () => {
   const userDets: User = {email: "", password: ""};
   const [user, setUser] = useState(userDets);
 
-  const navigate = useNavigate();  {/* useNavigate is initiate so I can route */}
+  const navigate = useNavigate(); 
 
   const handleSubmit = (e :React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
                   onChange={(e) => setUser({...user, password: e.target.value})}
                   required
                 />
-                <input type="submit" id="submit" value="Submit" />
+                <input onClick={() => navigate("/")} type="submit" id="submit" value="Log in" />
                 
               </form>
 
