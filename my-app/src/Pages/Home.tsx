@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TextField from "@mui/material/TextField";
 import List from "../Components/List";
+import '../Styles/Home.css';
 
 const Home = () => {
   const [inputText, setInputText] = useState("");

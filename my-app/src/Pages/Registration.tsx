@@ -76,14 +76,14 @@ const Registration: React.FC = () => {
             </svg>
             <div className="form-wrapper">
               <form onSubmit={handleClick}>  
-                <label htmlFor="email">Email</label>
+                <label className="login_label" htmlFor="email">Email</label>
                 <input
                   type="email"
                   id="email"
                   onChange={(e) => setUser({...user, email: e.target.value})}
                   required
                 />
-                <label htmlFor="password">Password</label>
+                <label className="login_label" htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"
