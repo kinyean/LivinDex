@@ -1,13 +1,13 @@
+import LoginAnimation from './LoginAnimation';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import LoginAnimation from './LoginAnimation';
 import '../Styles/Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigate = useNavigate();
+  const navigate = useNavigate();  {/* useNavigate is initiate so I can route */}
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ const Login: React.FC = () => {
           <div className="left">
             <div className="login">LivinDex</div>
             <div className="eula">
-              By logging in you agree to the ridiculously long terms that you didn't bother to read
+              Welcome to LivinDex where we've got it all!
             </div>
           </div>
           <div className="right">
