@@ -7,7 +7,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigate = useNavigate();  {/* useNavigate is initiate so I can route */}
+  const navigate = useNavigate(); 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,7 +71,7 @@ const Login: React.FC = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <input type="submit" id="submit" value="Submit" />
+                <input onClick={() => navigate("/")} type="submit" id="submit" value="Log in" />
                 
               </form>
 
