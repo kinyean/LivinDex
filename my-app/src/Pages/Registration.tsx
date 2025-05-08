@@ -1,31 +1,41 @@
-import LoginAnimation from './LoginAnimation';
-import React, { useState } from 'react';
+
+import  React,  {ReactEventHandler, useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { auth } from "../index";
+import { StringLiteral } from "typescript";
+import LoginAnimation from './LoginAnimation';
 import '../Styles/Login.css';
 
+
+interface User {
+    email: string;
+    password: string;
+}
+
 const Registration: React.FC = () => {
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
     const navigate = useNavigate();
-   
-    const handleSubmit = (e: React.FormEvent) => {
+    const userDets: User = {email: "", password: ""};
+    const [user, setUser] = useState(userDets);
+
+    const handleClick = (e :React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
-      };
+        createUserWithEmailAndPassword(auth, user.email, user.password)
+        .then((userCredential) => {
+            // Signed up 
+            const user = userCredential.user;
+            navigate("/login");
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+        });
+    }
 
     return (
     <>
-        {/* <div> Registration</div>
-        <form> 
-            <input  type="text" name="name" placeholder="Full Name"/>
-            <input  type="text" name="password" placeholder="Password"/>
-            <input  type="text" name="email" placeholder="Email"/>
-            <button onClick={() => navigate("/login")}>Go to Login Page</button>
-        </form> */}
-    
       <LoginAnimation /> {/* Animation logic runs here */}
       <div className="page">
         <div className="container">
@@ -63,21 +73,19 @@ const Registration: React.FC = () => {
               />
             </svg>
             <div className="form-wrapper">
-              <form onSubmit={handleSubmit}>  
+              <form onSubmit={handleClick}>  
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUser({...user, email: e.target.value})}
                   required
                 />
                 <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setUser({...user, password: e.target.value})}
                   required
                 />
                 <input onClick={() => navigate("/login")} type="submit" id="submit" value="Register" />
