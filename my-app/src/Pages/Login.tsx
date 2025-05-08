@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
 import LoginAnimation from './LoginAnimation';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import '../Styles/Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();  {/* useNavigate is initiate so I can route */}
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,9 +21,9 @@ const Login: React.FC = () => {
       <div className="page">
         <div className="container">
           <div className="left">
-            <div className="login">Login</div>
+            <div className="login">LivinDex</div>
             <div className="eula">
-              By logging in you agree to the ridiculously long terms that you didn't bother to read
+              Welcome to LivinDex where we've got it all!
             </div>
           </div>
           <div className="right">
@@ -50,25 +53,32 @@ const Login: React.FC = () => {
                 fill="url(#linearGradient)"
               />
             </svg>
-            <form className="form" onSubmit={handleSubmit}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <input type="submit" id="submit" value="Submit" />
-            </form>
+            <div className="form-wrapper">
+              <form onSubmit={handleSubmit}>  
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <input type="submit" id="submit" value="Submit" />
+                
+              </form>
+
+              <button onClick={() => navigate("/registration")} className="hover-underline-animation login-button">
+                  Register
+              </button>
+            </div>
           </div>
         </div>
       </div>
