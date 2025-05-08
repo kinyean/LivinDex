@@ -88,7 +88,7 @@ const Registration: React.FC = () => {
                   onChange={(e) => setUser({...user, password: e.target.value})}
                   required
                 />
-                <input type="submit" id="submit" value="Submit" />
+                <input onClick={() => navigate("/login")} type="submit" id="submit" value="Register" />
                 
               </form>
 
