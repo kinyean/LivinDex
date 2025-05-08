@@ -1,31 +1,46 @@
-import LoginAnimation from './LoginAnimation';
-import React, { useState } from 'react';
+
+import  React,  {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { StringLiteral } from "typescript";
+import LoginAnimation from './LoginAnimation';
 import '../Styles/Login.css';
+const auth = getAuth();
+
+interface User {
+    email: string;
+    password: string;
+}
 
 const Registration: React.FC = () => {
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
     const navigate = useNavigate();
+    const userDets: User = {email: "", password: ""};
+    const [user, setUser] = useState(userDets);
+
+    const handleClick = () => {
+        createUserWithEmailAndPassword(auth, user.email, user.password)
+        .then((userCredential) => {
+            // Signed up 
+            console.log("Registration successful")
+            const user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+        });
+
+        navigate("/login");
+    }
    
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Email:', email);
         console.log('Password:', password);
       };
-
     return (
     <>
-        {/* <div> Registration</div>
-        <form> 
-            <input  type="text" name="name" placeholder="Full Name"/>
-            <input  type="text" name="password" placeholder="Password"/>
-            <input  type="text" name="email" placeholder="Email"/>
-            <button onClick={() => navigate("/login")}>Go to Login Page</button>
-        </form> */}
-    
       <LoginAnimation /> {/* Animation logic runs here */}
       <div className="page">
         <div className="container">
@@ -69,7 +84,7 @@ const Registration: React.FC = () => {
                   type="email"
                   id="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUser({...user, email: e.target.value})}
                   required
                 />
                 <label htmlFor="password">Password</label>
@@ -77,7 +92,7 @@ const Registration: React.FC = () => {
                   type="password"
                   id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setUser({...user, password: e.target.value})}
                   required
                 />
                 <input type="submit" id="submit" value="Submit" />
