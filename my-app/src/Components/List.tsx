@@ -8,14 +8,14 @@ interface ListProps {
 
 const List: React.FC<ListProps> = (props) => {
 const filteredData = data.filter((el) => {
-    //if no input the return the original
-    if (props.input === '') {
-        return el;
+    //if no input the return the nothing
+    if (props.input.trim() === '') {
+      return ;
     }
-        //return the item which contains the user input
-        else {
-            return el.name.toLowerCase().includes(props.input)
-        }    
+    //return the item which contains the user input
+      else {
+        return el.name.toLowerCase().startsWith(props.input.trim().toLowerCase());
+      }    
     })
 
   return (
