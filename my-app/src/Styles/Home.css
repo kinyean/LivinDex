@@ -1,20 +1,40 @@
-.main {
+.avatar {
+    width: 56px;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+.avatar:hover {
+    cursor: pointer; /* Or any other CSS cursor value you want, like 'grab', 'move', etc. */
+}
+
+.search {
+    width: 50%;
+}
+
+.top {
     display: flex;
-    height: 100vh;
+    min-height: var(--base-size-56, 56px);
     width: 100%;
     align-items: center;
     flex-direction: column;
     row-gap: 20px;
+    box-sizing: border-box;
+}
+
+.userProfile {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px
 }
 
 h1 {
     margin: 10px;
     font-size: 40px;
     color: rgb(1, 1, 59);
-}
-
-.search {
-    width: 30%;
 }
 
 ul li {
