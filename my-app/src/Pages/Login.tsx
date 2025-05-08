@@ -88,7 +88,7 @@ const Login: React.FC = () => {
                   onChange={(e) => setUser({...user, password: e.target.value})}
                   required
                 />
-                <input onClick={() => navigate("/")} type="submit" id="submit" value="Log in" />
+                <input type="submit" id="submit" value="Log in" />
                 
               </form>
 
