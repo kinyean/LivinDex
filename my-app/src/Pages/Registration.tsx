@@ -23,6 +23,7 @@ const Registration: React.FC = () => {
         createUserWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
             // Signed up 
+            console.log("signed up");
             const user = userCredential.user;
             navigate("/login");
             // ...
@@ -31,6 +32,7 @@ const Registration: React.FC = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
             // ..
+            console.log(errorMessage);
         });
     }
 
@@ -88,7 +90,7 @@ const Registration: React.FC = () => {
                   onChange={(e) => setUser({...user, password: e.target.value})}
                   required
                 />
-                <input onClick={() => navigate("/login")} type="submit" id="submit" value="Register" />
+                <input type="submit" id="submit" value="Register" />
                 
               </form>
 
