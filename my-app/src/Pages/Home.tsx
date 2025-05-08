@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import List from "../Components/List";
 
 const Home = () => {
-   
   const [inputText, setInputText] = useState("");
 
   let inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
