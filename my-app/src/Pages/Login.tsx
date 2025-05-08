@@ -2,18 +2,37 @@ import LoginAnimation from './LoginAnimation';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../Styles/Login.css';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../index";
+
+
+interface User {
+  email: string;
+  password: string;
+}
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const userDets: User = {email: "", password: ""};
+  const [user, setUser] = useState(userDets);
 
   const navigate = useNavigate(); 
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
+  const handleSubmit = (e :React.FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
+          signInWithEmailAndPassword(auth, user.email, user.password)
+          .then((userCredential) => {
+              // Logged in successfully
+              console.log("Logged in");
+              const user = userCredential.user;
+              navigate("/");
+              // ...
+          })
+          .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              // ..
+          });
+      }
 
   return (
     <>
@@ -59,16 +78,14 @@ const Login: React.FC = () => {
                 <input
                   type="email"
                   id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUser({...user, email: e.target.value})}
                   required
                 />
                 <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setUser({...user, password: e.target.value})}
                   required
                 />
                 <input onClick={() => navigate("/")} type="submit" id="submit" value="Log in" />
