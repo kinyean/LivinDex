@@ -1,11 +1,12 @@
 
-import  React,  {useState} from "react";
+import  React,  {ReactEventHandler, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { auth } from "../index";
 import { StringLiteral } from "typescript";
 import LoginAnimation from './LoginAnimation';
 import '../Styles/Login.css';
-const auth = getAuth();
+
 
 interface User {
     email: string;
@@ -17,12 +18,13 @@ const Registration: React.FC = () => {
     const userDets: User = {email: "", password: ""};
     const [user, setUser] = useState(userDets);
 
-    const handleClick = () => {
+    const handleClick = (e :React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         createUserWithEmailAndPassword(auth, user.email, user.password)
         .then((userCredential) => {
             // Signed up 
-            console.log("Registration successful")
             const user = userCredential.user;
+            navigate("/login");
             // ...
         })
         .catch((error) => {
@@ -30,15 +32,8 @@ const Registration: React.FC = () => {
             const errorMessage = error.message;
             // ..
         });
-
-        navigate("/login");
     }
-   
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
-      };
+
     return (
     <>
       <LoginAnimation /> {/* Animation logic runs here */}
@@ -78,12 +73,11 @@ const Registration: React.FC = () => {
               />
             </svg>
             <div className="form-wrapper">
-              <form onSubmit={handleSubmit}>  
+              <form onSubmit={handleClick}>  
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   id="email"
-                  value={email}
                   onChange={(e) => setUser({...user, email: e.target.value})}
                   required
                 />
@@ -91,7 +85,6 @@ const Registration: React.FC = () => {
                 <input
                   type="password"
                   id="password"
-                  value={password}
                   onChange={(e) => setUser({...user, password: e.target.value})}
                   required
                 />
