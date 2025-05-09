@@ -6,11 +6,12 @@
   }
 
 .avatar:hover {
-    cursor: pointer; /* Or any other CSS cursor value you want, like 'grab', 'move', etc. */
+    cursor: pointer;
 }
 
 .search {
     width: 50%;
+    margin-top: 20px;
 }
 
 .top {
