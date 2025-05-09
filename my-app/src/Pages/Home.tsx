@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import TextField from "@mui/material/TextField";
 import List from "../Components/List";
-import Logo from '../Assets/Unknown User.jpg'
+import Navbar from "../Components/Navbar"; 
+import React, { useState } from 'react';
+import TextField from "@mui/material/TextField";
+import { useNavigate } from "react-router-dom";
 import '../Styles/Home.css';
 
 const Home = () => {
@@ -17,6 +17,7 @@ const Home = () => {
 
   return ( 
     <>
+    <Navbar/>
       <div className="main">
         <div className="top">
           <div className="search">
@@ -29,11 +30,10 @@ const Home = () => {
             />
           </div>
           <div className = "userProfile">
-          <img className="avatar" onClick={() => navigate("/profile")} src={Logo} alt="Logo" />
           </div>
         </div>
         <List input={inputText} />
-      </div>
+      </div> 
     </>
   );
 };
