@@ -6,6 +6,7 @@ import Profile from "./Pages/Profile"
 import Registration from "./Pages/Registration";
 import './Styles/App.css';
 import ProtectedRoute from './Components/ProtectedRoute';
+import Logout from './Components/Logout';
 
 function App() {
   
@@ -13,13 +14,13 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/registration" element={<Registration />} />
 
-        <Route path="/" element={<ProtectedRoute> 
-                                    <Home /> 
-                                  </ProtectedRoute> }
-        />
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route index element={<Home />} />
+          <Route path="/profile" element={<Profile />} />   
+          <Route path="/logout" element = {<Logout />} />
+        </Route>                     
       </Routes>
     </Router>
   );
