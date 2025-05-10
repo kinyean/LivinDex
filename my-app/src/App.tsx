@@ -15,7 +15,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
-
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Home />} />
           <Route path="/profile" element={<Profile />} />   
