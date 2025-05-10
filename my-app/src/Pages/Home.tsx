@@ -2,6 +2,8 @@ import FilterNavbar from "../Components/FilterNavbar";
 import List from "../Components/List";
 import Navbar from "../Components/Navbar"; 
 import React, { useState } from 'react';
+import SlideCards from '../Components/SlideCards';
+import { data as slideData } from "../Components/SlideItem";
 import TextField from "@mui/material/TextField";
 import '../Styles/Home.css';
 
@@ -27,9 +29,13 @@ const Home = () => {
               label="Search"
             />
           </div>
+          
           <FilterNavbar />
           <div className = "userProfile">
           </div>
+
+          <SlideCards slides={slideData} />
+
         </div>
         <List input={inputText} />
       </div> 
