@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <nav>
+    <nav className='nav-wrapper'>
       
       <ul className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
         <li onClick={() => setShowSidebar(false)}>Close</li>
