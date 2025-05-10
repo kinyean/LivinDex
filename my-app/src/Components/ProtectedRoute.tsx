@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
-const ProtectedRoute: React.FC< {children: React.ReactNode} > = ({children}) => {
+const ProtectedRoute: React.FC = () => {
 
     const { user, loading } = useAuth(); //useAuth to get the context from AuthContext
 
@@ -9,7 +9,7 @@ const ProtectedRoute: React.FC< {children: React.ReactNode} > = ({children}) => 
 
     if (!user) return <Navigate to="/login" replace />; //redirect if no user
 
-    return <>{children}</>;
+    return <Outlet />; //to Render the children routes
 }   
 
 export default ProtectedRoute;

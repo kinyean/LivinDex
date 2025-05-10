@@ -8,6 +8,7 @@ const Navbar: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const navigate = useNavigate();
 
+
   return (
     <nav className='nav-wrapper'>
       
@@ -15,7 +16,7 @@ const Navbar: React.FC = () => {
         <li onClick={() => setShowSidebar(false)}>Close</li>
         <li onClick={() => navigate("/profile")}>Profile</li>
         <li >Wallet</li>
-        <li onClick={() => navigate("/login")}>Log Out</li>
+        <li onClick={() => navigate("/logout")}>Log Out</li>
         
       </ul>
       <ul className="navbar">
