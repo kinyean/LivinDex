@@ -1,0 +1,78 @@
+/* Slider.css */
+
+/* —— HEADER STYLES —— */
+.slider-header {
+    text-align: center;
+    max-width: 800px;         /* or same as your slider max-width */
+    margin: 0 auto 2rem;      /* center + spacing below */
+    padding: 0 1rem;          /* horizontal gutter on small screens */
+  }
+  
+  .slider-title {
+    font-size: 2.5rem;        /* tweak to taste */
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    color: #0f172a;           /* dark navy */
+  }
+  
+  .slider-subtitle {
+    font-size: 1.125rem;
+    color: #374151;           /* slate-gray */
+    margin: 0.5rem 0 0;
+  }
+  
+  /* —— EXISTING SLIDER STYLES —— */
+  #main-slider-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .slider-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 0 1rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .slider-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  #slider {
+    display: flex;
+    gap: 1rem;
+    padding: 0;
+  }
+  
+  .slider-card {
+    flex: 0 0 calc((100% - 2rem) / 3);
+    scroll-snap-align: start;
+    height: 250px;
+    background: #b5b5b5;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  
+  .slider-card-image {
+    width: 100%;
+    height: 67%;
+    object-fit: cover;
+  }
+  
+  .slider-card-title {
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
