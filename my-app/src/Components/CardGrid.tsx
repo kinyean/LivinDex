@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import CardItem from './Cards';
+import Cards from './Cards';
 import testpic from '../Assets/contemplative-reptile.jpg';
 
 const cardData = [
@@ -78,7 +78,7 @@ export default function NestedGridColumns() {
       >
           {cardData.map((card, index) => (
           <Grid size={6} key={index}>
-            <CardItem {...card} />
+            <Cards {...card} />
           </Grid>
         ))}
       </Grid>
