@@ -39,7 +39,7 @@ const Home = () => {
           <div>
             <h2 className="home-title">All the skills you need in one place</h2>
             <p className="home-subtitle">
-              From critical skills to technical topics, Udemy supports your professional development.
+              From critical skills to technical topics, LivinDex supports your professional development.
             </p>
             <CardGrid />
           </div>
