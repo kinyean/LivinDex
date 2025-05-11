@@ -1,3 +1,4 @@
+import AddIcon from '../Assets/Add_icon.png'; 
 import Logo from '../Assets/Unknown User.jpg'
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
@@ -21,6 +22,10 @@ const Navbar: React.FC = () => {
       </ul>
       <ul className="navbar">
         <li className="hover-underline" onClick={() => navigate("/")}>LivinDex</li>
+        <li className="create">
+          <img src={AddIcon} alt="Add" className="create-icon" />
+          <span className="create-label" onClick={() => navigate("/content")}>Create</span>
+        </li>
         <li className="hover-underline">About</li>
         <li className="hover-underline">Notification</li>
 

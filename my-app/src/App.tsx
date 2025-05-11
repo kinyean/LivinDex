@@ -1,4 +1,5 @@
 import React from 'react';
+import Content from './Pages/Content';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./Pages/Home";
 import Login from "./Pages/Login"
@@ -13,6 +14,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/content" element={<Content />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<ProtectedRoute />}>
