@@ -1,3 +1,4 @@
+import CardGrid from "../Components/CardGrid";
 import FilterNavbar from "../Components/FilterNavbar";
 import List from "../Components/List";
 import Navbar from "../Components/Navbar"; 
@@ -35,7 +36,14 @@ const Home = () => {
           </div>
 
           <SlideCards slides={slideData} />
-
+          <div>
+            <h2 className="home-title">All the skills you need in one place</h2>
+            <p className="home-subtitle">
+              From critical skills to technical topics, Udemy supports your professional development.
+            </p>
+            <CardGrid />
+          </div>
+          
         </div>
         <List input={inputText} />
       </div> 
