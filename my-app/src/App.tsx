@@ -8,11 +8,15 @@ import './Styles/App.css';
 import ProtectedRoute from './Components/ProtectedRoute';
 import Logout from './Components/Logout';
 
+import Cardgrid from './Components/CardGrid';
+
 function App() {
   
   return (
     <Router>
       <Routes>
+        <Route path="/cardgrid" element={<Cardgrid />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<ProtectedRoute />}>
