@@ -7,6 +7,28 @@ body {
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.create {
+  background-color: #cdcbcb;
+  border-radius: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.create:hover {
+  background-color: #e0e0e0;
+}
+
+.create-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
 
 /* Hover for Navigation Bar */
 .hover-underline{
@@ -67,7 +89,7 @@ body {
   font-weight: bold;
   color: #333;
   height: 100%;
-  padding: 0 30px;
+  padding: 0 20px;
   display: flex; 
 }
 
