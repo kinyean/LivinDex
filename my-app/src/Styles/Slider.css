@@ -48,19 +48,16 @@
   #slider {
     display: flex;
     gap: 1rem;
-    padding: 0;
+    padding: 1rem 0;
   }
   
   .slider-card {
     flex: 0 0 calc((100% - 2rem) / 3);
     scroll-snap-align: start;
-    height: 250px;
-    background: #b5b5b5;
+    width: 280px;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     overflow: hidden;
   }
   

@@ -7,7 +7,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import { CardProps } from '../Types/CardProps';
 
 
-export default function CardItem({ image, alt, title, description }: CardProps) {
+export default function Cards({ image, alt, title, description }: CardProps) {
   return (
     <Card
     sx={{
