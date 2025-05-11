@@ -1,11 +1,7 @@
 import React from 'react';
 import '../Styles/Slider.css';
-
-interface SlideItem {
-  id: number;
-  image: string;
-  name: string;
-}
+import Cards from './Cards';
+import { SlideItem } from './SlideItem';
 
 interface SlideCardsProps {
   slides: SlideItem[];
@@ -14,24 +10,21 @@ interface SlideCardsProps {
 const SlideCards: React.FC<SlideCardsProps> = ({ slides }) => {
   return (
     <div id="main-slider-container">
-      
       <div className="slider-header">
         <h2 className="slider-title">Find what's right for you</h2>
-        <p className="slider-subtitle">
-          Get the latest insights and trends
-        </p>
+        <p className="slider-subtitle">Get the latest insights and trends</p>
       </div>
 
       <div className="slider-wrapper">
         <div id="slider">
-          {slides.map(slide => (
+          {slides.map((slide) => (
             <div className="slider-card" key={slide.id}>
-              <img
-                className="slider-card-image"
-                src={slide.image}
+              <Cards
+                image={slide.image}
                 alt={slide.name}
+                title={slide.name}
+                description="Explore this category"
               />
-              <p className="slider-card-title">{slide.name}</p>
             </div>
           ))}
         </div>
