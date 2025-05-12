@@ -1,35 +1,34 @@
 import CardGrid from "../Components/CardGrid";
 import FilterNavbar from "../Components/FilterNavbar";
-import List from "../Components/List";
 import Navbar from "../Components/Navbar"; 
-import React, { useState } from 'react';
+import React from 'react';
 import SlideCards from '../Components/SlideCards';
 import { data as slideData } from "../Components/SlideItem";
-import TextField from "@mui/material/TextField";
+import { data as listData } from "../Components/ListItem";
+import { Autocomplete, TextField } from '@mui/material';
 import '../Styles/Home.css';
 
 const Home = () => {
-  const [inputText, setInputText] = useState("");
-
-  let inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const lowerCase = e.target.value.toLowerCase();
-    setInputText(lowerCase);
-  }
-
   return ( 
     <>
     <Navbar/>
       <div className="main">
         <div className="top">
-          <div className="search">
-            <TextField
-              id="outlined-basic"
-              onChange={inputHandler}
-              variant="outlined"
-              fullWidth
-              label="Search"
-            />
-          </div>
+        <div className="search">
+        <Autocomplete
+          options={listData.map((item) => item.name)} 
+          fullWidth
+          freeSolo
+          filterOptions={(options, state) =>
+            options.filter(option =>
+              option.toLowerCase().startsWith(state.inputValue.toLowerCase())
+            )
+          }
+          renderInput={(params) => (
+            <TextField {...params} label="Search" variant="outlined" />
+          )}
+        />
+      </div>
           
           <FilterNavbar />
           <div className = "userProfile">
@@ -45,7 +44,6 @@ const Home = () => {
           </div>
           
         </div>
-        <List input={inputText} />
       </div> 
     </>
   );
