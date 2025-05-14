@@ -1,9 +1,10 @@
 import LoginAnimation from './LoginAnimation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../Styles/Login.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../index";
+import axios from "axios";
 
 
 interface User {
@@ -14,6 +15,15 @@ interface User {
 const Login: React.FC = () => {
   const userDets: User = {email: "", password: ""};
   const [user, setUser] = useState(userDets);
+
+  useEffect(() => {
+    const BaseAPI = axios.create({
+      baseURL: "http://localhost:3001/users",
+    });
+    console.log(69);
+    const response = BaseAPI.get("");
+    console.log(response);
+  }, []);
 
   const navigate = useNavigate(); 
 
