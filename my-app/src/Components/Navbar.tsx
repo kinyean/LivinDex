@@ -1,5 +1,5 @@
 import AddIcon from '../Assets/Add_icon.png'; 
-import Logo from '../Assets/Unknown User.jpg'
+import Logo from '../Assets/UnknownUser.jpg'
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../Styles/Navbar.css';
