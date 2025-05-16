@@ -17,12 +17,15 @@ const Login: React.FC = () => {
   const [user, setUser] = useState(userDets);
 
   useEffect(() => {
-    const BaseAPI = axios.create({
-      baseURL: "http://localhost:3001/users",
-    });
-    console.log(69);
-    const response = BaseAPI.get("");
-    console.log(response);
+    const testData = async () => {
+      const BaseAPI = axios.create({
+        baseURL: "http://localhost:3001/users",
+      });
+      console.log(69);
+      const response = await BaseAPI.get("");
+      console.log(response.data);
+    }
+    testData();
   }, []);
 
   const navigate = useNavigate(); 
