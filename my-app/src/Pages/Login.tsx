@@ -18,16 +18,12 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     const testData = async () => {
-      document.body.classList.add("login-body");
       const BaseAPI = axios.create({
         baseURL: "http://localhost:3001/users",
       });
       console.log(69);
       const response = await BaseAPI.get("");
       console.log(response.data);
-      return () => {
-        document.body.classList.remove("login-body");
-      };
     }
     testData();
   }, []);
@@ -55,64 +51,66 @@ const Login: React.FC = () => {
     <>
     
       <LoginAnimation /> {/* Animation logic runs here */}
-      <div className="page">
-        <div className="container">
-          <div className="left">
-            <div className="login">LivinDex</div>
-            <div className="eula">
-              Welcome to LivinDex where we've got it all!
+      <div className="login-body"> 
+        <div className="page">
+          <div className="container">
+            <div className="left">
+              <div className="login">LivinDex</div>
+              <div className="eula">
+                Welcome to LivinDex where we've got it all!
+              </div>
             </div>
-          </div>
-          <div className="right">
-            <svg viewBox="0 0 320 300">
-              <defs>
-                <linearGradient
-                  id="linearGradient"
-                  x1="13"
-                  y1="193.49992"
-                  x2="307"
-                  y2="193.49992"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop style={{ stopColor: '#ff00ff' }} offset="0" />
-                  <stop style={{ stopColor: '#ff0000' }} offset="1" />
-                </linearGradient>
-              </defs>
-              <path
-                d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 
-                   0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 
-                   c 0,-0.0205 -25,4.01348 -25,38.5 
-                   0,34.48652 25,38.5 25,38.5 h 215 
-                   c 0,0 20,-0.99604 20,-25 
-                   0,-24.00396 -20,-25 -20,-25 h -190 
-                   c 0,0 -20,1.71033 -20,25 
-                   0,24.00396 20,25 20,25 h 168.57143"
-                fill="url(#linearGradient)"
-              />
-            </svg>
-            <div className="form-wrapper">
-              <form onSubmit={handleSubmit}>  
-                <label className="login_label" htmlFor="email">Email</label>
-                <input 
-                  type="email"
-                  id="email"
-                  onChange={(e) => setUser({...user, email: e.target.value})}
-                  required
+            <div className="right">
+              <svg viewBox="0 0 320 300">
+                <defs>
+                  <linearGradient
+                    id="linearGradient"
+                    x1="13"
+                    y1="193.49992"
+                    x2="307"
+                    y2="193.49992"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop style={{ stopColor: '#ff00ff' }} offset="0" />
+                    <stop style={{ stopColor: '#ff0000' }} offset="1" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 
+                    0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 
+                    c 0,-0.0205 -25,4.01348 -25,38.5 
+                    0,34.48652 25,38.5 25,38.5 h 215 
+                    c 0,0 20,-0.99604 20,-25 
+                    0,-24.00396 -20,-25 -20,-25 h -190 
+                    c 0,0 -20,1.71033 -20,25 
+                    0,24.00396 20,25 20,25 h 168.57143"
+                  fill="url(#linearGradient)"
                 />
-                <label className="login_label" htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  onChange={(e) => setUser({...user, password: e.target.value})}
-                  required
-                />
-                <input type="submit" id="submit" value="Log in" />
-                
-              </form>
+              </svg>
+              <div className="form-wrapper">
+                <form onSubmit={handleSubmit}>  
+                  <label className="login_label" htmlFor="email">Email</label>
+                  <input 
+                    type="email"
+                    id="email"
+                    onChange={(e) => setUser({...user, email: e.target.value})}
+                    required
+                  />
+                  <label className="login_label" htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    onChange={(e) => setUser({...user, password: e.target.value})}
+                    required
+                  />
+                  <input type="submit" id="submit" value="Log in" />
+                  
+                </form>
 
-              <button onClick={() => navigate("/registration")} className="hover-underline-animation login-button">
-                  Register
-              </button>
+                <button onClick={() => navigate("/registration")} className="hover-underline-animation login-button">
+                    Register
+                </button>
+              </div>
             </div>
           </div>
         </div>

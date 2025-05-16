@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
       <ul className="navbar">
         <li className="hover-underline" onClick={() => navigate("/")}>LivinDex</li>
         <li className="create">
-          <img src={AddIcon} alt="Add" className="create-icon" />
+          <img src={AddIcon} alt="Add" className="create-icon" onClick={() => navigate("/content")}/>
           <span className="create-label" onClick={() => navigate("/content")}>Create</span>
         </li>
         <li className="hover-underline">About</li>

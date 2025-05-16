@@ -1,15 +1,4 @@
-*{
-    margin: 0;
-    padding:0;
-  }
-  
-  body {
-    /* min-height: 100vh; */
-    padding-top: 80px; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  /* Hover for Navigation Bar */
+/* Hover for Navigation Bar */
   .profileHover-underline{
     display: inline-block;
     position: relative;
@@ -73,6 +62,7 @@
   .profile-page-wrapper {
     color: white;
     padding: 2rem;
+    padding-top: 80px;
     min-height: 100vh;
   }
   
