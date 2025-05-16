@@ -8,7 +8,7 @@
 ::-moz-selection {
   background: #2D2F36;
 }
-body {
+.login-body {
   background: white;
   font-family: 'Inter UI', sans-serif;
   margin: 0;

@@ -17,12 +17,16 @@ const Login: React.FC = () => {
   const [user, setUser] = useState(userDets);
 
   useEffect(() => {
+    document.body.classList.add("login-body");
     const BaseAPI = axios.create({
       baseURL: "http://localhost:3001/users",
     });
     console.log(69);
     const response = BaseAPI.get("");
     console.log(response);
+    return () => {
+      document.body.classList.remove("login-body");
+    };
   }, []);
 
   const navigate = useNavigate(); 
@@ -46,6 +50,7 @@ const Login: React.FC = () => {
 
   return (
     <>
+    
       <LoginAnimation /> {/* Animation logic runs here */}
       <div className="page">
         <div className="container">
