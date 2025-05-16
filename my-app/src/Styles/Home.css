@@ -9,6 +9,10 @@
     cursor: pointer;
 }
 
+.main{
+    padding-top: 80px;
+}
+
 .home-title {
     font-size: 2.5rem;
     font-weight: 700;
