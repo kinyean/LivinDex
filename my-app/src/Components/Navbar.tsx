@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className='nav-wrapper'>
-      
+      <div className="nav-container">
       <ul className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
         <li onClick={() => setShowSidebar(false)}>Close</li>
         <li onClick={() => navigate("/profile")}>Profile</li>
@@ -35,6 +35,7 @@ const Navbar: React.FC = () => {
              onClick={() => setShowSidebar(!showSidebar)}
              style={{ cursor: 'pointer' }}/>
       </ul>
+      </div>
     </nav>
   );
 };
