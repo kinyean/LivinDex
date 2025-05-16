@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding:0;
+  }
+  
+  body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Hover for Navigation Bar */
+  .profileHover-underline{
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 0.95rem;
+    opacity: 0.8;
+    
+  }
+  
+  .profileHover-underline:hover {
+    opacity: 1;
+    color: #000000;
+  }
+  
+  .profileHover-underline::after {
+    content: '';
+    position: absolute;
+    width: 75%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -1.1rem;
+    left: 10%;
+    background-color: #000000;
+    
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  .profileHover-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  /* Profile Navigation Bar */
+  .profileNav-wrapper {
+    width: 100%;
+    border-bottom: 2px solid #b5b5b5;
+    padding-bottom: 1rem;
+  }
+
+  .profileNavbar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; 
+    padding: 1rem 0rem 0rem 2;
+    list-style: none;
+  }
+  
+  .profileNavbar li{
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+    height: 100%;
+    padding: 0 20px;
+    display: flex; 
+  }
+
+  /* Profile CSS */
+  .profile-page-wrapper {
+    color: white;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: white;
+    padding: 10px;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .profile-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .profile-id,
+  .profile-bio {
+    color: #b0b0b0;
+    margin-top: 4px;
+  }
+  
+  .profile-stats {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1.5rem;
+    color: #ccc;
+  }
