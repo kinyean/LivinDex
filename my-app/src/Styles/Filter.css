@@ -4,7 +4,8 @@
   }
   
   body {
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    padding-top: 80px; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
