@@ -1,6 +1,7 @@
 import React from 'react';
 import Content from './Pages/Content';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ForgotPassword from './Pages/ForgotPassword';
 import Home from "./Pages/Home";
 import Login from "./Pages/Login"
 import Profile from "./Pages/Profile"
@@ -15,6 +16,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/content" element={<Content />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<ProtectedRoute />}>

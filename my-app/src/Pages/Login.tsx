@@ -110,6 +110,9 @@ const Login: React.FC = () => {
                 <button onClick={() => navigate("/registration")} className="hover-underline-animation login-button">
                     Register
                 </button>
+                <button onClick={() => navigate("/forgotpassword")} className="hover-underline-animation login-button">
+                    Forgot Password
+                </button>
               </div>
             </div>
           </div>
