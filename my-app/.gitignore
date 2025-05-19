@@ -12,7 +12,7 @@
 /build
 
 #firebaseServiceAcccoutKey
-./my-app/Backend/firebaseServiceAcccoutKey
+./Backend/firebaseServiceAccountKey.json
 
 # misc
 .DS_Store
