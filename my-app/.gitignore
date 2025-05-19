@@ -11,8 +11,8 @@
 # production
 /build
 
-#firebaseAcccoutKey
-./Backend/firebaseAcccoutKey
+#firebaseServiceAcccoutKey
+./Backend/firebaseServiceAcccoutKey
 
 # misc
 .DS_Store
