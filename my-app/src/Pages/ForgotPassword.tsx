@@ -1,29 +1,24 @@
 
 import  React,  {ReactEventHandler, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { sendPasswordResetEmail} from "firebase/auth";
 import { auth } from "../index";
 import LoginAnimation from './LoginAnimation';
 import '../Styles/Login.css';
 
 
-interface User {
-    email: string;
-    password: string;
-}
 
 const ForgotPassword: React.FC = () => {
     const navigate = useNavigate();
-    const userDets: User = {email: "", password: ""};
-    const [user, setUser] = useState(userDets);
+    const [email, setEmail] = useState("");
 
     const handleClick = (e :React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createUserWithEmailAndPassword(auth, user.email, user.password)
+        sendPasswordResetEmail(auth, email)
         .then((userCredential) => {
             // Signed up 
-            console.log("signed up");
-            const user = userCredential.user;
+            console.log("Email sent");
+            alert("Recovery email sent");
             navigate("/login");
             // ...
         })
@@ -76,7 +71,7 @@ const ForgotPassword: React.FC = () => {
                     <input
                     type="email"
                     id="email"
-                    onChange={(e) => setUser({...user, email: e.target.value})}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     />
                     <input type="submit" id="submit" value="Submit" />
