@@ -1,29 +1,37 @@
 
 import  React,  {ReactEventHandler, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import axios from 'axios';
 import { auth } from "../index";
 import LoginAnimation from './LoginAnimation';
 import '../Styles/Login.css';
 
 
 interface User {
+    name : string;
     email: string;
     password: string;
 }
 
 const Registration: React.FC = () => {
     const navigate = useNavigate();
-    const userDets: User = {email: "", password: ""};
-    const [user, setUser] = useState(userDets);
+    const userDets: User = {name: "", email: "", password: ""};
+    const [userd, setUserd] = useState(userDets);
 
     const handleClick = (e :React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createUserWithEmailAndPassword(auth, user.email, user.password)
-        .then((userCredential) => {
+        createUserWithEmailAndPassword(auth, userd.email, userd.password)
+        .then(async (userCredential) => {
             // Signed up 
             console.log("signed up");
             const user = userCredential.user;
+
+            await axios.post('http://localhost:3001/auth/register', {
+              uid: user.uid,
+              name: userd.name,
+            });
+
             navigate("/login");
             // ...
         })
@@ -31,6 +39,7 @@ const Registration: React.FC = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
             // ..
+            console.log("Backend registration error");
             console.log(errorMessage);
         });
     }
@@ -75,19 +84,26 @@ const Registration: React.FC = () => {
                 />
               </svg>
               <div className="form-wrapper">
-                <form onSubmit={handleClick}>  
+                <form onSubmit={handleClick}> 
+                  <label className="login_label" htmlFor="name">Name</label>
+                  <input
+                    type="name"
+                    id="name"
+                    onChange={(e) => setUserd({...userd, name: e.target.value})}
+                    required
+                  /> 
                   <label className="login_label" htmlFor="email">Email</label>
                   <input
                     type="email"
                     id="email"
-                    onChange={(e) => setUser({...user, email: e.target.value})}
+                    onChange={(e) => setUserd({...userd, email: e.target.value})}
                     required
                   />
                   <label className="login_label" htmlFor="password">Password</label>
                   <input
                     type="password"
                     id="password"
-                    onChange={(e) => setUser({...user, password: e.target.value})}
+                    onChange={(e) => setUserd({...userd, password: e.target.value})}
                     required
                   />
                   <input type="submit" id="submit" value="Register" />
