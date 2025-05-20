@@ -6,11 +6,6 @@ const cors = require('cors');
 // Use CORS middleware
 app.use(cors()); // This allows all origins by default
 
-// Testing of backend form POSTMAN
-app.get('/ping', (req, res) => {
-    res.json({ message: 'pong', time: new Date().toISOString() });
-  });
-
 // Example defining a route in Express
 app.get('/', (req, res) => {
     res.send('<h1>Hello, Express.js Server!</h1>');
