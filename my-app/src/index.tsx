@@ -8,6 +8,8 @@ import reportWebVitals from './Types/reportWebVitals';
 import { initializeApp } from "firebase/app"
 import { getAuth } from 'firebase/auth';
 import { AuthProvider } from './Components/AuthContext';
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,8 +26,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
+export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

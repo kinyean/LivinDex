@@ -10,7 +10,7 @@ const Sidebar: React.FC = () => {
   <div className="contentSidebar">
     <div className="top-section">
     <h2 className="logo">LivinDex</h2>
-    <button className="upload-btn">+ Upload</button>
+    <button className="upload-btn" onClick={() => navigate("/content")}>+ Upload</button>
 
     <div className="section">
       <h4>Manage</h4>
@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
         <li>Home</li>
         <li>Posts</li>
         <li>Analytics</li>
-        <li>Comments</li>
+        <li onClick={() => navigate("/create/comment")}>Comments</li>
       </ul>
     </div>
 
