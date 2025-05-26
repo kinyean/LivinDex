@@ -22,11 +22,12 @@ app.get('/', (req, res) => {
 // Include route files
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const commentRoutes = require('./routes/commentRoutes');
 
 // Use routes
 app.use('/users', usersRoute);
 app.use('/auth', authRoute);
-
+app.use('/comments', commentRoutes);
 
 const port = 3001; // You can use environment variables for port configuration
 
