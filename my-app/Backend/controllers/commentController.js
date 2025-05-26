@@ -22,22 +22,40 @@ exports.createComment = async (req, res) => {
 
 exports.getComments = async (req, res) => {
   try {
-    const snapshot = await db.collection('comments').orderBy('createdAt', 'desc').get();
-    const comments = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const snapshot = await db.collection("comments").orderBy("createdAt", "desc").get();
+
+    const comments = snapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt.toDate().toISOString()
+      };
+    });
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-exports.deleteComment = async (req, res) => {
-  const commentId = req.params.id;
+exports.updateComment = async (req, res) => {
+  const { commentId } = req.params;
+  const { body } = req.body;
 
   try {
-    await db.collection('comments').doc(commentId).delete();
+    await db.collection("comments").doc(commentId).update({ body });
+    res.status(200).json({ message: "Comment updated" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.deleteComment = async (req, res) => {
+  const { commentId } = req.params;
+
+  try {
+    await db.collection("comments").doc(commentId).delete();
     res.status(200).json({ message: "Comment deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });
