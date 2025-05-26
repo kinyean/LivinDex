@@ -1,65 +1,64 @@
-// THIS DATA BASE IS USE FOR TESTING 
+// src/Components/Comment/CommentService.ts
+import { db } from "../../index"; // adjust path if needed
+import {
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
+  Timestamp,
+} from "firebase/firestore";
+
 export interface Comment {
   id: string;
   body: string;
   username: string;
   userId: string;
   parentId: string | null;
-  createdAt: string;
+  createdAt: string; // or Timestamp if you don’t convert
 }
 
-export const getComments = async () => {
-    return [
-      // {
-      //   id: "1",
-      //   body: "First comment",
-      //   username: "Jack",
-      //   userId: "1",
-      //   parentId: null,
-      //   createdAt: "2021-08-16T23:00:33.010+02:00",
-      // },
-      // {
-      //   id: "2",
-      //   body: "Second comment",
-      //   username: "John",
-      //   userId: "2",
-      //   parentId: null,
-      //   createdAt: "2021-08-16T23:00:33.010+02:00",
-      // },
-      // {
-      //   id: "3",
-      //   body: "First comment first child",
-      //   username: "John",
-      //   userId: "2",
-      //   parentId: "1",
-      //   createdAt: "2021-08-16T23:00:33.010+02:00",
-      // },
-      // {
-      //   id: "4",
-      //   body: "Second comment second child",
-      //   username: "John",
-      //   userId: "2",
-      //   parentId: "2",
-      //   createdAt: "2021-08-16T23:00:33.010+02:00",
-      // },
-    ];
-  };
-
-  export const createComment = async (text : string, parentId: string | null = null) => {
+export const getComments = async (): Promise<Comment[]> => {
+  const snapshot = await getDocs(collection(db, "comments"));
+  return snapshot.docs.map((docSnap) => {
+    const data = docSnap.data();
     return {
-      id: Math.random().toString(36).substr(2, 9),
-      body: text,
-      parentId,
-      userId: "1",
-      username: "John",
-      createdAt: new Date().toISOString(),
+      id: docSnap.id,
+      body: data.body,
+      username: data.username,
+      userId: data.userId,
+      parentId: data.parentId || null,
+      createdAt: data.createdAt?.toDate()?.toISOString() || new Date().toISOString()
     };
+  });
+};
+
+export const createComment = async (text: string, parentId: string | null): Promise<Comment> => {
+  const commentData = {
+    body: text,
+    username: "Jack",         // replace with dynamic user
+    userId: "1",              // replace with dynamic user ID
+    parentId: parentId,
+    createdAt: Timestamp.now(),
   };
 
-  export const updateComment = async (text : string) => {
-    return { text };
+  const docRef = await addDoc(collection(db, "comments"), commentData);
+  return {
+    id: docRef.id,
+    ...commentData,
+    createdAt: new Date().toISOString(), // adjust for consistency
   };
-  
-  export const deleteComment = async () => {
-    return {};
-  };
+};
+
+export const updateComment = async (text: string, commentId: string): Promise<void> => {
+  const commentRef = doc(db, "comments", commentId);
+  await updateDoc(commentRef, {
+    body: text,
+  });
+};
+
+export const deleteComment = async (commentId: string): Promise<void> => {
+  const commentRef = doc(db, "comments", commentId);
+  await deleteDoc(commentRef);
+};

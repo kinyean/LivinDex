@@ -112,7 +112,7 @@ const CommentTextBox: React.FC<CommentTextBoxProps> = ({ comment, replies, curre
             handleCancel={() => {
               setActiveComment(null);
             }}
-            parentId={null}
+            parentId={parentId}
           />
         )}
 

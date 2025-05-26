@@ -36,38 +36,32 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
     };
 
   // 
-  const addComment = (text: string, parentId : string | null) => {
+  const addComment = (text: string, parentId: string | null) => {
     createCommentApi(text, parentId).then((comment) => {
       setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });
   };
-
+  
   const deleteComment = (commentId: string) => {
     if (window.confirm("Are you sure you want to remove comment?")) {
-      deleteCommentApi().then(() => {
-        const updatedBackendComments = backendComments.filter(
-          (backendComment) => backendComment.id !== commentId
-        );
-        setBackendComments(updatedBackendComments);
+      deleteCommentApi(commentId).then(() => {
+        const updated = backendComments.filter((c) => c.id !== commentId);
+        setBackendComments(updated);
       });
     }
   };
-
+  
   const updateComment = (text: string, commentId: string) => {
-    updateCommentApi(text).then(() => {
-      const updatedBackendComments = backendComments.map((backendComment) => {
-        if (backendComment.id === commentId) {
-          return { ...backendComment, body: text };
-        }
-        return backendComment;
-      });
-      setBackendComments(updatedBackendComments);
+    updateCommentApi(text, commentId).then(() => {
+      const updated = backendComments.map((c) =>
+        c.id === commentId ? { ...c, body: text } : c
+      );
+      setBackendComments(updated);
       setActiveComment(null);
     });
   };
   
-
   
   useEffect(() => {
     // TODO: Pass in POST ID into the BackEnd
