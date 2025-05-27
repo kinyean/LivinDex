@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import {getComments as getCommentsApi,
         createComment as createCommentApi,
         updateComment as updateCommentApi,
-        deleteComment as deleteCommentApi} from './CommentDummyDB';
-import { Comment } from "./CommentDummyDB";
+        deleteComment as deleteCommentApi} from './GetComment';
+import { Comment } from "./GetComment";
 import CommentTextBox from "./CommentTextBox";
 import CommentForm from './CommentForm';
 
@@ -60,11 +60,9 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
       setBackendComments(updated);
       setActiveComment(null);
     });
-  };
-  
+  };  
   
   useEffect(() => {
-    // TODO: Pass in POST ID into the BackEnd
     getCommentsApi().then((data) => {
       setBackendComments(data);
     });
