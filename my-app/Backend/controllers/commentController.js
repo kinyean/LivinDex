@@ -13,12 +13,18 @@ exports.createComment = async (req, res) => {
       createdAt: Timestamp.now(),
     };
 
-    const docRef = await db.collection('comments').add(commentData);
-    res.status(201).json({ message: "Comment added", id: docRef.id });
+    const docRef = await db.collection("comments").add(commentData);
+
+    res.status(201).json({
+      id: docRef.id,
+      ...commentData,
+      createdAt: commentData.createdAt.toDate().toISOString(),
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getComments = async (req, res) => {
   try {
@@ -40,22 +46,37 @@ exports.getComments = async (req, res) => {
 };
 
 exports.updateComment = async (req, res) => {
-  const { commentId } = req.params;
+  const { id } = req.params;
   const { body } = req.body;
 
   try {
-    await db.collection("comments").doc(commentId).update({ body });
+    const docRef = db.collection("comments").doc(id);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    await docRef.update({ body });
     res.status(200).json({ message: "Comment updated" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
+
 exports.deleteComment = async (req, res) => {
-  const { commentId } = req.params;
+  const { id } = req.params;
 
   try {
-    await db.collection("comments").doc(commentId).delete();
+    const docRef = db.collection("comments").doc(id);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    await docRef.delete();
     res.status(200).json({ message: "Comment deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });
