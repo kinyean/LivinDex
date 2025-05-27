@@ -1,5 +1,5 @@
 import React from 'react';
-import { Comment as CommentType } from "./CommentDummyDB";
+import { Comment as CommentType } from "./GetComment";
 import Img from '../../Assets/UnknownUser.jpg';
 import "../../Styles/Comment.css";
 import CommentForm from './CommentForm';
@@ -66,7 +66,7 @@ const CommentTextBox: React.FC<CommentTextBoxProps> = ({ comment, replies, curre
             submitLabel="Update"
             hasCancelButton
             initialText={comment.body}
-            handleSubmit={(text) => updateComment(text, comment.id)}
+            handleSubmit={(text) => updateComment(text, comment.id) }
             handleCancel={() => {
               setActiveComment(null);
             }}
