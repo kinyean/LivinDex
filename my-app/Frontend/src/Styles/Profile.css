@@ -59,6 +59,26 @@
   }
 
   /* Profile CSS */
+
+  .edit-profile-btn {
+    cursor: pointer;
+    background-color: #d3d3d3;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #333;
+    font-size: 0.9rem;
+  }
+  
+  .name-edit-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+  }
+
   .profile-page-wrapper {
     color: white;
     padding: 2rem;

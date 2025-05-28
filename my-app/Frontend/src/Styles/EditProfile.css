@@ -1,0 +1,36 @@
+.profile-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: white;
+    padding: 10px;
+  }
+
+  .mui-profile-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .mui-profile-button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .mui-profile-button.cancel {
+    background-color: #6b7280; /* gray-500 */
+    color: white;
+  }
+  
+  .mui-profile-button.update {
+    background-color: #007bff;
+    color: white;
+  }
