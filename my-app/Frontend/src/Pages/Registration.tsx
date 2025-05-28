@@ -6,6 +6,7 @@ import axios from 'axios';
 import { auth } from "../index";
 import LoginAnimation from './LoginAnimation';
 import '../Styles/Login.css';
+import BaseAPI from "../API/BaseAPI"
 
 
 interface User {
@@ -26,8 +27,13 @@ const Registration: React.FC = () => {
             // Signed up 
             console.log("signed up");
             const user = userCredential.user;
+            const apiUrl = process.env.REACT_APP_API_URL;
 
-            await axios.post('http://localhost:3001/auth/register', {
+            if (!apiUrl) {
+              throw new Error('REACT_APP_API_URL is not defined');
+            }
+
+            await BaseAPI.post("/auth/register", {
               uid: user.uid,
               name: userd.name,
             });
