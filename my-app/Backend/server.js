@@ -29,7 +29,7 @@ app.use('/users', usersRoute);
 app.use('/auth', authRoute);
 app.use('/comments', commentRoutes);
 
-const port = 3001; // You can use environment variables for port configuration
+const port = process.env.PORT || 3001; // You can use environment variables for port configuration
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

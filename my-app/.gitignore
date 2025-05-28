@@ -15,6 +15,7 @@ Frontend/node_modules
 Backend/FirebaseServiceAccountKey.json
 # misc
 .DS_Store
+Backend/.env
 Frontend/.env
 .env
 .env.local
