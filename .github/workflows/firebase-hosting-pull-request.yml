@@ -13,12 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LIVINDEX_240B9 }}
-          channelId: live
-          projectId: livindex-240b9
-          entryPoint: my-app
+
       - run: npm install
         working-directory: ./my-app/Frontend
       - run: npm run build
@@ -29,4 +24,6 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LIVINDEX_240B9 }}
+          channelId: live
           projectId: livindex-240b9
+          entryPoint: my-app
