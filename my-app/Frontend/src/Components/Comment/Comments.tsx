@@ -35,14 +35,15 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
       );
     };
 
-  // 
+  // Adds a new comment or reply and updates the comment list state
   const addComment = (text: string, parentId: string | null) => {
     createCommentApi(text, parentId).then((comment) => {
-      setBackendComments([comment, ...backendComments]);
+      setBackendComments([comment, ...backendComments]); // Adding the new comment to the existing list for efficiency
       setActiveComment(null);
     });
   };
   
+  // Once the Backend confirms the deletion , then update the UI
   const deleteComment = (commentId: string) => {
     if (window.confirm("Are you sure you want to remove comment?")) {
       deleteCommentApi(commentId).then(() => {
@@ -51,7 +52,8 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
       });
     }
   };
-  
+
+  // Updates the comment's text both on the backend and the frontend UI state
   const updateComment = (text: string, commentId: string) => {
     updateCommentApi(text, commentId).then(() => {
       const updated = backendComments.map((c) =>
@@ -67,10 +69,6 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
       setBackendComments(data);
     });
   }, []);
-
-  useEffect(() => {
-    console.log("backendComments", backendComments);
-  }, [backendComments]);
   
   return (
     <div className="comments">

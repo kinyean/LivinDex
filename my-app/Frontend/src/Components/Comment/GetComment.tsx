@@ -9,6 +9,7 @@ export interface Comment {
   createdAt: string; 
 }
 
+// API functions for managing comments in the backend
 export const getComments = async () => {
   const res = await BaseAPI.get("/comments");
   return res.data;
