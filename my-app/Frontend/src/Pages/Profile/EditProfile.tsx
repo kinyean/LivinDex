@@ -9,7 +9,34 @@ import Navbar from "../../Components/Navbar";
 import UserImage from "../../Assets/UnknownUser.jpg";
 import "../../Styles/EditProfile.css";
 
+import { useEffect, useState } from "react";
+import { auth } from "../../index";
+import { getUserProfile } from "./GetProfile";
+
+
 const EditProfile: React.FC = () => {
+
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    bio: "",
+  });
+  
+  const uid = auth.currentUser?.uid;
+
+  useEffect(() => {
+    if (!uid) return;
+  
+    getUserProfile(uid).then((data) => {
+      setUserData(data);
+    }).catch((e) => {
+      console.error("Failed to fetch user data:", e);
+    });
+  }, [uid]);
+
+
   return (
     <div className="profile-layout">
       <Navbar />
@@ -31,16 +58,19 @@ const EditProfile: React.FC = () => {
                 />
               </Box>
               <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                Kemango
+                {userData.firstName || "Loading..."}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                kemango@test.com
+                {userData.email || "Loading..."}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {userData.phone || "Number : Nill"}
               </Typography>
               <Typography variant="h6" color="primary" sx={{ mt: 3, fontWeight: 600 }}>
                 About
               </Typography>
               <Typography variant="body2" sx={{ mt: 1, color: "text.secondary" }}>
-                I'm Kemango. Year 1 Student doing Orbital in this summer 2025.
+                {userData.bio || "Enter My Bio"}
               </Typography>
             </Card>
           </Grid>
@@ -69,17 +99,19 @@ const EditProfile: React.FC = () => {
                     fullWidth
                     placeholder="Enter first name"
                     variant="outlined"
+                    defaultValue={userData.firstName}
                   />
                 </Grid>
 
                 <Grid size={6}>
                   <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                    Last Name
+                    Last Name (Optional)
                   </Typography>
                   <TextField
                     fullWidth
                     placeholder="Enter last name"
                     variant="outlined"
+                    defaultValue={userData.lastName}
                   />
                 </Grid>
 
@@ -91,6 +123,7 @@ const EditProfile: React.FC = () => {
                     fullWidth
                     placeholder="Enter email ID"
                     variant="outlined"
+                    defaultValue={userData.email}
                   />
                 </Grid>
 
@@ -102,6 +135,7 @@ const EditProfile: React.FC = () => {
                     fullWidth
                     placeholder="Enter phone number"
                     variant="outlined"
+                    defaultValue={userData.phone}
                   />
                 </Grid>
               </Grid>
@@ -121,7 +155,7 @@ const EditProfile: React.FC = () => {
                     fullWidth
                     placeholder="Update Bio"
                     variant="outlined"
-                    defaultValue="I am smart!" // TODO: Fetch info from backend and populate
+                    defaultValue={userData.bio}
                   />
                 </Grid>
             </Box>

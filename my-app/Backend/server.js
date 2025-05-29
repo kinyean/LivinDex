@@ -20,12 +20,12 @@ app.get('/', (req, res) => {
 });
 
 // Include route files
-const usersRoute = require('./routes/users');
+const usersRoutes = require('./routes/userRoutes');
 const authRoute = require('./routes/auth');
 const commentRoutes = require('./routes/commentRoutes');
 
 // Use routes
-app.use('/users', usersRoute);
+app.use('/users', usersRoutes);
 app.use('/auth', authRoute);
 app.use('/comments', commentRoutes);
 
