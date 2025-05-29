@@ -1,12 +1,11 @@
-
 import  React,  {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../index";
-import LoginAnimation from './LoginAnimation';
-import '../Styles/Registration.css';
-import BaseAPI from "../API/BaseAPI"
-
+import { auth } from "../../index";
+import LoginAnimation from '../LoginAnimation';
+import '../../Styles/Registration.css';
+import BaseAPI from "../../API/BaseAPI"
+import { createUserApi } from "./GetProfile";
 
 interface User {
     name: string;
@@ -18,8 +17,6 @@ const Registration: React.FC = () => {
     const navigate = useNavigate();
     const userDets: User = {name: "", email: "", password: ""};
     const [userd, setUser] = useState(userDets);
-
-
 
     const handleClick = (e :React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -33,6 +30,15 @@ const Registration: React.FC = () => {
             if (!apiUrl) {
               throw new Error('REACT_APP_API_URL is not defined');
             }
+
+            // After Firebase signup
+            await createUserApi(user.uid, {
+              firstName: userd.name,
+              lastName: "",
+              email: user.email,
+              phone: "",
+              bio: ""
+            });
 
             await BaseAPI.post("/auth/register", {
               uid: user.uid,
