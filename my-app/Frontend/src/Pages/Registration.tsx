@@ -1,11 +1,10 @@
 
-import  React,  {ReactEventHandler, useState} from "react";
+import  React,  {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import axios from 'axios';
 import { auth } from "../index";
 import LoginAnimation from './LoginAnimation';
-import '../Styles/Login.css';
+import '../Styles/Registration.css';
 import BaseAPI from "../API/BaseAPI"
 
 
@@ -19,6 +18,8 @@ const Registration: React.FC = () => {
     const navigate = useNavigate();
     const userDets: User = {name: "", email: "", password: ""};
     const [userd, setUser] = useState(userDets);
+
+
 
     const handleClick = (e :React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -38,11 +39,10 @@ const Registration: React.FC = () => {
               name: userd.name,
             });
 
-            navigate("/login");
+            navigate("/editProfile");
             // ...
         })
         .catch((error) => {
-            const errorCode = error.code;
             const errorMessage = error.message;
             // ..
             console.log(errorMessage);
@@ -54,7 +54,7 @@ const Registration: React.FC = () => {
       <LoginAnimation /> {/* Animation logic runs here */}
       <div className="login-body"> 
         <div className="page">
-          <div className="container">
+          <div className="registration-container">
             <div className="left">
               <div className="registration">Registration</div>
               <div className="eula">
@@ -76,22 +76,12 @@ const Registration: React.FC = () => {
                     <stop style={{ stopColor: '#ff0000' }} offset="1" />
                   </linearGradient>
                 </defs>
-                <path
-                  d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 
-                    0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 
-                    c 0,-0.0205 -25,4.01348 -25,38.5 
-                    0,34.48652 25,38.5 25,38.5 h 215 
-                    c 0,0 20,-0.99604 20,-25 
-                    0,-24.00396 -20,-25 -20,-25 h -190 
-                    c 0,0 -20,1.71033 -20,25 
-                    0,24.00396 20,25 20,25 h 168.57143"
-                  fill="url(#linearGradient)"
-                />
               </svg>
               <div className="form-wrapper">
                 <form onSubmit={handleClick}>  
                   <label className="login_label" htmlFor="name">Name</label>
                   <input
+                    className="styled-input"
                     type="text"
                     id="name"
                     onChange={(e) => setUser({...userd, name: e.target.value})}
@@ -99,6 +89,7 @@ const Registration: React.FC = () => {
                   />
                   <label className="login_label" htmlFor="email">Email</label>
                   <input
+                    className="styled-input"
                     type="email"
                     id="email"
                     onChange={(e) => setUser({...userd, email: e.target.value})}
@@ -106,6 +97,7 @@ const Registration: React.FC = () => {
                   />
                   <label className="login_label" htmlFor="password">Password</label>
                   <input
+                    className="styled-input"
                     type="password"
                     id="password"
                     onChange={(e) => setUser({...userd, password: e.target.value})}
