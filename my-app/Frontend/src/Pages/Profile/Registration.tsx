@@ -35,7 +35,6 @@ const Registration: React.FC = () => {
             await createUserApi(user.uid, {
               firstName: userd.name,
               lastName: "",
-              email: user.email,
               phone: "",
               bio: ""
             });

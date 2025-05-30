@@ -3,7 +3,6 @@ import BaseAPI from "../../API/BaseAPI";
 export const createUserApi = async (uid: string, userData: {
   firstName: string;
   lastName: string | null; //last name optional
-  email: string | null;
   phone: string | null;
   bio: string;
 }) => {

@@ -8,7 +8,6 @@ exports.createUser = async (req, res) => {
     const userData = {
       firstName,
       lastName,
-      email,
       phone,
       bio,
     };
@@ -38,11 +37,11 @@ exports.getUser = async (req, res) => {
 
 // Update user profile
 exports.updateUser = async (req, res) => {
-  const { id } = req.params;
+  const { uid } = req.params;
   const newData = req.body;
 
   try {
-    await db.collection("users").doc(id).update(newData);
+    await db.collection("users").doc(uid).update(newData);
     res.status(200).json({ message: "User profile updated" });
   } catch (error) {
     res.status(500).json({ error: error.message });
