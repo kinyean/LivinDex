@@ -8,14 +8,19 @@ import Button from "@mui/material/Button";
 import Navbar from "../../Components/Navbar";
 import UserImage from "../../Assets/UnknownUser.jpg";
 import "../../Styles/EditProfile.css";
-
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth } from "../../index";
-import { getUserProfile } from "./GetProfile";
+import { verifyBeforeUpdateEmail } from "firebase/auth"; 
+import { getUserProfile as getUserProfileApi,
+         updateUserProfile as updateUserProfileApi } from "./GetProfile";
 
 
 const EditProfile: React.FC = () => {
 
+  const navigate = useNavigate();
+  const [emailError, setEmailError] = useState(false);
+  const [formEmail, setFormEmail] = useState("");
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -25,12 +30,53 @@ const EditProfile: React.FC = () => {
   });
   
   const uid = auth.currentUser?.uid;
+  const firebaseEmail = auth.currentUser?.email;
+
+  const handleUpdate = async () => {
+    if (!uid || !auth.currentUser) return;
+  
+    await auth.currentUser.reload();
+  
+    const currentEmail = (auth.currentUser.email || "").trim().toLowerCase();
+    const formEmailRaw = userData.email ?? ""; 
+    const formEmail = formEmailRaw.trim().toLowerCase();
+  
+    // Only attempt email verification if a valid new email was entered
+    if (formEmail && formEmail !== currentEmail) {
+      verifyBeforeUpdateEmail(auth.currentUser, formEmail)
+        .then(() => {
+          alert("A verification email has been sent. Please verify it, then login again.");
+          auth.signOut().then(() => navigate("/login"));
+        })
+        .catch((e) => {
+          console.error("Failed to send verification email:", e);
+          alert("Failed to update email. " + e.message);
+        });
+      return;
+    }
+  
+    // ✅ Update the rest
+    updateUserProfileApi(uid, {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      phone: userData.phone,
+      bio: userData.bio,
+    })
+      .then(() => {
+        alert("Profile updated!");
+      })
+      .catch((e) => {
+        console.error("Profile update failed:", e);
+        alert("Failed to update profile. " + e.message);
+      });
+  };  
 
   useEffect(() => {
     if (!uid) return;
   
-    getUserProfile(uid).then((data) => {
+    getUserProfileApi(uid).then((data) => {
       setUserData(data);
+      setFormEmail(data.email);
     }).catch((e) => {
       console.error("Failed to fetch user data:", e);
     });
@@ -58,16 +104,16 @@ const EditProfile: React.FC = () => {
                 />
               </Box>
               <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                {userData.firstName || "Loading..."}
+                {userData.firstName + " " + userData.lastName|| "Loading..."}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {userData.email || "Loading..."}
+                {firebaseEmail|| "Loading..."}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {userData.phone || "Number : Nill"}
+                {"PH: " + userData.phone || "PH : Nill"}
               </Typography>
               <Typography variant="h6" color="primary" sx={{ mt: 3, fontWeight: 600 }}>
-                About
+                About 
               </Typography>
               <Typography variant="body2" sx={{ mt: 1, color: "text.secondary" }}>
                 {userData.bio || "Enter My Bio"}
@@ -100,6 +146,9 @@ const EditProfile: React.FC = () => {
                     placeholder="Enter first name"
                     variant="outlined"
                     defaultValue={userData.firstName}
+                    onChange={(e) =>
+                      setUserData({ ...userData, firstName: e.target.value })
+                    }
                   />
                 </Grid>
 
@@ -112,6 +161,9 @@ const EditProfile: React.FC = () => {
                     placeholder="Enter last name"
                     variant="outlined"
                     defaultValue={userData.lastName}
+                    onChange={(e) =>
+                      setUserData({ ...userData, lastName: e.target.value })
+                    }
                   />
                 </Grid>
 
@@ -123,19 +175,38 @@ const EditProfile: React.FC = () => {
                     fullWidth
                     placeholder="Enter email ID"
                     variant="outlined"
-                    defaultValue={userData.email}
+                    value={formEmail || ""}
+                    error={emailError}
+                    helperText={emailError ? "Email must contain @" : ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormEmail(value);
+                      setUserData({ ...userData, email: value });
+                      setEmailError(!value.includes("@"));
+                    }}
                   />
                 </Grid>
 
                 <Grid size={6}>
                   <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                    Phone
+                    Phone (Optional)
                   </Typography>
                   <TextField
                     fullWidth
                     placeholder="Enter phone number"
                     variant="outlined"
-                    defaultValue={userData.phone}
+                    value={userData.phone}
+                    inputProps={{
+                      inputMode: "numeric",
+                      pattern: "[0-9]*",
+                      maxLength: 8,
+                    }}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^\d{0,8}$/.test(value)) {
+                        setUserData({ ...userData, phone: value });
+                      }
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -156,16 +227,17 @@ const EditProfile: React.FC = () => {
                     placeholder="Update Bio"
                     variant="outlined"
                     defaultValue={userData.bio}
+                    onChange={(e) => setUserData({ ...userData, bio: e.target.value })}
                   />
                 </Grid>
             </Box>
   
             <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4 }}>
-              <Button variant="outlined" sx={{ mr: 2 }}>
+              <Button variant="outlined" sx={{ mr: 2 }} onClick={() => navigate("/profile")}>
                 Cancel
               </Button>
               {/* TODO: Grey out this button if values are default */}
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={handleUpdate}>
                 Update
               </Button>
             </Box>
