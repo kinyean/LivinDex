@@ -31,6 +31,16 @@ const EditProfile: React.FC = () => {
   
   const uid = auth.currentUser?.uid;
   const firebaseEmail = auth.currentUser?.email;
+  const [originalData, setOriginalData] = useState(userData);
+  const isFormChanged = () => {
+    return (
+      userData.firstName !== originalData.firstName ||
+      userData.lastName !== originalData.lastName ||
+      userData.phone !== originalData.phone ||
+      userData.bio !== originalData.bio ||
+      userData.email !== originalData.email
+    );
+  };
 
   const handleUpdate = async () => {
     if (!uid || !auth.currentUser) return;
@@ -40,7 +50,7 @@ const EditProfile: React.FC = () => {
     const currentEmail = (auth.currentUser.email || "").trim().toLowerCase();
     const formEmailRaw = userData.email ?? ""; 
     const formEmail = formEmailRaw.trim().toLowerCase();
-  
+
     // Only attempt email verification if a valid new email was entered
     if (formEmail && formEmail !== currentEmail) {
       verifyBeforeUpdateEmail(auth.currentUser, formEmail)
@@ -76,6 +86,7 @@ const EditProfile: React.FC = () => {
   
     getUserProfileApi(uid).then((data) => {
       setUserData(data);
+      setOriginalData(data);
       setFormEmail(data.email);
     }).catch((e) => {
       console.error("Failed to fetch user data:", e);
@@ -237,7 +248,7 @@ const EditProfile: React.FC = () => {
                 Cancel
               </Button>
               {/* TODO: Grey out this button if values are default */}
-              <Button variant="contained" color="primary" onClick={handleUpdate}>
+              <Button variant="contained" color="primary" onClick={handleUpdate} disabled={!isFormChanged()}>
                 Update
               </Button>
             </Box>
