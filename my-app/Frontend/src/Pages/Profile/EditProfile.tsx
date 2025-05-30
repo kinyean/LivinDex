@@ -14,6 +14,7 @@ import { auth } from "../../index";
 import { verifyBeforeUpdateEmail } from "firebase/auth"; 
 import { getUserProfile as getUserProfileApi,
          updateUserProfile as updateUserProfileApi } from "./GetProfile";
+import { onAuthStateChanged } from "firebase/auth";
 
 
 const EditProfile: React.FC = () => {
@@ -74,6 +75,11 @@ const EditProfile: React.FC = () => {
     })
       .then(() => {
         alert("Profile updated!");
+        originalData.firstName = userData.firstName;
+        originalData.lastName = userData.lastName;
+        originalData.phone = userData.phone;
+        originalData.bio = userData.bio;
+        originalData.email = userData.email;
       })
       .catch((e) => {
         console.error("Profile update failed:", e);
@@ -82,16 +88,26 @@ const EditProfile: React.FC = () => {
   };  
 
   useEffect(() => {
-    if (!uid) return;
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        console.log("No user is logged in");
+        return;
+      }
   
-    getUserProfileApi(uid).then((data) => {
-      setUserData(data);
-      setOriginalData(data);
-      setFormEmail(data.email);
-    }).catch((e) => {
-      console.error("Failed to fetch user data:", e);
+      const uid = user.uid;
+      setFormEmail(user.email ?? "");
+      
+      getUserProfileApi(uid).then((data) => {
+        setUserData(data);
+        setOriginalData(data);
+      }).catch((e) => {
+        console.error("Failed to fetch user data:", e);
+      });
     });
-  }, [uid]);
+  
+    return () => unsubscribe();
+  }, []);
+  
 
 
   return (
