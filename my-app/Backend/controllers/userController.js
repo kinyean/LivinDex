@@ -8,6 +8,7 @@ exports.createUser = async (req, res) => {
     const userData = {
       firstName,
       lastName,
+      email,
       phone,
       bio,
     };
