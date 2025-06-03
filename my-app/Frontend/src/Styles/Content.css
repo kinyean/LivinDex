@@ -13,3 +13,23 @@
     flex-direction: column;
   }
   
+/* ContentTab.css */
+.upload-form-container {
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.upload-button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.caption-input {
+  width: 100%;
+}
+
+.file-label {
+  width: 100%;
+  margin-top: 1rem;
+  display: inline-block;
+}
