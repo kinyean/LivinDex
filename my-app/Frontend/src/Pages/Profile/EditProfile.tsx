@@ -16,7 +16,6 @@ import { getUserProfile as getUserProfileApi,
          updateUserProfile as updateUserProfileApi } from "./GetProfile";
 import { onAuthStateChanged } from "firebase/auth";
 
-
 const EditProfile: React.FC = () => {
 
   const navigate = useNavigate();
@@ -66,7 +65,6 @@ const EditProfile: React.FC = () => {
       return;
     }
   
-    // ✅ Update the rest
     updateUserProfileApi(uid, {
       firstName: userData.firstName,
       lastName: userData.lastName,
@@ -86,6 +84,8 @@ const EditProfile: React.FC = () => {
         alert("Failed to update profile. " + e.message);
       });
   };  
+
+  // Check auth state and load user profile if logged in
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -108,8 +108,6 @@ const EditProfile: React.FC = () => {
     return () => unsubscribe();
   }, []);
   
-
-
   return (
     <div className="profile-layout">
       <Navbar />
@@ -263,7 +261,6 @@ const EditProfile: React.FC = () => {
               <Button variant="outlined" sx={{ mr: 2 }} onClick={() => navigate("/profile")}>
                 Cancel
               </Button>
-              {/* TODO: Grey out this button if values are default */}
               <Button variant="contained" color="primary" onClick={handleUpdate} disabled={!isFormChanged()}>
                 Update
               </Button>
