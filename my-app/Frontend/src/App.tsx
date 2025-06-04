@@ -2,6 +2,7 @@ import React from 'react';
 import Content from './Pages/Content';
 import CreateComment from './Pages/Create_Section/CreateComment';
 import EditProfile from './Pages/Profile/EditProfile';
+import Display from './Pages/Display';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ForgotPassword from './Pages/ForgotPassword';
 import Home from "./Pages/Home";
@@ -17,9 +18,10 @@ function App() {
   return (
     <Router>
       <Routes>
-      <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/content" element={<Content />} />
         <Route path="/create/comment" element={<CreateComment />} />
+        <Route path="/display" element={<Display />} />
+        <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
