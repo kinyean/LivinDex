@@ -8,6 +8,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage, db } from "../index";
+import '../Styles/Content.css';
 
 const uploadMedia = async (file: File) => {
   const fileRef = ref(storage, `posts/${Date.now()}-${file.name}`);
