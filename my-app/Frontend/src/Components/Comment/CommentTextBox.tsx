@@ -26,12 +26,16 @@ const CommentTextBox: React.FC<CommentTextBoxProps> = ({ comment, replies, curre
   const fiveMinutes = 300000;
   const timePassed = new Date().getTime() - new Date(comment.createdAt).getTime() > fiveMinutes;
   
-  const canReply = Boolean(currentUserId);
+  // const canReply = Boolean(currentUserId);
 
-  const canEdit = currentUserId === comment.userId && !timePassed; 
+  // const canEdit = currentUserId === comment.userId && !timePassed; 
 
-  const canDelete =
-    currentUserId === comment.userId && replies.length === 0 && !timePassed;
+  // const canDelete =
+  //   currentUserId === comment.userId && replies.length === 0 && !timePassed;
+
+  const canEdit = true; // force show
+  const canDelete = true; // force show
+  const canReply = true; // force show
 
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
   
@@ -45,7 +49,7 @@ const CommentTextBox: React.FC<CommentTextBoxProps> = ({ comment, replies, curre
     activeComment.id === comment.id &&
     activeComment.type === "replying";
 
-  const replyId = parentId ? parentId : comment.id;
+  // const replyId = parentId ? parentId : comment.id;
 
   return (
     <div className="comment">

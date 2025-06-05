@@ -2,10 +2,13 @@ import React from "react";
 import Navbar from "../Components/Navbar";
 import testImage from "../Assets/contemplative-reptile.jpg";
 import Comments from "../Components/Comment/Comments";
-
+import { auth } from "../index";
 import "../Styles/Display.css";
 
 const Display: React.FC = () => {
+
+  const uid = auth.currentUser?.uid;
+
   return (
     <div className="note-wrapper">
       <Navbar />
@@ -45,7 +48,7 @@ const Display: React.FC = () => {
         </div>
 
         <div className="note-footer">
-          <Comments currentUserId="1" />
+          <Comments currentUserId = {uid ?? ''} />
         </div>
       </div>
     </div>

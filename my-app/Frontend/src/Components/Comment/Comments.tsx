@@ -6,6 +6,9 @@ import {getComments as getCommentsApi,
 import { Comment } from "./GetComment";
 import CommentTextBox from "./CommentTextBox";
 import CommentForm from './CommentForm';
+import { getUserProfile as getUserProfileApi} from "../../Pages/Profile/GetProfile";
+import { auth } from "../../index";
+import { onAuthStateChanged } from "firebase/auth";
 
 type ActiveComment = {
   id: string;
@@ -13,13 +16,21 @@ type ActiveComment = {
 };
 
 interface CommentsProps {
-  currentUserId: string;
+  currentUserId: string ;
 }
 
 const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
   const [backendComments, setBackendComments] = useState<Comment[]>([]);
 
   const [activeComment, setActiveComment] = useState<ActiveComment | null>(null);
+
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    bio: "",
+  });
 
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
@@ -37,7 +48,9 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
 
   // Adds a new comment or reply and updates the comment list state
   const addComment = (text: string, parentId: string | null) => {
-    createCommentApi(text, parentId).then((comment) => {
+    console.log("Creating comment with userData:", userData); 
+
+    createCommentApi(text, parentId, userData).then((comment) => {
       setBackendComments([comment, ...backendComments]); // Adding the new comment to the existing list for efficiency
       setActiveComment(null);
     });
@@ -63,11 +76,29 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
       setActiveComment(null);
     });
   };  
-  
+
   useEffect(() => {
-    getCommentsApi().then((data) => {
-      setBackendComments(data);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        console.warn("No user is logged in");
+        return;
+      }
+  
+      getCommentsApi().then((data) => {
+        setBackendComments(data);
+      });
+  
+      getUserProfileApi(user.uid)
+        .then((profileData) => {
+          setUserData(profileData);
+          console.log("Loaded user profile:", profileData);
+        })
+        .catch((e) => {
+          console.error("Failed to load user profile:", e);
+        });
     });
+  
+    return () => unsubscribe(); // Clean up listener
   }, []);
   
   return (
