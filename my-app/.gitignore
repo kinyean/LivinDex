@@ -13,6 +13,9 @@ Frontend/node_modules
 
 #FirebaseServiceAccountKey.json
 Backend/FirebaseServiceAccountKey.json
+.firebase/
+*.cache
+
 # misc
 .DS_Store
 Backend/.env
