@@ -1,4 +1,5 @@
 import BaseAPI from "../../API/BaseAPI";
+import { auth } from "../../index";
 
 export interface Comment {
   id: string;                   // ID that is tag at the comment
@@ -15,12 +16,19 @@ export const getComments = async () => {
   return res.data;
 };
 
-export const createComment = async (body: string, parentId: string | null) => {
+export const createComment = async (body: string, parentId: string | null, userData: { firstName: string; lastName: string } ) => {
+  
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("User is not authenticated"); //Check to see User is not null 
+  }
+  
   const res = await BaseAPI.post("/comments", {
     body,
     parentId,
-    userId: "1",
-    username: "Jack",
+    userId: user.uid,
+    username: userData.firstName + " " + userData.lastName,
   });
   return res.data;
 };
