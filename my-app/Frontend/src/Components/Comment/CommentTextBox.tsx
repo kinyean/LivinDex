@@ -23,20 +23,12 @@ interface CommentTextBoxProps {
 
 const CommentTextBox: React.FC<CommentTextBoxProps> = ({ comment, replies, currentUserId, deleteComment, activeComment, setActiveComment, parentId, addComment, updateComment}) => {
   
-  const fiveMinutes = 300000;
-  const timePassed = new Date().getTime() - new Date(comment.createdAt).getTime() > fiveMinutes;
-  
-  // const canReply = Boolean(currentUserId);
+  // const fiveMinutes = 300000;
+  // const timePassed = new Date().getTime() - new Date(comment.createdAt).getTime() > fiveMinutes;
 
-  // const canEdit = currentUserId === comment.userId && !timePassed; 
-
-  // const canDelete =
-  //   currentUserId === comment.userId && replies.length === 0 && !timePassed;
-
-  const canEdit = true; // force show
-  const canDelete = true; // force show
-  const canReply = true; // force show
-
+  const canEdit = true; 
+  const canDelete = true; 
+  const canReply = true; 
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
   
   const isEditing =
