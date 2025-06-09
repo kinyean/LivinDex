@@ -1,0 +1,81 @@
+  /* Wallet CSS */
+   .wallet-card {
+    position: relative;
+    margin-top: -60px; 
+    padding: 0 16px;
+    z-index: 10;
+    padding-left: 2rem;
+    padding-right: 2rem;
+   }
+
+  .wallet-green-header {
+    background: linear-gradient(to bottom, #2be679, #28b663);
+    padding: 48px 20px 100px;
+    color: white;
+    padding-top: 80px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .wallet-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .wallet-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+    border: 3px solid white;
+  }
+  
+  .wallet-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+ 
+  .wallet-LCoin-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  
+  .wallet-LCoin-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+  }
+  
+  .wallet-LCoin-text {
+    margin: 4px 0;
+    font-size: 16px;
+    opacity: 0.9;
+  }
+  
+  .wallet-SGD {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+    margin: 0;
+  }
+  
+  .wallet-currency {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-right: 8px;
+  }
+  
+  .wallet-amount {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+
+  

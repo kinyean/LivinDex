@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
       <ul className="sidebar" style={{ display: showSidebar ? 'flex' : 'none' }}>
         <li onClick={() => setShowSidebar(false)}>Close</li>
         <li onClick={() => navigate("/profile")}>Profile</li>
-        <li >Wallet</li>
+        <li onClick={() => navigate("/wallet")}>Wallet</li>
         <li onClick={() => navigate("/logout")}>Log Out</li>
         
       </ul>

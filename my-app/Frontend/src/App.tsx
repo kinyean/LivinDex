@@ -12,12 +12,14 @@ import Registration from "./Pages/Profile/Registration";
 import './Styles/App.css';
 import ProtectedRoute from './Components/ProtectedRoute';
 import Logout from './Components/Logout';
+import Wallet from './Pages/Wallet';
 
 function App() {
   
   return (
     <Router>
       <Routes>
+        <Route path="/wallet" element={<Wallet />} />
         <Route path="/content" element={<Content />} />
         <Route path="/create/comment" element={<CreateComment />} />
         <Route path="/display" element={<Display />} />
