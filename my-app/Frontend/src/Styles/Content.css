@@ -7,7 +7,7 @@
 
 .main-content {
     padding-top: 80px;
-    flex-grow: 1;
+    flex-grow: 0.95;
     margin-left: 320px; /* Same value as sidebar width */
     display: flex;
     flex-direction: column;

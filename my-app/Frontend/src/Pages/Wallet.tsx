@@ -7,7 +7,8 @@ import { getUserProfile as getUserProfileApi} from "./Profile/GetProfile";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../index";
 import '../Styles/Wallet.css';
-import WalletCard from "../Components/WalletCard";
+import WalletCard from "../Components/Wallet/WalletCard";
+import WalletList from "../Components/Wallet/WalletList";
 
 const Wallet: React.FC = () => {
 
@@ -43,7 +44,7 @@ const Wallet: React.FC = () => {
           <h1 className="wallet-name">{userData.firstName + " " + userData.lastName}</h1>
           <p className="wallet-SGD">
             <span className="wallet-currency">SGD: </span>
-            <span className="wallet-amount">0.00</span>
+            <span className="wallet-amount">354.50</span>
           </p>
           <div className="wallet-LCoin-section">
             <img className="wallet-LCoin-icon" src={LCoin} alt="L Coin" />
@@ -54,6 +55,11 @@ const Wallet: React.FC = () => {
 
       <div className="wallet-card">
         <WalletCard />
+      </div>
+
+      <div className="wallet-transaction">
+        <h1 className="wallet-transaction-name">All Transactions</h1>
+        <WalletList />
       </div>
     </>
   );
