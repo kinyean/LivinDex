@@ -77,5 +77,18 @@
     font-weight: bold;
   }
 
-
+  .wallet-transaction-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+    padding-top: 8px;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #b5b5b5;
+  }
   
+  /* WalletList CSS */
+  .wallet-transaction-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+  }
