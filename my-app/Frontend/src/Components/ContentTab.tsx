@@ -6,41 +6,14 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { CloudUpload } from '@mui/icons-material';
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import {ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage, db } from "../index";
 import '../Styles/Content.css';
+import BaseAPI from '../API/BaseAPI';
 
-const uploadMedia = async (file: File) => {
-  const fileRef = ref(storage, `posts/${Date.now()}-${file.name}`);
-  await uploadBytes(fileRef, file);
-  const url = await getDownloadURL(fileRef);
-  return url;
-};
-
-const createPost = async (text: string, file:File | null, userId: string, tags: string[]) => {
-  let mediaURL = "";
-  let mediaType = "";
-
-  if (file) {
-    mediaType = file.type.startsWith("image") ? "image" : "video";
-    mediaURL = await uploadMedia(file);
-  }
-
-  await addDoc(collection(db, "posts"), {
-    text, 
-    mediaURL,
-    mediaType,
-    userId,
-    tags,
-    createdAt: serverTimestamp(),
-  });
-};
 
 export default function ContentTab() {
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null); //Preview
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const [value, setValue] = React.useState('1');
@@ -52,6 +25,38 @@ export default function ContentTab() {
       fileInputRef.current.value = "";
     }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!file) {
+      alert("Please select a file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("text", text);
+    formData.append("userId", "user-id-here"); // Replace with actual user ID
+    formData.append("tags", JSON.stringify(selectedTags)); // Convert array to string
+
+    try {
+      const response = await BaseAPI.post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert("Post created successfully");
+      setText("");
+      setFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (error) {
+      console.error("Error uploading post:", error);
+      alert("An error occurred while uploading.");
+    }
+  };
+
 
   const toggleTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
@@ -91,14 +96,7 @@ export default function ContentTab() {
         </Box>
         <TabPanel value="1">
           <h3>Upload Videos</h3>
-          <form onSubmit = {async (e) => {
-            e.preventDefault();
-            if (!file) return alert("Please select a file.");
-            await createPost(text, file, "user-id-here", selectedTags);
-            alert("Post created successfully");
-            setText("");
-            setFile(null);
-          }}>
+          <form onSubmit={handleSubmit}>
             <div className="upload-box-wrapper">
               <label className="upload-box"
                 onDragOver={(e) => e.preventDefault()}
@@ -163,15 +161,7 @@ export default function ContentTab() {
         </TabPanel>
         <TabPanel value="2">
           <h3>Upload Images</h3>
-          <form onSubmit={async (e) => {
-            e.preventDefault();
-            if (!file) return alert("Please select a file.");
-            await createPost(text, file, "user-id-here", selectedTags);
-            alert("Post created successfully");
-            setText("");
-            setFile(null);
-          }}>
-            
+          <form onSubmit={handleSubmit}>
             <div className="upload-box-wrapper">
               <label className="upload-box"
                 onDragOver={(e) => e.preventDefault()}
