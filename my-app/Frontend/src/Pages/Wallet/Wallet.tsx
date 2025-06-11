@@ -1,14 +1,14 @@
 import React from "react";
-import Logo from '../Assets/UnknownUser.jpg';
-import LCoin from '../Assets/L-Coin.png';
-import Navbar from "../Components/Navbar"; 
+import Logo from '../../Assets/UnknownUser.jpg';
+import LCoin from '../../Assets/L-Coin.png';
+import Navbar from "../../Components/Navbar"; 
 import { useEffect, useState } from "react";
-import { getUserProfile as getUserProfileApi} from "./Profile/GetProfile";
+import { getUserProfile as getUserProfileApi} from "../Profile/GetProfile";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../index";
-import '../Styles/Wallet.css';
-import WalletCard from "../Components/Wallet/WalletCard";
-import WalletList from "../Components/Wallet/WalletList";
+import { auth } from "../../index";
+import '../../Styles/Wallet.css';
+import WalletCard from "../../Components/Wallet/WalletCard";
+import WalletList from "../../Components/Wallet/WalletList";
 
 const Wallet: React.FC = () => {
 
@@ -58,7 +58,9 @@ const Wallet: React.FC = () => {
       </div>
 
       <div className="wallet-transaction">
-        <h1 className="wallet-transaction-name">All Transactions</h1>
+        <div className="wallet-body-wrapper">
+          <h1 className="wallet-transaction-name">All Transactions</h1>
+        </div>
         <WalletList />
       </div>
     </>
