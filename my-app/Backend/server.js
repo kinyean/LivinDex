@@ -21,13 +21,15 @@ app.get('/', (req, res) => {
 
 // Include route files
 const usersRoutes = require('./routes/userRoutes');
-const authRoute = require('./routes/auth');
+const authRoutes = require('./routes/auth');
 const commentRoutes = require('./routes/commentRoutes');
+const uploadRoutes = require('./routes/upload');
 
 // Use routes
 app.use('/users', usersRoutes);
-app.use('/auth', authRoute);
+app.use('/auth', authRoutes);
 app.use('/comments', commentRoutes);
+app.use('/upload', uploadRoutes);
 
 const port = process.env.PORT || 3001; // You can use environment variables for port configuration
 

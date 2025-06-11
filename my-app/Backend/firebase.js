@@ -2,6 +2,7 @@
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const { getAuth } = require('firebase-admin/auth');
+const { getStorage } = require("firebase-admin/storage");
 
 require('dotenv').config();
 
@@ -19,9 +20,11 @@ initializeApp({
     client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
     universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN,
   }),
+  storageBucket: "livindex-240b9.firebasestorage.app",
 });
 
 const auth = getAuth();
 const db = getFirestore(); 
+const storage = getStorage();
 
-module.exports = { auth, db };
+module.exports = { auth, db , storage };
