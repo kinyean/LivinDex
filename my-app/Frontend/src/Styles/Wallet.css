@@ -1,4 +1,29 @@
   /* Wallet CSS */
+  .backtransaction_btn {
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 20px; 
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+    margin-top: 2px;
+  }
+  
+  .backtransaction_btn:hover {
+    background-color: #d5d5d5;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .backtransaction_btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
    .wallet-card {
     position: relative;
     margin-top: -60px; 
@@ -77,13 +102,21 @@
     font-weight: bold;
   }
 
-  .wallet-transaction-name {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 12px;
+  .wallet-body-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     padding-top: 8px;
     padding-bottom: 1rem;
     border-bottom: 2px solid #b5b5b5;
+    margin-bottom: 1rem;
+  }
+  
+  .wallet-transaction-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    margin-left: 10px;
   }
   
   /* WalletList CSS */

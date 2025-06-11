@@ -19,7 +19,7 @@ const transactions = [
     amount: 10,
   },
   {
-    type: 'Cash in',
+    type: 'Cash Out',
     date: '10 June 2019, 3:08 pm',
     amount: 354.5,
   },
