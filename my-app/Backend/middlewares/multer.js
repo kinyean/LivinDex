@@ -1,21 +1,28 @@
 const express = require('express');
-const multer = require('multer');
+const multer = require("multer");
 
+// In-memory storage
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['image/jpeg', 'image/png', 'video/mp4'];
-  if (allowedTypes.includes(file.mimetype)) {
+  const isImage = file.mimetype.startsWith("image/");
+  const isVideo = file.mimetype.startsWith("video/");
+   const { uploadType } = req.query;
+
+  if ((uploadType === "image" && isImage) || (uploadType === "video" && isVideo)) {
     cb(null, true);
   } else {
-    cb(new Error('Unsupported file type'), false);
+    cb(new Error("Invalid file type for this upload type."), false);
   }
 };
 
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 50 * 1024 * 1024 },
+  limits: {
+    fileSize: 20 * 1024 * 1024, // 20MB per file
+    files: 8,
+  },
 });
 
 module.exports = upload;
