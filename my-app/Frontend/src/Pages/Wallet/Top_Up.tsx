@@ -51,25 +51,25 @@ const Top_Up: React.FC = () => {
 
       />
 
-      <div className="wallet-card">
+      <div className="wallet_card">
         <WalletCard />
       </div>
 
-      <div className="wallet-transaction">
-        <div className="wallet-body-wrapper">
-          <h1 className="wallet-transaction-name">Top Up Amount</h1>
+      <div className="wallet_transaction">
+        <div className="wallet_body_header">
+          <h1 className="wallet_transaction_name">Top Up Amount</h1>
           <button className="backtransaction_btn" onClick={() => navigate("/wallet")}>Back to Transaction</button>
         </div>
         <TopUpCards />
-        <div className="wallet-body2-wrapper">
-          <h1 className="wallet-transaction-name">Payment Method</h1>
+        <div className="wallet_body2_wrapper">
+          <h1 className="wallet_transaction_name">Payment Method</h1>
         </div>
         <PaymentMethod
           selectedIndex={selectedIndex}
           setSelectedIndex={setSelectedIndex}
         />
 
-        <div className="TopUp_btn-wrapper">
+        <div className="TopUp_btn_wrapper">
           <button className="TopUp_btn" disabled={selectedIndex === null}>
             Top Up
           </button>

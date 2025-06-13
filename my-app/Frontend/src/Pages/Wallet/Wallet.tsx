@@ -9,6 +9,7 @@ import { auth } from "../../index";
 import '../../Styles/Wallet.css';
 import WalletCard from "../../Components/Wallet/WalletCard";
 import WalletList from "../../Components/Wallet/WalletList";
+import WalletHeader from '../../Components/Wallet/WalletHeader';
 
 const Wallet: React.FC = () => {
 
@@ -38,28 +39,20 @@ const Wallet: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="wallet-green-header">
-        <div className="wallet-header-content">
-          <img className="wallet-avatar" src={Logo} alt="Avatar" />
-          <h1 className="wallet-name">{userData.firstName + " " + userData.lastName}</h1>
-          <p className="wallet-SGD">
-            <span className="wallet-currency">SGD: </span>
-            <span className="wallet-amount">354.50</span>
-          </p>
-          <div className="wallet-LCoin-section">
-            <img className="wallet-LCoin-icon" src={LCoin} alt="L Coin" />
-            <p className="wallet-LCoin-text"> 100 LCoins</p>
-          </div>
-        </div>
-      </div>
+      <WalletHeader 
+        userData={userData}
+        balance="354.50"
+        lCoins={100}
+        avatar={Logo}
+      />
 
-      <div className="wallet-card">
+      <div className="wallet_card">
         <WalletCard />
       </div>
 
-      <div className="wallet-transaction">
-        <div className="wallet-body-wrapper">
-          <h1 className="wallet-transaction-name">All Transactions</h1>
+      <div className="wallet_transaction">
+        <div className="wallet_body_wrapper">
+          <h1 className="wallet_transaction_name">All Transactions</h1>
         </div>
         <WalletList />
       </div>

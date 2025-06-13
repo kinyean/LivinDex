@@ -69,7 +69,7 @@ export default function WalletList() {
           }
         >
           <ListItemAvatar>
-          <img className="wallet-transaction-icon" src={Transaction_Icon} alt="Transaction_Icon" />
+          <img className="wallet_transaction_icon" src={Transaction_Icon} alt="Transaction_Icon" />
           </ListItemAvatar>
           <ListItemText
             primary={
