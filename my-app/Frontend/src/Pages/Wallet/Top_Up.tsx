@@ -1,6 +1,8 @@
 import React from "react";
 import Logo from '../../Assets/UnknownUser.jpg';
 import Navbar from "../../Components/Navbar"; 
+import PaymentMethod from "../../Components/Wallet/PaymentMethod";
+import TopUpCards from "../../Components/Wallet/TopUpCards";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { getUserProfile as getUserProfileApi} from "../Profile/GetProfile";
@@ -13,6 +15,8 @@ import WalletHeader from '../../Components/Wallet/WalletHeader';
 const Top_Up: React.FC = () => {
   const navigate = useNavigate();
   
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -53,8 +57,22 @@ const Top_Up: React.FC = () => {
 
       <div className="wallet-transaction">
         <div className="wallet-body-wrapper">
-          <h1 className="wallet-transaction-name">Top_Up</h1>
+          <h1 className="wallet-transaction-name">Top Up Amount</h1>
           <button className="backtransaction_btn" onClick={() => navigate("/wallet")}>Back to Transaction</button>
+        </div>
+        <TopUpCards />
+        <div className="wallet-body2-wrapper">
+          <h1 className="wallet-transaction-name">Payment Method</h1>
+        </div>
+        <PaymentMethod
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+        />
+
+        <div className="TopUp_btn-wrapper">
+          <button className="TopUp_btn" disabled={selectedIndex === null}>
+            Top Up
+          </button>
         </div>
       </div>
     </>
