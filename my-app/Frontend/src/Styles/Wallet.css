@@ -30,6 +30,19 @@
     margin-top: 30px;         
   }
 
+  .empty_reward {
+    width: 150px; 
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-top: 2rem;
+  }
+
+  .empty_reward_txt {
+    font-size: 30px;
+    color: #333;
+  }
+
   .TopUp_btn {
     background-color: #24ab67;
     border: none;
@@ -146,6 +159,16 @@
   .wallet_amount {
     font-size: 32px;
     font-weight: bold;
+  }
+
+  .wallet_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    padding: 20px;
   }
 
   .wallet_body_header {

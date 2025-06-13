@@ -1,4 +1,5 @@
 import React from "react";
+import EmptyReward from '../../Assets/empty_reward.png';
 import Logo from '../../Assets/UnknownUser.jpg';
 import Navbar from "../../Components/Navbar"; 
 import { useNavigate } from 'react-router-dom';
@@ -56,6 +57,10 @@ const Rewards: React.FC = () => {
           <button className="backtransaction_btn" onClick={() => navigate("/wallet")}>Back to Transaction</button>
         </div>
 
+        <div className="wallet_body">
+          <img className="empty_reward" src={EmptyReward} alt="EmptyReward" />
+          <h1 className="empty_reward_txt" >No Available Rewards</h1>
+        </div>
 
       </div>
     </>
