@@ -18,19 +18,19 @@ const WalletHeader: React.FC<WalletHeaderProps> = ({
   avatar,
 }) => {
   return (
-    <div className="wallet-green-header">
-      <div className="wallet-header-content">
-        <img className="wallet-avatar" src={avatar} alt="Avatar" />
-        <h1 className="wallet-name">
+    <div className="wallet_green_header">
+      <div className="wallet_header_content">
+        <img className="wallet_avatar" src={avatar} alt="Avatar" />
+        <h1 className="wallet_name">
           {userData.firstName} {userData.lastName}
         </h1>
-        <p className="wallet-SGD">
-          <span className="wallet-currency">SGD: </span>
-          <span className="wallet-amount">{balance}</span>
+        <p className="wallet)SGD">
+          <span className="wallet_currency">SGD: </span>
+          <span className="wallet_amount">{balance}</span>
         </p>
-        <div className="wallet-LCoin-section">
-          <img className="wallet-LCoin-icon" src={LCoin} alt="L Coin" />
-          <p className="wallet-LCoin-text">{lCoins} LCoins</p>
+        <div className="wallet_LCoin_section">
+          <img className="wallet_LCoin_icon" src={LCoin} alt="L Coin" />
+          <p className="wallet_LCoin_text">{lCoins} LCoins</p>
         </div>
       </div>
     </div>

@@ -46,15 +46,17 @@ const Rewards: React.FC = () => {
         avatar={Logo}
       />
 
-      <div className="wallet-card">
+      <div className="wallet_card">
         <WalletCard />
       </div>
 
-      <div className="wallet-transaction">
-        <div className="wallet-body-wrapper">
-          <h1 className="wallet-transaction-name">Rewards</h1>
+      <div className="wallet_transaction">
+        <div className="wallet_body_header">
+          <h1 className="wallet_transaction_name">Rewards</h1>
           <button className="backtransaction_btn" onClick={() => navigate("/wallet")}>Back to Transaction</button>
         </div>
+
+
       </div>
     </>
   );
