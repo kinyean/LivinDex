@@ -2,6 +2,13 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Grid, Paper, TextField} from '@mui/material';
 
+interface TopUpCardsProps {
+  selectedIndex: number;
+  setSelectedIndex: (i: number) => void;
+  customTopUp: string;
+  setCustomTopUp: (v: string) => void;
+}
+
 const options = ["$10", "$20", "$30", "$50", "$100", "Others"];
 
 const OptionCard = styled(Paper, {
@@ -22,9 +29,7 @@ const OptionCard = styled(Paper, {
   },
 }));
 
-export default function TopUpCards() {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [customTopUp, setCustomTopUp] = React.useState('');
+export default function TopUpCards({ selectedIndex, setSelectedIndex, customTopUp, setCustomTopUp }: TopUpCardsProps) {
   
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 1600, mx: 'auto' }}>

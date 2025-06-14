@@ -4,6 +4,7 @@ import Navbar from "../../Components/Navbar";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { getUserProfile as getUserProfileApi} from "../Profile/GetProfile";
+import { updateCashOut as updateCashOutApi} from "../Wallet/GetWallet";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../index";
 import '../../Styles/Wallet.css';
@@ -91,9 +92,35 @@ const Cash_Out: React.FC = () => {
             />
           </div>
         <div className="TopUp_btn_wrapper">
-          <button className="TopUp_btn"  disabled={customCashOut === ''}>
-            Cash Out
-          </button>
+        <button
+          className="TopUp_btn"
+          disabled={customCashOut === ''}
+          onClick={async () => {
+            const user = auth.currentUser;
+            if (!user) return alert("Not logged in");
+
+            const amount = parseFloat(customCashOut);
+            if (isNaN(amount) || amount <= 0 || amount > 999.99) {
+              return alert("Invalid amount");
+            }
+
+            const available = userData.SGD / 100;
+            if (amount > available) {
+              return alert("Insufficient balance");
+            }
+
+            try {
+              const res = await updateCashOutApi(user.uid, amount);
+              alert(`Successfully cashed out $${amount.toFixed(2)}`);
+              navigate("/wallet");
+            } catch (err) {
+              console.error("Cash out failed:", err);
+              alert("Cash out failed");
+            }
+          }}
+        >
+          Cash Out
+        </button>
         </div>
       </div>
     </>
