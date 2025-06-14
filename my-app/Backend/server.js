@@ -24,12 +24,14 @@ const usersRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/auth');
 const commentRoutes = require('./routes/commentRoutes');
 const uploadRoutes = require('./routes/upload');
+const walletRoutes = require('./routes/walletRoutes');
 
 // Use routes
 app.use('/users', usersRoutes);
 app.use('/auth', authRoutes);
 app.use('/comments', commentRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/wallet', walletRoutes);
 
 const port = process.env.PORT || 3001; // You can use environment variables for port configuration
 

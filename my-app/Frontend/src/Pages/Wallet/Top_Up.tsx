@@ -6,6 +6,7 @@ import TopUpCards from "../../Components/Wallet/TopUpCards";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { getUserProfile as getUserProfileApi} from "../Profile/GetProfile";
+import { updateTopUp as updateTopUpApi} from "../Wallet/GetWallet";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../index";
 import '../../Styles/Wallet.css';
@@ -14,8 +15,12 @@ import WalletHeader from '../../Components/Wallet/WalletHeader';
 
 const Top_Up: React.FC = () => {
   const navigate = useNavigate();
-  
+  const options = ["$10", "$20", "$30", "$50", "$100", "Others"];
+
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [amountIndex, setAmountIndex] = useState(0);
+  const [customTopUp, setCustomTopUp] = useState('');
+  
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -42,6 +47,33 @@ const Top_Up: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleTopUp = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Not logged in");
+      return;
+    }
+  
+    const amount =
+      amountIndex === 5
+        ? Number(customTopUp)
+        : Number(options[amountIndex].replace("$", ""));
+  
+    if (isNaN(amount) || amount < 1 || amount > 999) {
+      alert("Invalid amount");
+      return;
+    }
+  
+    try {
+      const result = await updateTopUpApi(user.uid, amount);
+      alert(`Top-up successful. New balance: $${(result.newBalance / 100).toFixed(2)}`);
+      navigate("/wallet");
+    } catch (err) {
+      console.error("Top-up failed:", err);
+      alert("Top-up failed.");
+    }
+  };  
+ 
   return (
     <>
       <Navbar />
@@ -62,7 +94,12 @@ const Top_Up: React.FC = () => {
           <h1 className="wallet_transaction_name">Top Up Amount</h1>
           <button className="backtransaction_btn" onClick={() => navigate("/wallet")}>Back to Transaction</button>
         </div>
-        <TopUpCards />
+        <TopUpCards 
+          selectedIndex={amountIndex}
+          setSelectedIndex={setAmountIndex}
+          customTopUp={customTopUp}
+          setCustomTopUp={setCustomTopUp} 
+        />
         <div className="wallet_body2_wrapper">
           <h1 className="wallet_transaction_name">Payment Method</h1>
         </div>
@@ -72,9 +109,13 @@ const Top_Up: React.FC = () => {
         />
 
         <div className="TopUp_btn_wrapper">
-          <button className="TopUp_btn" disabled={selectedIndex === null}>
-            Top Up
-          </button>
+        <button 
+          className="TopUp_btn" 
+          onClick={handleTopUp}
+          disabled={selectedIndex === null}
+        >
+          Top Up
+        </button>
         </div>
       </div>
     </>

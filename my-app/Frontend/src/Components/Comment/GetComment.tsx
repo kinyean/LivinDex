@@ -5,7 +5,7 @@ export interface Comment {
   id: string;                   // ID that is tag at the comment
   body: string;
   username: string;
-  userId: string;               // TODO: Once profile is set up edit the User ID so the comment can retrieve the name of the commenter
+  userId: string;               
   parentId: string | null;      // It is used so that the child can tag under the parentID
   createdAt: string; 
 }
