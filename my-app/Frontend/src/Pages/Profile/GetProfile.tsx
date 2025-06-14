@@ -5,6 +5,8 @@ export const createUserApi = async (uid: string, userData: {
   lastName: string | null; //last name optional
   phone: string | null;
   bio: string;
+  SGD: number,
+  LCoin: number,
 }) => {
     const res = await BaseAPI.post(`/users`, {
         uid,

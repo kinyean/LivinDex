@@ -19,6 +19,8 @@ const Cash_Out: React.FC = () => {
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
+    SGD: 0,
+    LCoin: 0
   });
 
   useEffect(() => {
@@ -44,8 +46,8 @@ const Cash_Out: React.FC = () => {
       <Navbar />
       <WalletHeader 
         userData={userData}
-        balance="354.50"
-        lCoins={100}
+        balance={(userData.SGD / 100).toFixed(2)}
+        lCoins={userData.LCoin}
         avatar={Logo}
       />
 
