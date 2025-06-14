@@ -18,7 +18,7 @@ const WalletCard = () => {
     <Box sx={{ backgroundColor: '#f1f1f2', borderRadius: 2, p: 2, cursor: 'pointer' }}>
       <Grid container spacing={2} justifyContent="space-around">
         {options.map((opt) => (
-          <Grid size={4} sx={{ textAlign: 'center' }} onClick={() => navigate(opt.path)}>
+          <Grid key={opt.label} size={4} sx={{ textAlign: 'center' }} onClick={() => navigate(opt.path)}>
             <Box
               component="img"
               src={opt.icon}

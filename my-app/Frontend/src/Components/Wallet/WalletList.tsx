@@ -4,54 +4,37 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Typography from '@mui/material/Typography';
-import Transaction_Icon from '../../Assets/transactions.png'
+import Transaction_Icon from '../../Assets/transactions.png';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../index';
+import { getUserTransactions as getUserTransactionsAPI } from "../../Pages/Wallet/GetWallet";
+
 import '../../Styles/Wallet.css';
 
-const transactions = [
-  {
-    type: 'Top Up',
-    date: '10 June 2019, 3:08 pm',
-    amount: 354.5,
-  },
-  {
-    type: 'Daily Earnings',
-    date: '10 June 2019, 3:08 pm',
-    amount: 10,
-  },
-  {
-    type: 'Cash Out',
-    date: '10 June 2019, 3:08 pm',
-    amount: 354.5,
-  },
-  {
-    type: 'Top Up',
-    date: '10 June 2019, 3:08 pm',
-    amount: 354.5,
-  },
-];
-
-
 export default function WalletList() {
-  const [checked, setChecked] = React.useState([1]);
+  const [transactions, setTransactions] = React.useState<any[]>([]);
 
-  const handleToggle = (value : number) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  React.useEffect(() => {
+    
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const data = await getUserTransactionsAPI(user.uid);
+          setTransactions(data.transactions || []);
+        } catch (error) {
+          console.error("Failed to fetch transactions:", error);
+        }
+      }
+    });
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
+    return () => unsubscribe();
+  }, []);
 
   return (
     <List>
-      {transactions.map((tx, index) => (
+      {Array.isArray(transactions) && transactions.map((tx, index) => (
         <ListItem
-          key={index}
+          key={tx.id || index}
           alignItems="flex-start"
           divider
           secondaryAction={
@@ -61,32 +44,32 @@ export default function WalletList() {
                 fontWeight: 'bold',
               }}
             >
-              {(tx.type === 'Daily Earnings')
+              {tx.type === 'Daily Earnings'
                 ? `+${Math.round(tx.amount)} pts`
-                : `${tx.type === 'Top Up' ? '+' : '-'}$${tx.amount.toFixed(2)}`
+                : `${tx.type === 'Top Up' ? '+' : '-'}$${Math.abs(tx.amount / 100).toFixed(2)}`
               }
             </Typography>
           }
         >
           <ListItemAvatar>
-          <img className="wallet_transaction_icon" src={Transaction_Icon} alt="Transaction_Icon" />
+            <img className="wallet_transaction_icon" src={Transaction_Icon} alt="Transaction_Icon" />
           </ListItemAvatar>
           <ListItemText
             primary={
-            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 {tx.type}
-            </Typography>
+              </Typography>
             }
             secondary={
-            <>
               <Typography variant="caption" color="text.secondary">
-              {tx.date}
+                {tx.createdAt
+                  ? new Date(tx.createdAt).toLocaleString()
+                  : 'No date available'}
               </Typography>
-            </>
-          }
-        />
-      </ListItem>
-    ))}
+            }
+          />
+        </ListItem>
+      ))}
     </List>
   );
 }

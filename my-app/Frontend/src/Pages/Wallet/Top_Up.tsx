@@ -55,7 +55,7 @@ const Top_Up: React.FC = () => {
     }
   
     const amount =
-      amountIndex === 5
+      amountIndex === 5 // if user click to "Others" (5th index) then amount = the number of value input in the textbox
         ? Number(customTopUp)
         : Number(options[amountIndex].replace("$", ""));
   
