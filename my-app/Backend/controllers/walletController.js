@@ -9,19 +9,27 @@ exports.updateTopUp = async (req, res) => {
 
   try {
     const userRef = admin.firestore().collection("users").doc(uid);
-    const docSnap = await userRef.get();
+    const doc = await userRef.get();
 
-    if (!docSnap.exists) {
+    if (!doc.exists) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const currentBalance = docSnap.data().SGD || 0;
-    const updatedBalance = currentBalance + amount * 100;
+    const currentBalance = doc.data().SGD || 0;
+    const amountInCents = Math.round(amount * 100);
+    const updatedBalance = currentBalance + amountInCents;
 
     await userRef.update({ SGD: updatedBalance });
 
+    await admin.firestore().collection("transactions").add({
+      uid,
+      type: "Top Up",
+      amount: amountInCents,
+      createdAt: admin.firestore.FieldValue.serverTimestamp()
+    });
+
     res.status(200).json({
-      uid: docSnap.id,
+      uid: doc.id,
       newBalance: updatedBalance,
       message: `Topped up $${amount}`,
     });
@@ -40,13 +48,13 @@ exports.updateCashOut = async (req, res) => {
 
   try {
     const userRef = admin.firestore().collection("users").doc(uid);
-    const docSnap = await userRef.get();
+    const doc = await userRef.get();
 
-    if (!docSnap.exists) {
+    if (!doc.exists) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const currentSGD = docSnap.data().SGD || 0;
+    const currentSGD = doc.data().SGD || 0;
     const amountInCents = Math.round(amount * 100);
 
     if (currentSGD < amountInCents) {
@@ -59,8 +67,8 @@ exports.updateCashOut = async (req, res) => {
 
     await admin.firestore().collection("transactions").add({
       uid,
-      type: "cashout",
-      amount: -amountInCents,
+      type: "TopUp",
+      amount: amountInCents,
       createdAt: admin.firestore.FieldValue.serverTimestamp()
     });
 
@@ -81,13 +89,13 @@ exports.updateLCoin = async (req, res) => {
 
   try {
     const userRef = admin.firestore().collection("users").doc(uid);
-    const docSnap = await userRef.get();
+    const doc = await userRef.get();
 
-    if (!docSnap.exists) {
+    if (!doc.exists) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const currentLCoin = docSnap.data().LCoin || 0;
+    const currentLCoin = doc.data().LCoin || 0;
     const updatedLCoin = currentLCoin + delta;
 
     if (updatedLCoin < 0) {
@@ -97,11 +105,37 @@ exports.updateLCoin = async (req, res) => {
     await userRef.update({ LCoin: updatedLCoin });
 
     res.status(200).json({
-      uid: docSnap.id,
+      uid: doc.id,
       newLCoin: updatedLCoin,
       message: `${delta > 0 ? "Added" : "Redeemed"} ${Math.abs(delta)} LCoins`,
     });
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.getTransactions = async (req, res) => {
+  const { uid } = req.params;
+
+  try {
+    const snapshot = await admin.firestore()
+      .collection("transactions")
+      .where("uid", "==", uid)
+      .orderBy("createdAt", "desc")
+      .get();
+
+      const transactions = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toDate?.() ?? null
+        };
+      });
+
+    res.status(200).json({ transactions });
+  } catch (err) {
+    console.error("Get transactions error:", err);
     res.status(500).json({ error: err.message });
   }
 };

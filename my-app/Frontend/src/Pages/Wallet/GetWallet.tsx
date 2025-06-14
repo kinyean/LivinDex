@@ -14,3 +14,8 @@ export const updateLCoin = async (uid: string, delta: number) => {
   const res = await BaseAPI.post('/wallet/lcoin', { uid, delta });
   return res.data;
 };
+
+export const getUserTransactions = async (uid: string) => {
+  const res = await BaseAPI.get(`/wallet/transactions/${uid}`);
+  return res.data;
+};
