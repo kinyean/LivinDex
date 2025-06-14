@@ -24,7 +24,7 @@ const WalletHeader: React.FC<WalletHeaderProps> = ({
         <h1 className="wallet_name">
           {userData.firstName} {userData.lastName}
         </h1>
-        <p className="wallet)SGD">
+        <p className="wallet_SGD">
           <span className="wallet_currency">SGD: </span>
           <span className="wallet_amount">{balance}</span>
         </p>
