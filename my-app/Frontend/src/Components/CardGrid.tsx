@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import { GridLegacy as Grid } from '@mui/material';
 import Cards from './Cards';
 import testpic from '../Assets/contemplative-reptile.jpg';
 
@@ -57,31 +57,25 @@ const cardData = [
     },
   ];
 
-export default function NestedGridColumns() {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        mt: 5,
-      }}
-    >
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          maxWidth: '1500px',
-          height: '100%'
-        }}
-        columns={24}
-        justifyContent="center"
-      >
+  export default function NestedGridColumns() {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+        <Grid container spacing={2} sx={{ maxWidth: 1500, width: '100%' }}>
           {cardData.map((card, index) => (
-          <Grid size={6} key={index}>
-            <Cards {...card} />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
-  );
-}
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              key={index}
+              sx={{ display: 'flex' }} 
+            >
+              <Cards {...card} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    );
+  }
+  
