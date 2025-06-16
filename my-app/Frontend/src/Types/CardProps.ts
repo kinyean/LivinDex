@@ -3,5 +3,7 @@ export interface CardProps {
     alt: string;
     title: string;
     description: string;
+    width?: string | number | { [key: string]: string | number };
+
   }
   

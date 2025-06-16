@@ -14,20 +14,20 @@
 }
 
 .home-title {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
     font-weight: 700;
     text-align: left;
-    color: #2d2f31; /* very dark gray */
+    color: #2d2f31; 
     margin-bottom: 0.5rem;
     line-height: 1.2;
     padding-top: 2rem;
   }
   
   .home-subtitle {
-    font-size: 1.125rem;
+    font-size: clamp(0.3rem, 3vw, 1.125rem);
     font-weight: 400;
     text-align: left;
-    color: #6a6f73; /* muted gray */
+    color: #6a6f73; 
     margin-top: 0;
     max-width: 2000px;
     line-height: 1.5;

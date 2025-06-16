@@ -35,7 +35,6 @@
     max-width: 1000px;
     box-sizing: border-box;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     padding: 0 1rem;
     -ms-overflow-style: none;
@@ -72,4 +71,24 @@
     font-size: 1rem;
     font-weight: 500;
   }
+
+  @media (max-width: 1024px) {
+    .slider-card {
+      flex: 0 0 45%;
+    }
+  }
   
+  @media (max-width: 600px) {
+    .slider-card {
+      width: 90%;
+      flex: 0 0 auto;
+    }
+    .slider-header {
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .slider-wrapper {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
