@@ -3,6 +3,7 @@ import Logo from '../Assets/UnknownUser.jpg'
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../Styles/Navbar.css';
+import DarkMode from "./DarkMode/DarkMode";
 
 const Navbar: React.FC = () => {
 
@@ -28,7 +29,7 @@ const Navbar: React.FC = () => {
         </li>
         <li className="hover-underline">About</li>
         <li className="hover-underline">Notification</li>
-
+        <DarkMode />
         <img className="avatar" 
              src={Logo} 
              alt="Logo" 

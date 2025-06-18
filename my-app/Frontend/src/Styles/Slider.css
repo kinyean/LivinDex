@@ -13,12 +13,12 @@
     font-weight: 700;
     line-height: 1.2;
     margin: 0;
-    color: #0f172a;         
+    color: var(--title_color);     
   }
   
   .slider-subtitle {
     font-size: 1.125rem;
-    color: #374151;          
+    color: var(--subtitle_color);          
     margin: 0.5rem 0 0;
   }
   

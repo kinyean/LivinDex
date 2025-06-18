@@ -25,7 +25,7 @@ const Home = () => {
             )
           }
           renderInput={(params) => (
-            <TextField {...params} label="Search" variant="outlined" />
+            <TextField {...params} className="home_search_bar" label="Search" variant="outlined" />
           )}
         />
       </div>
