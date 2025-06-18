@@ -3,16 +3,16 @@
     display: inline-block;
     position: relative;
     cursor: pointer;
-    color: rgb(0, 0, 0);
+    color: var(--body_color); 
     text-decoration: none;
     font-size: 0.95rem;
-    opacity: 0.8;
+    opacity: 1;
     
   }
   
   .profileHover-underline:hover {
     opacity: 1;
-    color: #000000;
+    color: var(--body_color);
   }
   
   .profileHover-underline::after {
@@ -23,7 +23,7 @@
     height: 2px;
     bottom: -1.1rem;
     left: 10%;
-    background-color: #000000;
+    background-color: var(--body_color);
     
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
@@ -52,7 +52,7 @@
   .profileNavbar li{
     text-decoration: none;
     font-weight: bold;
-    color: #333;
+    color: var(--profileNavbar_color); 
     height: 100%;
     padding: 0 20px;
     display: flex; 
@@ -110,15 +110,17 @@
   }
   
   .profile-name {
+    color: var(--profile_name_color); 
     font-size: 2rem;
     white-space: nowrap;
     font-weight: bold;
     margin: 0;
+
   }
   
   .profile-id,
   .profile-bio {
-    color: #b0b0b0;
+    color: var(--profile_text_color); 
     margin-top: 4px;
   }
   

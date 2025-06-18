@@ -37,6 +37,7 @@ export default function WalletList() {
           key={tx.id || index}
           alignItems="flex-start"
           divider
+          
           secondaryAction={
             <Typography
               sx={{
@@ -61,7 +62,7 @@ export default function WalletList() {
               </Typography>
             }
             secondary={
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{ color: 'var(--body_color)' }} >
                 {tx.createdAt
                   ? new Date(tx.createdAt).toLocaleString()
                   : 'No date available'}
