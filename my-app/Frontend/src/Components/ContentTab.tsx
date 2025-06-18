@@ -181,8 +181,21 @@ export default function ContentTab() {
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="upload tabs">
+        <Box  sx={{
+                borderBottom: 1,
+                borderColor:
+                  document.body.getAttribute('data-theme') === 'dark'
+                    ? '#6a6f73'
+                    : '#f0f0f0',
+              }}>
+          <TabList 
+            onChange={handleChange} 
+            aria-label="upload tabs"
+            sx={{
+              '.MuiTab-root': {
+                color: 'inherit',
+              },
+            }}>
             <Tab label="Upload Videos" value="1" />
             <Tab label="Upload Images" value="2" />
           </TabList>

@@ -4,7 +4,7 @@
   left: 0;
   height: 100vh;
   width: 260px;
-  background-color: white;
+  background-color: var(--body_background);;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -30,6 +30,7 @@
 
 .section li {
   margin-bottom: 12px;
+  color: var(--sidebar_color);
   cursor: pointer;
 }
 
@@ -53,6 +54,7 @@
 }
 .logo{
   padding-bottom: 16px;
+  color: var(--sidebar_color);
 }
 .top-section {
   flex: 1 1 auto;         

@@ -7,12 +7,14 @@
     --body_background: white;
     --wallet_card_background: #eaeaea;
     --body_color: black;
+    --comment_actions_color:rgb(51, 51, 51);
+    --empty_reward_txt_color:#333;
     --title_color: #0f172a;
+    --sidebar_color:black;
     --subtitle_color: #6a6f73;
     --profile_text_color:#6a6f73;
     --profile_name_color:`#01013B;
     --profileNavbar_color:#484747;
-    --empty_reward_txt_color:#333;
     --link_color: navy;
 
     --card-bg: #ffffff;
@@ -23,12 +25,14 @@
     --body_background: #121212;
     --wallet_card_background: #b0b0b0;
     --body_color: #f0f0f0;
+    --comment_actions_color:#f0f0f0;
+    --empty_reward_txt_color:#f0f0f0;
     --title_color: #f0f0f0;
+    --sidebar_color:#f0f0f0;
     --subtitle_color: #f0f0f0;
     --profile_text_color:#b0b0b0;
     --profile_name_color:#f0f0f0;
     --profileNavbar_color:#bbbbbb;
-    --empty_reward_txt_color:#f0f0f0;
     --link_color: #80d8ff;
 
     --card-bg: #1e1e1e;
