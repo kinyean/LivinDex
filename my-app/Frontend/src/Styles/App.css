@@ -2,9 +2,34 @@
     margin: 0;
     padding:0;
 }
-  
+
+:root {
+    --body_background: white;
+    --body_color: black;
+    --title_color: #0f172a;
+    --subtitle_color: #6a6f73;
+    --link_color: navy;
+
+    --card-bg: #ffffff;
+    --card-text: #000000;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+}
+[data-theme="dark"] {
+    --body_background: #121212;
+    --body_color: #f0f0f0;
+    --title_color: #f0f0f0;
+    --subtitle_color: #f0f0f0;
+    --link_color: #80d8ff;
+
+    --card-bg: #1e1e1e;
+    --card-text: #f0f0f0;
+    --card-shadow: rgba(0, 0, 0, 0.6);
+}
+
 body {
     /* min-height: 100vh; */
     /* padding-top: 80px;  */
+    background-color: var(--body_background);
+    color: var(--body_color);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
