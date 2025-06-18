@@ -15,7 +15,7 @@ const WalletCard = () => {
   ];
 
   return (
-    <Box sx={{ backgroundColor: '#f1f1f2', borderRadius: 2, p: 2, cursor: 'pointer' }}>
+    <Box sx={{ backgroundColor: 'var(--wallet_card_background)', borderRadius: 2, p: 2, cursor: 'pointer' }}>
       <Grid container spacing={2} justifyContent="space-around">
         {options.map((opt) => (
           <Grid key={opt.label} size={4} sx={{ textAlign: 'center' }} onClick={() => navigate(opt.path)}>
@@ -30,7 +30,7 @@ const WalletCard = () => {
                     cursor: 'pointer'
                   }}
             />
-            <Typography variant="body1">{opt.label}</Typography>
+            <Typography variant="body1" sx={{ color: 'text.primary', mt: 1 }}>{opt.label}</Typography>
           </Grid>
         ))}
       </Grid>

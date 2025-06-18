@@ -40,7 +40,7 @@
 
   .empty_reward_txt {
     font-size: 30px;
-    color: #333;
+    color: var(--empty_reward_txt_color);
   }
 
   .TopUp_btn {
@@ -192,6 +192,7 @@
   }
   
   .wallet_transaction_name {
+    color: var(--profile_name_color);
     font-size: 1.8rem;
     font-weight: bold;
     margin: 0;
@@ -203,4 +204,26 @@
     width: 48px;
     height: 48px;
     object-fit: cover;
+  }
+
+  body[data-theme="dark"] .MuiDivider-root,
+  body[data-theme="dark"] .MuiListItem-root {
+    border-color: rgba(255, 255, 255, 0.208); /* or a soft white line */
+  }
+
+  /* CashOut CSS */
+  body[data-theme="dark"] .wallet_cashout .MuiOutlinedInput-root {
+    color: white;
+  }
+  
+  body[data-theme="dark"] .wallet_cashout .MuiOutlinedInput-root fieldset {
+    border-color: white;
+  }
+  
+  body[data-theme="dark"] .wallet_cashout .MuiInputLabel-root {
+    color: white;
+  }
+  
+  body[data-theme="dark"] .wallet_cashout .MuiInputLabel-root.Mui-focused {
+    color: white;
   }

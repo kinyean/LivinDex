@@ -56,9 +56,9 @@ const Profile: React.FC = () => {
               {userData.bio}</p>
             <div className="profile-stats">
               {/* TODO: not Link to backend and Firebase */}
-              <span>0 Views</span> 
-              <span>0 Followers</span>
-              <span>0 Likes</span>
+              <span className="profile-bio">0 Views</span> 
+              <span className="profile-bio">0 Followers</span>
+              <span className="profile-bio">0 Likes</span>
             </div>
           </div>
         </div>

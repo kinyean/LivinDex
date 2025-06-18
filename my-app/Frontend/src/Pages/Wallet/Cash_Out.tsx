@@ -64,6 +64,7 @@ const Cash_Out: React.FC = () => {
         </div>
         <div className="cashout_wrapper">
           <TextField
+              className="wallet_cashout"
               type="number"
               label="Enter Amount (Min $1, Max $999.99)"
               value={customCashOut}
