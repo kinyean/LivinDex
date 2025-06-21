@@ -1,4 +1,4 @@
-import CardGrid from "../Components/CardGrid";
+import CardGrid from "../Components/Posts/CardGrid";
 import FilterNavbar from "../Components/FilterNavbar";
 import Navbar from "../Components/Navbar"; 
 import React from 'react';

@@ -15,7 +15,7 @@ export interface Post {
 
 // API functions for managing comments in the backend
 export const getPosts = async (uid: string) => {
-  const res = await BaseAPI.get("/posts", {
+  const res = await BaseAPI.get("/posts/user", {
     params: { uid },
   });
   return res.data;
@@ -26,4 +26,8 @@ export const getPostById = async (id: string) => {
   return res.data;
 };
 
+export const getAllPosts = async () => {
+  const res = await BaseAPI.get("/posts");
+  return res.data;
+};
 

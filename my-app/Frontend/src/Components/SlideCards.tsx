@@ -1,6 +1,6 @@
 import React from 'react';
 import '../Styles/Slider.css';
-import Cards from './Cards';
+import Cards from './Posts/Cards';
 import { SlideItem } from './SlideItem';
 
 interface SlideCardsProps {

@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
-import { CardProps } from '../Types/CardProps';
+import { CardProps } from '../../Types/CardProps';
 
 
 export default function Cards({ image, alt, title, description, width = '100%'}: CardProps) {
