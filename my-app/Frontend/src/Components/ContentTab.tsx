@@ -12,6 +12,7 @@ import BaseAPI from '../API/BaseAPI';
 
 export default function ContentTab() {
   const [text, setText] = useState("");
+  const [header, setHeader] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [uploadType, setUploadType] = useState<"image" | "video">("video");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -63,6 +64,7 @@ export default function ContentTab() {
 
     const formData = new FormData();
     files.forEach(file => formData.append("files", file));
+    formData.append("header", header);
     formData.append("text", text);
     formData.append("userId", user.uid);
     formData.append("tags", JSON.stringify(selectedTags));
@@ -76,6 +78,7 @@ export default function ContentTab() {
       });
       alert("Post created successfully");
       setText("");
+      setHeader("")
       setFiles([]);
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
@@ -159,10 +162,31 @@ export default function ContentTab() {
       <div>{renderPreviews()}</div>
 
       <textarea
+        data-gramm="false"
+        data-gramm_editor="false"
+        onChange={(e) => setHeader(e.target.value)}
+        value={header}
+        placeholder="Add Header..."
+        style={{
+          width: "50%",
+          height: "40px",             
+          padding: "10px",
+          minHeight: "unset",
+          marginTop: "10px",
+          borderRadius: "6px",
+          border: "1px solid #ccc",
+          boxSizing: "border-box"}}
+      />
+
+      <textarea
         onChange={(e) => setText(e.target.value)}
         value={text}
         placeholder="Add Captions..."
-        style={{ width: "100%", marginTop: "10px" }}
+        style={{ width: "100%",
+           marginTop: "10px",
+           borderRadius: "6px",
+           border: "1px solid #ccc",
+           boxSizing: "border-box" }}
       />
 
       <div className="tag-selector">
