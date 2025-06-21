@@ -20,16 +20,18 @@ app.get('/', (req, res) => {
 });
 
 // Include route files
-const usersRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/auth');
 const commentRoutes = require('./routes/commentRoutes');
+const postRoutes = require('./routes/postRoutes');
+const usersRoutes = require('./routes/userRoutes');
 const uploadRoutes = require('./routes/upload');
 const walletRoutes = require('./routes/walletRoutes');
 
 // Use routes
-app.use('/users', usersRoutes);
 app.use('/auth', authRoutes);
 app.use('/comments', commentRoutes);
+app.use("/posts", postRoutes);
+app.use('/users', usersRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/wallet', walletRoutes);
 
