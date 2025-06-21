@@ -5,7 +5,7 @@ const bucket = admin.storage().bucket();
 
 exports.uploadMedia = async (req, res) => {
   try {
-    const { text, userId, tags, uploadType } = req.body;
+    const { header, text, userId, tags, uploadType } = req.body;
     const files = req.files; // Array of files
 
     if (!files || files.length === 0) {
@@ -46,6 +46,7 @@ exports.uploadMedia = async (req, res) => {
     }
 
     const docRef = await db.collection("posts").add({
+      header,
       text,
       userId,
       tags: JSON.parse(tags),
