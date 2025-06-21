@@ -9,6 +9,7 @@ import ForgotPassword from './Pages/ForgotPassword';
 import Home from "./Pages/Home";
 import Login from "./Pages/Login"
 import Logout from './Components/Logout';
+import Posts from './Pages/Create_Section/Posts';
 import Profile from "./Pages/Profile"
 import ProtectedRoute from './Components/ProtectedRoute';
 import Registration from "./Pages/Profile/Registration";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/create/posts" element={<Posts />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Home />} />

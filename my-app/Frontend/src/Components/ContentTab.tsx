@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { auth } from "../index";
 import { useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -54,10 +55,16 @@ export default function ContentTab() {
       return;
     }
 
+    const user = auth.currentUser;
+    if (!user) {
+      alert("You must be logged in to upload.");
+      return;
+    }
+
     const formData = new FormData();
     files.forEach(file => formData.append("files", file));
     formData.append("text", text);
-    formData.append("userId", "user-id-here");
+    formData.append("userId", user.uid);
     formData.append("tags", JSON.stringify(selectedTags));
     formData.append("uploadType", uploadType);
 
