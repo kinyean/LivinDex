@@ -1,17 +1,20 @@
 import BaseAPI from "../../API/BaseAPI";
-import { auth } from "../../index";
 
 export interface Post {
   createdAt: string;
-  title: string;                   // ID that is tag at the comment
-  img: string;
+  header: string;
+  media: {
+    mediaType: string;
+    mediaURL: string;
+  }[];
+  tags: string[];
   text: string;
-  userId: string;               
+  userId: string;            
 }
 
 // API functions for managing comments in the backend
 export const getPosts = async () => {
-  const res = await BaseAPI.get("/comments");
+  const res = await BaseAPI.get("/posts");
   return res.data;
 };
 
