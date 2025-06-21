@@ -1,42 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getPostById, Post } from "../Components/Posts/GetPosts";
 import Navbar from "../Components/Navbar";
-import testImage from "../Assets/contemplative-reptile.jpg";
 import Comments from "../Components/Comment/Comments";
 import { auth } from "../index";
 import "../Styles/Display.css";
 
 const Display: React.FC = () => {
 
+  const { postId } = useParams<{ postId: string }>();
+  const [post, setPost] = useState<Post | null>(null);
+  const [loading, setLoading] = useState(true);
   const uid = auth.currentUser?.uid;
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        if (!postId) {
+          console.log("No postId in URL");
+          return;
+        }
+        console.log("Fetching post with ID:", postId);
+        const data = await getPostById(postId);
+        console.log("Fetched post data:", data);
+        setPost(data);
+      } catch (error) {
+        console.error("Failed to load post:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchPost();
+  }, [postId]);
+  
+
+  if (loading) return <div>Loading post...</div>;
+  if (!post) return <div>Post not found.</div>;
 
   return (
     <div className="note-wrapper">
       <Navbar />
 
-
       <div className="note-scroller">
         <div className="image-section">
           <div className="image-wrapper">
-            <img src={testImage} alt="Reptile" className="bounded-image" />
-          </div>
+            <img
+                src={post.media?.[0]?.mediaURL}
+                alt={post.header}
+                className="bounded-image"
+              />          
+            </div>
         </div>
 
-
         <div className="note-content">
-          <h3 className="title">【Green guardian of the jungle】</h3>
-          <p className="desc">
-            From their epic skin sheds to their amazing colors, there’s no denying that lizards are some of the coolest creatures out there. 
-            But which lovable reptile are you most like? There’s only one way to find out.
-          </p>
+          <h3 className="title">{post.header}</h3>
+          <p className="desc">{post.text}</p>
 
           <div className="hashTagxsxw">
-            #NatureShot #WildlifeDaily #MacroPhotography #JungleMood #GreenIsPower
+            {post.tags?.map((tag) => `#${tag} `)}
           </div>
 
           <div className="event">
-            <p>🎵 Singapore Symphony Orchestra</p>
-            <p>📍 Singapore Zoo</p>
-            <p>📅 6 July，6–7pm</p>
+            <p>📅 {new Date(post.createdAt).toLocaleDateString()}</p>
           </div>
 
           <div className="actions">

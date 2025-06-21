@@ -1,5 +1,6 @@
 const { db } = require('../firebase');
 
+// For Post
 exports.getPosts = async (req, res) => {
   try {
     const { uid } = req.query;
@@ -21,6 +22,29 @@ exports.getPosts = async (req, res) => {
     });
 
     res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// For Display
+exports.getPostById = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+    const docRef = db.collection("posts").doc(id);
+    const docSnap = await docRef.get();
+
+    if (!docSnap.exists) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    const data = docSnap.data();
+    res.status(200).json({
+      id: docSnap.id,
+      ...data,
+      createdAt: data.createdAt.toDate().toISOString(),
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

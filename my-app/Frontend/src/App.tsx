@@ -25,7 +25,7 @@ function App() {
       <Routes>
         <Route path="/content" element={<Content />} />
         <Route path="/create/comment" element={<CreateComment />} />
-        <Route path="/display" element={<Display />} />
+        <Route path="/post/:postId" element={<Display />} />
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
