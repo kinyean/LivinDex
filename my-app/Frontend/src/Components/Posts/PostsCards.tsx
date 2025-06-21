@@ -15,7 +15,7 @@ export default function PostsCards({ post, width = '100%' }: CardProps) {
   const image = post.media?.[0]?.mediaURL ?? "";
   const alt = post.header;
   const title = post.header;
-  const description = post.text;
+  const createAt = new Date(post.createdAt).toLocaleString();
 
   return (
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', width }}>
@@ -26,7 +26,7 @@ export default function PostsCards({ post, width = '100%' }: CardProps) {
             {title}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', mt: 'auto' }}>
-            {description}
+            {createAt}
           </Typography>
         </CardContent>
       </CardActionArea>
