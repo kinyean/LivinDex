@@ -4,6 +4,8 @@ const postController = require('../controllers/postController');
 
 
 // Define routes and attach controller logic
-router.get("/", postController.getPosts);       
+router.get("/user", postController.getPosts);       
 router.get("/:id", postController.getPostById);
+router.get("/", postController.getAllPosts); 
+
 module.exports = router;
