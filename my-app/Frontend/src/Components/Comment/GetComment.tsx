@@ -8,27 +8,33 @@ export interface Comment {
   userId: string;               
   parentId: string | null;      // It is used so that the child can tag under the parentID
   createdAt: string; 
+  postId: string;
 }
 
 // API functions for managing comments in the backend
-export const getComments = async () => {
-  const res = await BaseAPI.get("/comments");
+export const getComments = async (postId: string) => {
+  const res = await BaseAPI.get(`/comments?postId=${postId}`);
   return res.data;
 };
 
-export const createComment = async (body: string, parentId: string | null, userData: { firstName: string; lastName: string } ) => {
-  
+export const createComment = async (
+  body: string,
+  parentId: string | null,
+  userData: { firstName: string; lastName: string },
+  postId: string 
+) => {
   const user = auth.currentUser;
 
   if (!user) {
-    throw new Error("User is not authenticated"); //Check to see User is not null 
+    throw new Error("User is not authenticated");
   }
-  
+
   const res = await BaseAPI.post("/comments", {
     body,
     parentId,
     userId: user.uid,
     username: userData.firstName + " " + userData.lastName,
+    postId, 
   });
   return res.data;
 };

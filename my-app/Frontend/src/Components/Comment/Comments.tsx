@@ -17,9 +17,10 @@ type ActiveComment = {
 
 interface CommentsProps {
   currentUserId: string ;
+  postId: string;
 }
 
-const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
+const Comments: React.FC<CommentsProps>  = ({currentUserId ,postId}) => {
   const [backendComments, setBackendComments] = useState<Comment[]>([]);
 
   const [activeComment, setActiveComment] = useState<ActiveComment | null>(null);
@@ -50,7 +51,7 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
   const addComment = (text: string, parentId: string | null) => {
     console.log("Creating comment with userData:", userData); 
 
-    createCommentApi(text, parentId, userData).then((comment) => {
+    createCommentApi(text, parentId, userData, postId).then((comment) => {
       setBackendComments([comment, ...backendComments]); // Adding the new comment to the existing list for efficiency
       setActiveComment(null);
     });
@@ -84,7 +85,7 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId}) => {
         return;
       }
   
-      getCommentsApi().then((data) => {
+      getCommentsApi(postId).then((data) => {
         setBackendComments(data);
       });
   

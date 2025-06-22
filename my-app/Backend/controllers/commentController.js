@@ -2,13 +2,18 @@ const { db } = require('../firebase');
 const { Timestamp } = require('firebase-admin/firestore');
 
 exports.createComment = async (req, res) => {
-  const { body, username, userId, parentId } = req.body;
+  const { body, username, userId, parentId, postId } = req.body;
 
+  if (!postId) {
+    return res.status(400).json({ error: "Missing postId in request body" });
+  }
+  
   try {
     const commentData = {
       body,
       username,
       userId,
+      postId,
       parentId: parentId || null,
       createdAt: Timestamp.now(),
     };
@@ -25,10 +30,18 @@ exports.createComment = async (req, res) => {
   }
 };
 
-
 exports.getComments = async (req, res) => {
+  const { postId } = req.query;
+
+  if (!postId) {
+    return res.status(400).json({ error: "Missing postId" });
+  }
+
   try {
-    const snapshot = await db.collection("comments").orderBy("createdAt", "desc").get();
+    const snapshot = await db.collection('comments')
+      .where("postId", "==", postId)
+      .orderBy("createdAt", "desc")
+      .get();
 
     const comments = snapshot.docs.map((doc) => {
       const data = doc.data();
@@ -36,10 +49,12 @@ exports.getComments = async (req, res) => {
       return {
         id: doc.id,
         ...data,
-        createdAt: data.createdAt.toDate().toISOString()
+        createdAt: data.createdAt?.toDate().toISOString() || null
       };
     });
+
     res.status(200).json(comments);
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
