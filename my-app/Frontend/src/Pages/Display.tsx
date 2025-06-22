@@ -74,7 +74,7 @@ const Display: React.FC = () => {
         </div>
 
         <div className="note-footer">
-          <Comments currentUserId = {uid ?? ''} />
+          <Comments currentUserId={uid ?? ""} postId={postId ?? ""} />
         </div>
       </div>
     </div>
