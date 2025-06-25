@@ -6,7 +6,6 @@ import { Post } from './GetPosts';
 import { getAllPosts as getAllPostsApi } from './GetPosts';
 import Cards from './Cards';
 
-
   export default function NestedGridColumns() {
     const [posts, setPosts] = useState<Post[]>([]);
 
@@ -37,6 +36,7 @@ import Cards from './Cards';
                 alt={post.header}
                 title={post.header}
                 description={post.text} 
+                post={post}
               />
             </Grid>
           ))}
