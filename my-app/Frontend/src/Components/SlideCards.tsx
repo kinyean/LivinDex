@@ -1,10 +1,10 @@
 import React from 'react';
 import '../Styles/Slider.css';
-import Cards from './Posts/Cards';
-import { SlideItem } from './SlideItem';
+import PostsCards from '../Components/Posts/PostsCards';
+import { Post } from './Posts/GetPosts';
 
 interface SlideCardsProps {
-  slides: SlideItem[];
+  slides: Post[];
 }
 
 const SlideCards: React.FC<SlideCardsProps> = ({ slides }) => {
@@ -17,14 +17,9 @@ const SlideCards: React.FC<SlideCardsProps> = ({ slides }) => {
 
       <div className="slider-wrapper">
         <div id="slider">
-          {slides.map((slide) => (
-            <div className="slider-card" key={slide.id}>
-              <Cards
-                image={slide.image}
-                alt={slide.name}
-                title={slide.name}
-                description="Explore this category"
-              />
+          {slides.map((post) => (
+            <div className="slider-card" key={post.id}>
+              <PostsCards post={post} width="300px" /> 
             </div>
           ))}
         </div>

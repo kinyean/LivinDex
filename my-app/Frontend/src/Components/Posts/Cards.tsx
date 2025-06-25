@@ -5,9 +5,15 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import { CardProps } from '../../Types/CardProps';
+import { useNavigate } from 'react-router-dom';
 
+export default function Cards({ post, image, alt, title, description, width = '100%'}: CardProps) {
+  const navigate = useNavigate();
 
-export default function Cards({ image, alt, title, description, width = '100%'}: CardProps) {
+  const handleClick = () => {
+    navigate(`/post/${post.id}`);
+  };
+
   return (
     <Card
       sx={{
@@ -16,6 +22,7 @@ export default function Cards({ image, alt, title, description, width = '100%'}:
         flexDirection: 'column',
         width,
       }}
+      onClick={handleClick}
     >
       <CardActionArea
         sx={{
