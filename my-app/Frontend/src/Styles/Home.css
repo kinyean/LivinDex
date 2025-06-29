@@ -54,6 +54,23 @@
     margin-top: 20px;
 }
 
+.slide_section {
+  text-align: center;
+  margin: 10px 0 0px;
+}
+
+.slide_title {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: #111827;
+}
+
+.slide_subtitle {
+  font-size: clamp(0.3rem, 3vw, 1.125rem);
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
 .top {
     display: flex;
     min-height: var(--base-size-56, 56px);
