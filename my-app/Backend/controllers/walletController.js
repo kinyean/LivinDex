@@ -67,7 +67,7 @@ exports.updateCashOut = async (req, res) => {
 
     await admin.firestore().collection("transactions").add({
       uid,
-      type: "TopUp",
+      type: "Cash Out",
       amount: amountInCents,
       createdAt: admin.firestore.FieldValue.serverTimestamp()
     });
