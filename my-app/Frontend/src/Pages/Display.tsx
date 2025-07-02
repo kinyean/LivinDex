@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getPostById, Post } from "../Components/Posts/GetPosts";
 import Navbar from "../Components/Navbar";
 import Comments from "../Components/Comment/Comments";
 import { auth } from "../index";
 import "../Styles/Display.css";
+import BaseAPI from "../API/BaseAPI";
 
 const Display: React.FC = () => {
 
@@ -12,6 +13,7 @@ const Display: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const uid = auth.currentUser?.uid;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -33,6 +35,20 @@ const Display: React.FC = () => {
   
     fetchPost();
   }, [postId]);
+
+  const handleDelete = async () => {
+  const confirmed = window.confirm("Are you sure you want to delete this post?");
+  if (!confirmed || !postId) return;
+
+  try {
+    await BaseAPI.delete(`/posts/${postId}`);
+    alert("Post deleted!");
+    navigate("/");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to delete post.");
+  }
+};
   
 
   if (loading) return <div>Loading post...</div>;
@@ -76,6 +92,14 @@ const Display: React.FC = () => {
         <div className="note-footer">
           <Comments currentUserId={uid ?? ""} postId={postId ?? ""} />
         </div>
+        
+        {uid === post.userId && (
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <button onClick={handleDelete} className="delete-button">
+              Delete Post
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
