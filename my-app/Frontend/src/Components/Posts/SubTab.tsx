@@ -5,8 +5,30 @@ import { getUserProfile as getUserProfileApi} from "../../Pages/Profile/GetProfi
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../index";
 import '../../Styles/SubTab.css';
+import BaseAPI from "../../API/BaseAPI";
 
-const Navbar: React.FC = () => {
+interface Props {
+  postId: string;
+  postUserId: string;
+  currentUserId: string;
+  onDeleteSuccess: () => void;
+}
+
+const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onDeleteSuccess }) => {
+  
+  const handleDelete = async () => {
+    const confirmed = window.confirm("Are you sure you want to delete this post?");
+    if (!confirmed) return;
+
+    try {
+      await BaseAPI.delete(`/posts/${postId}`);
+      alert("Post deleted!");
+      onDeleteSuccess();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete post.");
+    }
+  };
 
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -59,16 +81,21 @@ const Navbar: React.FC = () => {
         <button className="subscribe_button">Subscribe</button>
       </div>
       <div className="sub_right">
-          <div className='sub_other'>
-            <div className='like_dislike_group'>
-              <button className="like_button">Like</button> 
-              <button className="dislike_button">DisLike</button>
-            </div>
-            <button className="share_button">Share</button>
+        <div className='sub_other'>
+          <div className='like_dislike_group'>
+            <button className="like_button">Like</button> 
+            <button className="dislike_button">DisLike</button>
           </div>
+          <button className="share_button">Share</button>
+          {currentUserId === postUserId && (
+            <button onClick={handleDelete} className="delete_button">
+              Delete Post
+            </button>
+          )}
         </div>
+      </div>
     </div>
   );
 };
 
-export default Navbar;
+export default SubscriberTab;

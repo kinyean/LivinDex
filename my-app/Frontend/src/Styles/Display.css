@@ -14,20 +14,9 @@
     margin-bottom: 12px;
   }
   
-  /* .follow-btn {
-    background-color: #ff3366;
-    color: white;
-    border: none;
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-weight: bold;
-    cursor: pointer;
-  } */
-  
   .note-scroller {
     background-color:  var(--body_background);
     width: 100%;
-
     border-radius: 12px;
     overflow: hidden;
   }
@@ -74,7 +63,7 @@
   
   .note-footer {
     background-color: var(--card-bg);
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* lighter for dark theme */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 12px 16px;
   }
   

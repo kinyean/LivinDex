@@ -40,7 +40,7 @@
   font-size: 16px;
   font-weight: 600;
   margin: 0;
-  color: var(--profile_name_color); ;
+  color: var(--profile_name_color);
 }
 
 .UserProfile_subs {
@@ -85,6 +85,25 @@
 
 .like_button:hover {
   background-color: var(--sub_hover);
+}
+
+.delete_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 20px;
+  background-color: var(--sub_delete_button);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px; 
+  margin-left: 12px; 
+}
+
+.delete_button:hover {
+  background-color: var(--sub_delete_hover);
 }
 
 .dislike_button {
@@ -159,3 +178,4 @@
 .sub_other .subscribe_button:not(:last-child) {
   border-right: 1px solid #444;
 }
+
