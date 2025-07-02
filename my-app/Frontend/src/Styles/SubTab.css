@@ -1,0 +1,161 @@
+.sub_wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.sub_left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sub_right {
+  display: flex;
+  align-items: center;
+}
+.sub_avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: white;
+  padding: 3px;
+}
+
+.sub_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile_name_row {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.UserProfile_name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--profile_name_color); ;
+}
+
+.UserProfile_subs {
+  font-size: 14px;
+  color: var(--profile_text_color); 
+  margin: 0;
+}
+
+.sub_other {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  margin-left: 24px;
+}
+
+.like_dislike_group {
+  display: flex;
+  align-items: center;
+  background-color: var(--sub_button_color);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.like_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-right: 1px solid #444;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  margin: 0;
+}
+
+.like_button:hover {
+  background-color: var(--sub_hover);
+}
+
+.dislike_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin: 0;
+}
+
+.dislike_button:hover {
+  background-color: var(--sub_hover);
+}
+
+.share_button {
+  display: flex;
+  align-items: center;
+  background-color: var(--sub_button_color);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+}
+
+.subscribe_button {
+  margin-left: 24px;
+  padding: 6px 16px;
+  background-color: var(--sub_button_color);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.subscribe_button:hover {
+  background-color: var(--sub_hover);
+}
+
+.sub_other .subscribe_button {
+  background-color: var(--sub_button_color);
+  color: white;
+  border: none;
+  border-radius: 0;
+  padding: 6px 14px;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sub_other .subscribe_button:hover {
+  background-color: var(--sub_hover);
+}
+
+.share_button:hover {
+  background-color: var(--sub_hover);
+}
+
+.sub_other .subscribe_button:not(:last-child) {
+  border-right: 1px solid #444;
+}
