@@ -20,11 +20,14 @@ exports.uploadMedia = async (req, res) => {
     }
 
     const uploadedMedia = [];
+    const storagePath = [];
 
     for (const file of files) {
       const ext = file.originalname.split(".").pop();
       const filename = `${Date.now()}-${uuidv4()}.${ext}`;
-      const blob = bucket.file(`posts/${filename}`);
+      const path = `posts/${filename}`;
+      storagePath.push(path);
+      const blob = bucket.file(path);
 
        const downloadToken = uuidv4();
 
@@ -49,6 +52,7 @@ exports.uploadMedia = async (req, res) => {
       header,
       text,
       userId,
+      storagePath,
       tags: JSON.parse(tags),
       media: uploadedMedia,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),

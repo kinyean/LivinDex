@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.1a372c03.css",
-    "main.js": "/static/js/main.8a59bd5e.js",
+    "main.css": "/static/css/main.bf3054ae.css",
+    "main.js": "/static/js/main.6a08a2ad.js",
     "static/js/453.ed3810f9.chunk.js": "/static/js/453.ed3810f9.chunk.js",
     "static/media/L-Coin.png": "/static/media/L-Coin.cabb90eaaa3aa47f3f62.png",
     "static/media/empty_reward.png": "/static/media/empty_reward.83c6df7a52f211db200f.png",
@@ -9,21 +9,18 @@
     "static/media/top_up.png": "/static/media/top_up.8496bfdcfcac4ec2421c.png",
     "static/media/cash_in.png": "/static/media/cash_in.03f1d3d62e23204566d1.png",
     "static/media/paynow.png": "/static/media/paynow.6305de021a7f27d41d92.png",
-    "static/media/coffee.jpg": "/static/media/coffee.883a5512f937af158cb1.jpg",
     "static/media/rewards.png": "/static/media/rewards.f908994b67f475044859.png",
-    "static/media/tech.png": "/static/media/tech.ef95d66a2e2b60e4a44e.png",
-    "static/media/hardware.jpg": "/static/media/hardware.4736caeff587d3f2c3ba.jpg",
     "static/media/creditcard.png": "/static/media/creditcard.3bc6b2b2ec875829fd25.png",
     "static/media/paylah.png": "/static/media/paylah.66eff19901a280a71c5c.png",
     "static/media/Sun.svg": "/static/media/Sun.681607dcda2a01539a9a8a157ae74e6e.svg",
     "static/media/Moon.svg": "/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
     "index.html": "/index.html",
-    "main.1a372c03.css.map": "/static/css/main.1a372c03.css.map",
-    "main.8a59bd5e.js.map": "/static/js/main.8a59bd5e.js.map",
+    "main.bf3054ae.css.map": "/static/css/main.bf3054ae.css.map",
+    "main.6a08a2ad.js.map": "/static/js/main.6a08a2ad.js.map",
     "453.ed3810f9.chunk.js.map": "/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1a372c03.css",
-    "static/js/main.8a59bd5e.js"
+    "static/css/main.bf3054ae.css",
+    "static/js/main.6a08a2ad.js"
   ]
 }
