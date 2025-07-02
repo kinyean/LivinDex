@@ -1,20 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
 import { getPostById, Post } from "../Components/Posts/GetPosts";
 import Navbar from "../Components/Navbar";
 import Comments from "../Components/Comment/Comments";
 import SubscriberTab from "../Components/Posts/SubTab";
 import { auth } from "../index";
 import "../Styles/Display.css";
-import BaseAPI from "../API/BaseAPI";
 
 const Display: React.FC = () => {
 
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const uid = auth.currentUser?.uid;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUserId(user.uid);
+      } else {
+        setCurrentUserId(null);
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -37,21 +50,6 @@ const Display: React.FC = () => {
     fetchPost();
   }, [postId]);
 
-  const handleDelete = async () => {
-  const confirmed = window.confirm("Are you sure you want to delete this post?");
-  if (!confirmed || !postId) return;
-
-  try {
-    await BaseAPI.delete(`/posts/${postId}`);
-    alert("Post deleted!");
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-    alert("Failed to delete post.");
-  }
-};
-  
-
   if (loading) return <div>Loading post...</div>;
   if (!post) return <div>Post not found.</div>;
 
@@ -73,7 +71,12 @@ const Display: React.FC = () => {
         <div className="note-content">
           <h3 className="title">{post.header}</h3>
           <div className="actions"> 
-            <SubscriberTab />
+            <SubscriberTab 
+              postId={postId ?? ""} 
+              postUserId={post.userId} 
+              currentUserId={uid ?? ""} 
+              onDeleteSuccess={() => navigate("/")} 
+            />
           </div>
           <p className="desc">{post.text}</p>
 
@@ -89,14 +92,6 @@ const Display: React.FC = () => {
         <div className="note-footer">
           <Comments currentUserId={uid ?? ""} postId={postId ?? ""} />
         </div>
-        
-        {uid === post.userId && (
-          <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <button onClick={handleDelete} className="delete-button">
-              Delete Post
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

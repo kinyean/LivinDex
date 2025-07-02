@@ -17,7 +17,9 @@
     --profileNavbar_color:#484747;
     --link_color: navy;
     --sub_button_color:black;
+    --sub_delete_button:rgb(167, 26, 26);
     --sub_hover:#b3aeae;
+    --sub_delete_hover:rgb(221, 20, 20);
 
 
     --card-bg: #ffffff;
@@ -38,7 +40,9 @@
     --profileNavbar_color:#bbbbbb;
     --link_color: #80d8ff;
     --sub_button_color:#b0b0b0;
+    --sub_delete_button:rgb(180, 32, 32);
     --sub_hover:#545454;
+    --sub_delete_hover:rgb(140, 11, 11);
 
     --card-bg: #1e1e1e;
     --card-text: #f0f0f0;
