@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getPostById, Post } from "../Components/Posts/GetPosts";
 import Navbar from "../Components/Navbar";
 import Comments from "../Components/Comment/Comments";
+import SubscriberTab from "../Components/Posts/SubTab";
 import { auth } from "../index";
 import "../Styles/Display.css";
 
@@ -55,6 +56,9 @@ const Display: React.FC = () => {
 
         <div className="note-content">
           <h3 className="title">{post.header}</h3>
+          <div className="actions"> 
+            <SubscriberTab />
+          </div>
           <p className="desc">{post.text}</p>
 
           <div className="hashTagxsxw">
@@ -63,13 +67,6 @@ const Display: React.FC = () => {
 
           <div className="event">
             <p>📅 {new Date(post.createdAt).toLocaleDateString()}</p>
-          </div>
-
-          <div className="actions">
-            <span>❤️ 59</span>
-            <span>⭐ 69</span>
-            <span>💬 4</span>
-            <span>🔗</span>
           </div>
         </div>
 
