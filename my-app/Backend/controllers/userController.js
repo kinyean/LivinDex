@@ -2,7 +2,7 @@ const { db } = require('../firebase');
 
 // Create user profile
 exports.createUser = async (req, res) => {
-  const { uid, firstName, lastName, phone, bio, SGD, LCoin } = req.body;
+  const { uid, firstName, lastName, phone, bio, SGD, LCoin, like, dislike, subscriber } = req.body;
 
   try {
     const userData = {
@@ -11,7 +11,10 @@ exports.createUser = async (req, res) => {
       phone,
       bio,
       SGD,
-      LCoin
+      LCoin,
+      like,
+      dislike, 
+      subscriber
     };
 
     await db.collection("users").doc(uid).set(userData);

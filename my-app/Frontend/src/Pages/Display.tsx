@@ -74,7 +74,7 @@ const Display: React.FC = () => {
             <SubscriberTab 
               postId={postId ?? ""} 
               postUserId={post.userId} 
-              currentUserId={uid ?? ""} 
+              currentUserId={currentUserId ?? ""} 
               onDeleteSuccess={() => navigate("/")} 
             />
           </div>
