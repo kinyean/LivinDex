@@ -38,6 +38,9 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
     email: "",
     phone: "",
     bio: "",
+    like: 0,
+    dislike: 0,
+    subscriber: 0  
   });
 
   const navigate = useNavigate();
@@ -74,7 +77,7 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
               {userData.firstName} {userData.lastName}
             </h1>
             <h1 className="UserProfile_subs">
-              10.1M subscribers
+              {userData.subscriber} subscribers
             </h1>
           </div>
         </div>

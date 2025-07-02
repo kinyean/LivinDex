@@ -18,6 +18,9 @@ const Profile: React.FC = () => {
     email: "",
     phone: "",
     bio: "",
+    like: 0,
+    dislike: 0,
+    subscriber: 0
   });
   const navigate = useNavigate();
 
@@ -56,9 +59,9 @@ const Profile: React.FC = () => {
               {userData.bio}</p>
             <div className="profile-stats">
               {/* TODO: not Link to backend and Firebase */}
-              <span className="profile-bio">0 Views</span> 
-              <span className="profile-bio">0 Followers</span>
-              <span className="profile-bio">0 Likes</span>
+              <span className="profile-bio">{userData.like} Likes</span>
+              <span className="profile-bio">{userData.dislike} Dislikes</span>
+              <span className="profile-bio">{userData.subscriber} Subscribers</span>
             </div>
           </div>
         </div>

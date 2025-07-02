@@ -27,6 +27,9 @@ const EditProfile: React.FC = () => {
     email: "",
     phone: "",
     bio: "",
+    like: 0,
+    dislike: 0,
+    subscriber: 0
   });
   
   const uid = auth.currentUser?.uid;

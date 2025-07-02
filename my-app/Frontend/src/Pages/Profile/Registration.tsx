@@ -38,7 +38,10 @@ const Registration: React.FC = () => {
               phone: "",
               bio: "",
               SGD: 0,
-              LCoin: 0
+              LCoin: 0,
+              like: 0,
+              dislike: 0,
+              subscriber: 0
             });
 
             await BaseAPI.post("/auth/register", {

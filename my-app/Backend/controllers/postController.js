@@ -80,7 +80,6 @@ exports.deletePostById = async (req, res) => {
     const docRef = db.collection("posts").doc(id);
     const docSnap = await docRef.get();
     const storagePaths = docSnap.data()?.storagePath || [];
-    console.log("DELETE request received for post ID:", req.params.id);
 
     if (!docSnap.exists) {
       return res.status(404).json({ error: "Post not found" });
