@@ -57,12 +57,16 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
         <img className="sub_avatar" 
               src={Logo} 
               alt="Logo" 
-              onClick={() => setShowSidebar(!showSidebar)}
+              onClick={() => navigate(`/profile/${postUserId}`)}
               style={{ cursor: 'pointer' }}/>
         <div className='sub_info'>
           <div className='profile_name_row'>
-            <h1 className="UserProfile_name">
-              {posterData.firstName} {posterData.lastName}     
+            <h1 
+                className="UserProfile_name"
+                onClick={() => navigate(`/profile/${postUserId}`)}
+                style={{ cursor: 'pointer' }}
+              >
+                {posterData.firstName} {posterData.lastName}     
             </h1>
             <h1 className="UserProfile_subs">
               {posterData.subscriber} subscribers
