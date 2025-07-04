@@ -32,36 +32,24 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
 
   const [showSidebar, setShowSidebar] = useState(false);
 
-  const [userData, setUserData] = useState({
+  const [posterData, setPosterData] = useState({
     firstName: "",
     lastName: "",
-    email: "",
-    phone: "",
-    bio: "",
-    like: 0,
-    dislike: 0,
-    subscriber: 0  
+    subscriber: 0
   });
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //TODO : Link to User Account
 
+  // Fetch poster's user info
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        console.log("No user is logged in");
-        return;
-      }
-  
-      const uid = user.uid;
-      getUserProfileApi(uid).then((data) => {
-        setUserData(data);
-      }).catch((e) => {
-        console.error("Failed to fetch user data:", e);
+    getUserProfileApi(postUserId)
+      .then((data) => {
+        setPosterData(data);
+      })
+      .catch((e) => {
+        console.error("Failed to fetch poster's data:", e);
       });
-    });
-  
-    return () => unsubscribe();
-  }, []);
+  }, [postUserId]);
 
   return (
     <div className='sub_wrapper'>
@@ -74,10 +62,10 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
         <div className='sub_info'>
           <div className='profile_name_row'>
             <h1 className="UserProfile_name">
-              {userData.firstName} {userData.lastName}
+              {posterData.firstName} {posterData.lastName}     
             </h1>
             <h1 className="UserProfile_subs">
-              {userData.subscriber} subscribers
+              {posterData.subscriber} subscribers
             </h1>
           </div>
         </div>
