@@ -23,13 +23,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/content" element={<Content />} />
-        <Route path="/create/comment/:postId" element={<CreateComment />} />
-        <Route path="/post/:postId" element={<Display />} />
-        <Route path="/editProfile" element={<EditProfile />} />
+        
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/create/posts" element={<Posts />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Home />} />
@@ -39,6 +35,11 @@ function App() {
           <Route path="/wallet/top_up" element={<TopUp />} />
           <Route path="/wallet/cash_out" element={<CashOut />} />
           <Route path="/wallet/rewards" element={<Rewards />} />
+          <Route path="/content" element={<Content />} />
+          <Route path="/create/comment/:postId" element={<CreateComment />} />
+          <Route path="/post/:postId" element={<Display />} />
+          <Route path="/editProfile" element={<EditProfile />} />
+          <Route path="/create/posts" element={<Posts />} />
         </Route>                     
       </Routes>
     </Router>
