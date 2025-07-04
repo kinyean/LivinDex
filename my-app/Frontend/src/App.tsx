@@ -29,7 +29,7 @@ function App() {
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Home />} />
-          <Route path="/profile" element={<Profile />} />   
+          <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/logout" element = {<Logout />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/wallet/top_up" element={<TopUp />} />
