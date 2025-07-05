@@ -13,6 +13,13 @@
     padding-top: 80px;
 }
 
+.home-section {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem; /* horizontal padding */
+  box-sizing: border-box;
+}
+
 .home-title {
     font-size: clamp(1.5rem, 5vw, 2.5rem);
     font-weight: 700;
