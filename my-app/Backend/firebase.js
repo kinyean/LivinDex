@@ -26,5 +26,6 @@ initializeApp({
 const auth = getAuth();
 const db = getFirestore(); 
 const storage = getStorage();
+const bucket = storage.bucket()
 
-module.exports = { auth, db , storage };
+module.exports = { auth, db , storage, bucket };

@@ -12,9 +12,11 @@ interface Props {
   postUserId: string;
   currentUserId: string;
   onDeleteSuccess: () => void;
+  isEditing: boolean;
+  onToggleEdit: () => void;
 }
 
-const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onDeleteSuccess }) => {
+const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onDeleteSuccess, isEditing, onToggleEdit }) => {
   
   const handleDelete = async () => {
     const confirmed = window.confirm("Are you sure you want to delete this post?");
@@ -43,7 +45,6 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
     subscriber: 0  
   });
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -90,6 +91,11 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
             <button className="dislike_button">DisLike</button>
           </div>
           <button className="share_button">Share</button>
+          {postUserId === currentUserId && (
+            <button onClick={onToggleEdit} className="edit_button">
+              {isEditing ? "Save" : "Edit"}
+            </button>
+          )}
           {currentUserId === postUserId && (
             <button onClick={handleDelete} className="delete_button">
               Delete Post
