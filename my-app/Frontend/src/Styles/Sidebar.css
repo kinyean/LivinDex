@@ -4,7 +4,7 @@
   left: 0;
   height: 100vh;
   width: 260px;
-  background-color: var(--body_background);;
+  background-color: var(--body_background);
   display: flex;
   flex-direction: column;
   padding: 20px;

@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from '../Assets/UnknownUser.jpg';
 import Navbar from "../Components/Navbar"; 
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserProfile as getUserProfileApi} from "./Profile/GetProfile";
@@ -11,7 +12,11 @@ import '../Styles/Profile.css';
 
 const Profile: React.FC = () => {
 
-  const uid = auth.currentUser?.uid;
+  const navigate = useNavigate();
+
+  const { userId: paramId } = useParams(); 
+  const [userId, setUserId] = useState<string | null>(paramId || null);
+
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -22,25 +27,34 @@ const Profile: React.FC = () => {
     dislike: 0,
     subscriber: 0
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        console.log("No user is logged in");
-        return;
-      }
+    if (paramId) {
+      setUserId(paramId);
+    } else {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUserId(user.uid);
+        } else {
+          navigate("/login");
+        }
+      });
+      return () => unsubscribe();
+    }
+  }, [paramId, navigate]);
+
+  // Fetch user profile
+  useEffect(() => {
+    if (!userId) return;
   
-      const uid = user.uid;
-      getUserProfileApi(uid).then((data) => {
+    getUserProfileApi(userId)
+      .then((data) => {
         setUserData(data);
-      }).catch((e) => {
+      })
+      .catch((e) => {
         console.error("Failed to fetch user data:", e);
       });
-    });
-  
-    return () => unsubscribe();
-  }, []);
+  }, [userId]);
 
   return (
     <>
@@ -51,9 +65,13 @@ const Profile: React.FC = () => {
           <div className="profile-info">
           <div className="name-edit-container">
             <h1 className="profile-name">{userData.firstName + " " + userData.lastName}</h1>
-            <span className="edit-profile-btn" onClick={() => navigate("/editProfile")}>Edit Profile</span>
+            {userId === auth.currentUser?.uid && (
+              <span className="edit-profile-btn" onClick={() => navigate("/editProfile")}>
+                Edit Profile
+              </span>
+            )}
           </div>
-            <p className="profile-id">LivinDex Account：{uid}</p>
+            <p className="profile-id">LivinDex Account：{userId}</p>
             <p className="profile-bio">Intro:</p>
             <p className="profile-bio">
               {userData.bio}</p>

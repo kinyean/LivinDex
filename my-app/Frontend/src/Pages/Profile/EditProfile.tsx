@@ -114,11 +114,11 @@ const EditProfile: React.FC = () => {
   return (
     <div className="profile-layout">
       <Navbar />
-      <Box sx={{ backgroundColor: "#f5f7fa", minHeight: "100vh", p: 4, mt: 7 }}>
+      <Box sx={{ backgroundColor: 'var(--body_background)', minHeight: "100vh", p: 4, mt: 7 }}>
         <Grid container spacing={4} justifyContent="center" alignItems="stretch">
           {/* Left Profile Card */}
           <Grid >
-            <Card sx={{ height: "100%", borderRadius: 3, p: 3, textAlign: "center" }}>
+            <Card sx={{ backgroundColor: 'var(--reg_background)', height: "100%", borderRadius: 3, p: 3, textAlign: "center" }}>
               <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
                 <img
                   src={UserImage}
@@ -151,7 +151,7 @@ const EditProfile: React.FC = () => {
 
           {/* Right Form Card */}
           <Grid>
-          <Card sx={{ height: "100%", borderRadius: 3, p: 3 }}>
+          <Card sx={{ backgroundColor: 'var(--reg_background)', height: "100%", borderRadius: 3, p: 3 }}>
             <Typography
               variant="h6"
               sx={{ fontWeight: 600, color: "#1976d2", mb: 2 }}
