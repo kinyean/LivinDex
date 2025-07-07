@@ -7,6 +7,7 @@ import Comments from "../Components/Comment/Comments";
 import SubscriberTab from "../Components/Posts/SubTab";
 import { auth } from "../index";
 import "../Styles/Display.css";
+import BaseAPI from "../API/BaseAPI";
 
 const Display: React.FC = () => {
 
@@ -14,6 +15,9 @@ const Display: React.FC = () => {
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedDesc, setEditedDesc] = useState("");
   const uid = auth.currentUser?.uid;
   const navigate = useNavigate();
 
@@ -38,6 +42,8 @@ const Display: React.FC = () => {
         }
         console.log("Fetching post with ID:", postId);
         const data = await getPostById(postId);
+        setEditedTitle(data.header);
+        setEditedDesc(data.text);
         console.log("Fetched post data:", data);
         setPost(data);
       } catch (error) {
@@ -49,6 +55,21 @@ const Display: React.FC = () => {
   
     fetchPost();
   }, [postId]);
+
+  const handleSave = async () => {
+    try {
+      await BaseAPI.patch(`/posts/${postId}`, {
+        header: editedTitle,
+        text: editedDesc,
+      });
+      alert("Post edited successfully");
+      setPost((prev) => prev ? { ...prev, header: editedTitle, text: editedDesc } : null);
+      setIsEditing(false);
+    } catch (err) {
+      console.error(err);
+      alert("Error editing post")
+    }
+  };
 
   if (loading) return <div>Loading post...</div>;
   if (!post) return <div>Post not found.</div>;
@@ -69,16 +90,36 @@ const Display: React.FC = () => {
         </div>
 
         <div className="note-content">
-          <h3 className="title">{post.header}</h3>
+        {isEditing ? (
+          <input
+              type="text"
+              value={editedTitle}
+              onChange={(e) => setEditedTitle(e.target.value)}
+              className="edit-input title"
+            /> 
+          ) : (
+            <h3 className="title">{post.header}</h3>
+          )}
           <div className="actions"> 
             <SubscriberTab 
               postId={postId ?? ""} 
               postUserId={post.userId} 
               currentUserId={currentUserId ?? ""} 
               onDeleteSuccess={() => navigate("/")} 
+              isEditing={isEditing}
+              onToggleEdit={isEditing ? handleSave : () => setIsEditing(true)}
             />
           </div>
-          <p className="desc">{post.text}</p>
+          {isEditing ? (
+          <textarea
+              value={editedDesc}
+              onChange={(e) => setEditedDesc(e.target.value)}
+              className="edit-input desc"
+            />
+          ) : (
+            <p className="desc">{post.text}</p>
+          )}
+          
 
           <div className="hashTagxsxw">
             {post.tags?.map((tag) => `#${tag} `)}
