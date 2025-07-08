@@ -92,7 +92,7 @@
   align-items: center;
   justify-content: center;
   padding: 6px 20px;
-  background-color: var(--sub_delete_button);
+  background-color: var(--sub_edit_button);
   color: white;
   font-size: 14px;
   font-weight: 500;
@@ -100,6 +100,10 @@
   border: none;
   border-radius: 20px; 
   margin-left: 12px; 
+}
+
+.edit_button:hover {
+  background-color: var(--sub_edit_hover);
 }
 
 .delete_button {

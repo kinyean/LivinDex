@@ -52,7 +52,7 @@ const Home = () => {
             <p className="slide_subtitle">Get the latest insights and trends</p>
             <SlideCards slides={posts} />
           </div>
-          <div>
+          <div className = "home-section">
             <h2 className="home-title">All the skills you need in one place</h2>
             <p className="home-subtitle">
               From critical skills to technical topics, LivinDex supports your professional development.
