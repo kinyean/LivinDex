@@ -28,7 +28,7 @@ const EditProfile: React.FC = () => {
     phone: "",
     bio: "",
     like: 0,
-    dislike: 0,
+    follower: 0,
     subscriber: 0
   });
   
