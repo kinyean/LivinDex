@@ -40,7 +40,7 @@ const Registration: React.FC = () => {
               SGD: 0,
               LCoin: 0,
               like: 0,
-              dislike: 0,
+              follower: 0,
               subscriber: 0
             });
 
