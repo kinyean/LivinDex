@@ -26,6 +26,7 @@ const postRoutes = require('./routes/postRoutes');
 const usersRoutes = require('./routes/userRoutes');
 const uploadRoutes = require('./routes/upload');
 const walletRoutes = require('./routes/walletRoutes');
+const subRoutes = require('./routes/subRoutes');
 
 // Use routes
 app.use('/auth', authRoutes);
@@ -34,6 +35,7 @@ app.use("/posts", postRoutes);
 app.use('/users', usersRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/wallet', walletRoutes);
+app.use('/subscription', subRoutes);
 
 const port = process.env.PORT || 3001; // You can use environment variables for port configuration
 
