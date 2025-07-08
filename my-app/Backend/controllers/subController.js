@@ -22,6 +22,11 @@ exports.subscribe = async (req, res) => {
       subscriber: FieldValue.increment(1)
     });
 
+    const currentUserRef = db.collection("users").doc(userId);
+    await currentUserRef.update({
+      following: FieldValue.increment(1)
+    });
+
     res.status(200).json({ message: "Subscribed successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -45,6 +50,11 @@ exports.unsubscribe = async (req, res) => {
       subscriber: FieldValue.increment(-1)
     });
 
+    const currentUserRef = db.collection("users").doc(userId);
+    await currentUserRef.update({
+      following: FieldValue.increment(-1)
+    });
+
     res.status(200).json({ message: "Unsubscribed successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -54,7 +64,7 @@ exports.unsubscribe = async (req, res) => {
 // Get all users this user is following
 exports.getSubscriptions = async (req, res) => {
   const { userId } = req.params;
-  
+
   try {
     const snapshot = await db.collection("subscriptions").where("userId", "==", userId).get();
     const subscriptions = snapshot.docs.map(doc => doc.data().targetUserId);
