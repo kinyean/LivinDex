@@ -3,6 +3,7 @@ const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const { getAuth } = require('firebase-admin/auth');
 const { getStorage } = require("firebase-admin/storage");
+const admin = require('firebase-admin');
 
 require('dotenv').config();
 
@@ -28,4 +29,4 @@ const db = getFirestore();
 const storage = getStorage();
 const bucket = storage.bucket()
 
-module.exports = { auth, db , storage, bucket };
+module.exports = { auth, db, storage, bucket, admin };

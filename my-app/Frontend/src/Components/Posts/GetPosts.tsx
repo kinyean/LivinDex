@@ -11,6 +11,10 @@ export interface Post {
   tags: string[];
   text: string;
   userId: string;
+  like: number;
+  dislike: number;
+  likedUsers?: string[];    
+  dislikedUsers?: string[];  
 }
 
 // API functions for managing comments in the backend
