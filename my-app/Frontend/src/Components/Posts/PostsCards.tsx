@@ -20,7 +20,7 @@ export default function PostsCards({ post, width = '100%' }: CardProps) {
     navigate(`/post/${post.id}`);
   };
 
-  const image = post.media?.[0]?.mediaURL ?? "";
+  const image = post?.thumbnailURL ?? "";
   const alt = post.header;
   const title = post.header;
   const createAt = new Date(post.createdAt).toLocaleString();

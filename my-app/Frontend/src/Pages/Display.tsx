@@ -14,6 +14,7 @@ const Display: React.FC = () => {
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<Post | null>(null);
+  const [mediaType, setMediaType] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
@@ -46,6 +47,7 @@ const Display: React.FC = () => {
         setEditedDesc(data.text);
         console.log("Fetched post data:", data);
         setPost(data);
+        setMediaType(data.media?.[0]?.mediaType)
       } catch (error) {
         console.error("Failed to load post:", error);
       } finally {
@@ -55,6 +57,24 @@ const Display: React.FC = () => {
   
     fetchPost();
   }, [postId]);
+
+  const displayThumbnail = () => {
+    try {
+      if (post == null) return ;
+      return (
+        <div>
+          <img 
+              src={post.thumbnailURL} 
+              alt={post.header}
+              className="bounded-image"
+              />
+        </div>
+      )
+    } catch (err) {
+      console.error(err);
+    }
+    
+  }
 
   const handleSave = async () => {
     try {
@@ -81,11 +101,7 @@ const Display: React.FC = () => {
       <div className="note-scroller">
         <div className="image-section">
           <div className="image-wrapper">
-            <img
-                src={post.media?.[0]?.mediaURL}
-                alt={post.header}
-                className="bounded-image"
-              />          
+            {displayThumbnail()}  
             </div>
         </div>
 
