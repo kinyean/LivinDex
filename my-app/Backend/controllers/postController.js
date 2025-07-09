@@ -79,20 +79,34 @@ exports.deletePostById = async (req, res) => {
     const {id} = req.params;
     const docRef = db.collection("posts").doc(id);
     const docSnap = await docRef.get();
-    const storagePaths = docSnap.data()?.storagePath || [];
+    const postData = docSnap.data();
+
+    // Delete media files from Firebase Storage
+    const mediaPaths = postData.storagePath || [];
+    const thumbnailPath = postData.thumbnailPath;
 
     if (!docSnap.exists) {
       return res.status(404).json({ error: "Post not found" });
     } 
 
-    for (const path of storagePaths) {
-      try {
-        await bucket.file(path).delete();
-      } catch (err) {
-        console.error('error deleting file ${path}', err);
-      }
+    const deletePromises = [];
+
+    // Delete each media file
+    for (const path of mediaPaths) {
+      const file = bucket.file(path);
+      deletePromises.push(file.delete());
     }
 
+    // Delete thumbnail file
+    if (thumbnailPath) {
+      const thumbFile = bucket.file(thumbnailPath);
+      deletePromises.push(thumbFile.delete());
+    }
+
+    // Wait for all deletions
+    await Promise.all(deletePromises);
+
+    // Delete Firestore doc
     await docRef.delete();
 
     res.status(200).json({ message: "Post and media deleted" });
