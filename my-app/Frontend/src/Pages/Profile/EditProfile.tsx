@@ -19,6 +19,7 @@ import { onAuthStateChanged } from "firebase/auth";
 const EditProfile: React.FC = () => {
 
   const navigate = useNavigate();
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [emailError, setEmailError] = useState(false);
   const [formEmail, setFormEmail] = useState("");
   const [userData, setUserData] = useState({
@@ -28,7 +29,7 @@ const EditProfile: React.FC = () => {
     phone: "",
     bio: "",
     like: 0,
-    dislike: 0,
+    following: 0,
     subscriber: 0
   });
   
@@ -97,6 +98,10 @@ const EditProfile: React.FC = () => {
         return;
       }
   
+      if (user) {
+        setCurrentUserId(user.uid);
+      }
+      
       const uid = user.uid;
       setFormEmail(user.email ?? "");
       
@@ -261,7 +266,7 @@ const EditProfile: React.FC = () => {
             </Box>
   
             <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4 }}>
-              <Button variant="outlined" sx={{ mr: 2 }} onClick={() => navigate("/profile")}>
+              <Button variant="outlined" sx={{ mr: 2 }} onClick={() => navigate(`/profile/${currentUserId}`)}>
                 Cancel
               </Button>
               <Button variant="contained" color="primary" onClick={handleUpdate} disabled={!isFormChanged()}>

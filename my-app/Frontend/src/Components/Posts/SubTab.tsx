@@ -2,6 +2,9 @@ import Logo from '../../Assets/UnknownUser.jpg'
 import React, { useEffect, useState } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
 import { getUserProfile as getUserProfileApi} from "../../Pages/Profile/GetProfile";
+import { getSubs as getSubsApi,
+         subscribe as subscribeApi,
+         unsubscribe as unsubscribeApi } from "../../Components/Posts/GetSubs";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../index";
 import '../../Styles/SubTab.css';
@@ -32,7 +35,32 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
     }
   };
 
+  const handleSubscribeClick = async () => {
+    try {
+      if (isSubscribed) {
+        await unsubscribeApi(currentUserId, postUserId);
+        setIsSubscribed(false);
+        setPosterData((prev) => ({
+          ...prev,
+          subscriber: prev.subscriber - 1,
+        }));
+      } else {
+        await subscribeApi(currentUserId, postUserId);
+        setIsSubscribed(true);
+        setPosterData((prev) => ({
+          ...prev,
+          subscriber: prev.subscriber + 1,
+        }));
+      }
+    } catch (err) {
+      console.error("Subscription action failed:", err);
+      alert("Something went wrong.");
+    }
+  };
+
   const [showSidebar, setShowSidebar] = useState(false);
+
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const [posterData, setPosterData] = useState({
     firstName: "",
@@ -52,7 +80,11 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
       .catch((e) => {
         console.error("Failed to fetch poster's data:", e);
       });
-  }, [postUserId]);
+
+    getSubsApi(currentUserId).then((subs:string[]) => {
+      setIsSubscribed(subs.includes(postUserId));
+    });
+  }, [postUserId, currentUserId]);
 
   return (
     <div className='sub_wrapper'>
@@ -76,7 +108,11 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
             </h1>
           </div>
         </div>
-        <button className="subscribe_button">Subscribe</button>
+        {currentUserId !== postUserId && (
+          <button className="subscribe_button" onClick={handleSubscribeClick}>
+            {isSubscribed ? "Unsubscribe" : "Subscribe"}
+          </button>
+        )}
       </div>
       <div className="sub_right">
         <div className='sub_other'>

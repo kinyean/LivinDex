@@ -24,7 +24,7 @@ const Profile: React.FC = () => {
     phone: "",
     bio: "",
     like: 0,
-    dislike: 0,
+    following: 0,
     subscriber: 0
   });
 
@@ -76,9 +76,8 @@ const Profile: React.FC = () => {
             <p className="profile-bio">
               {userData.bio}</p>
             <div className="profile-stats">
-              {/* TODO: not Link to backend and Firebase */}
               <span className="profile-bio">{userData.like} Likes</span>
-              <span className="profile-bio">{userData.dislike} Dislikes</span>
+              <span className="profile-bio">{userData.following} Following</span>
               <span className="profile-bio">{userData.subscriber} Subscribers</span>
             </div>
           </div>
