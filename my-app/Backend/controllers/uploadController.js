@@ -5,7 +5,7 @@ const bucket = admin.storage().bucket();
 
 exports.uploadMedia = async (req, res) => {
   try {
-    const { header, text, userId, tags, uploadType } = req.body;
+    const { header, text, userId, tags, uploadType, like, dislike } = req.body;
     const files = req.files; // Array of files
     const thumbnail = req.files?.thumbnail?.[0]; // expect single thumbnail
 
@@ -71,6 +71,8 @@ exports.uploadMedia = async (req, res) => {
 
     const docRef = await db.collection("posts").add({
       header,
+      like,
+      dislike,
       text,
       userId,
       storagePath,
