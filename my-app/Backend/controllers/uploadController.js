@@ -6,7 +6,7 @@ const bucket = admin.storage().bucket();
 exports.uploadMedia = async (req, res) => {
   try {
     const { header, text, userId, tags, uploadType } = req.body;
-    const files = req.files; // Array of files
+    const files = req.files.files; // Array of files
     const thumbnail = req.files?.thumbnail?.[0]; // expect single thumbnail
 
     if (!thumbnail) {
@@ -29,12 +29,13 @@ exports.uploadMedia = async (req, res) => {
 
     for (const file of files) {
       const ext = file.originalname.split(".").pop();
-      const filename = `${Date.now()}-${uuidv4()}.${ext}`;
+      const downloadToken = uuidv4();
+      const filename = `${Date.now()}-${downloadToken}.${ext}`;
       const path = `posts/${filename}`;
       storagePath.push(path);
       const blob = bucket.file(path);
 
-       const downloadToken = uuidv4();
+       
 
       await blob.save(file.buffer, {
         metadata: {
@@ -45,7 +46,7 @@ exports.uploadMedia = async (req, res) => {
         },
       });
 
-      const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(blob.name)}?alt=media&token=${blob.metadata.metadata.firebaseStorageDownloadTokens}`;
+      const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(blob.name)}?alt=media&token=${downloadToken}`;
 
       uploadedMedia.push({
         mediaURL: publicUrl,
@@ -53,20 +54,21 @@ exports.uploadMedia = async (req, res) => {
       });
     }
 
+    const thumbnailDownloadToken = uuidv4();
     const thumbExt = thumbnail.originalname.split(".").pop();
-    const thumbFilename = `thumbnails/${Date.now()}-${uuidv4()}.${thumbExt}`;
+    const thumbFilename = `thumbnails/${Date.now()}-${thumbnailDownloadToken}.${thumbExt}`;
     const thumbBlob = bucket.file(thumbFilename);
 
     await thumbBlob.save(thumbnail.buffer, {
       metadata: {
         contentType: thumbnail.mimetype,
         metadata: {
-          firebaseStorageDownloadTokens: uuidv4(),
+          firebaseStorageDownloadTokens: thumbnailDownloadToken,
         },
       },
     });
 
-    const thumbnailURL = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(thumbBlob.name)}?alt=media&token=${thumbBlob.metadata.metadata.firebaseStorageDownloadTokens}`;
+    const thumbnailURL = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(thumbBlob.name)}?alt=media&token=${thumbnailDownloadToken}`;
 
 
     const docRef = await db.collection("posts").add({
@@ -75,7 +77,9 @@ exports.uploadMedia = async (req, res) => {
       userId,
       storagePath,
       tags: JSON.parse(tags),
-      media: uploadedMedia,
+      media: uploadedMedia, 
+      thumbnailURL,
+      thumbnailPath: thumbFilename,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     });
 
