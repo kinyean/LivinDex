@@ -4,23 +4,33 @@ import { onAuthStateChanged } from "firebase/auth";
 import { getUserProfile as getUserProfileApi} from "../../Pages/Profile/GetProfile";
 import { getSubs as getSubsApi,
          subscribe as subscribeApi,
-         unsubscribe as unsubscribeApi } from "../../Components/Posts/GetSubs";
+         unsubscribe as unsubscribeApi,
+         likePost as likePostApi,
+         dislikePost as dislikePostApi } from "../../Components/Posts/GetSubs";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../index";
 import '../../Styles/SubTab.css';
 import BaseAPI from "../../API/BaseAPI";
+import { SubTabProps } from '../../Types/SubTab';
 
-interface Props {
-  postId: string;
-  postUserId: string;
-  currentUserId: string;
-  onDeleteSuccess: () => void;
-  isEditing: boolean;
-  onToggleEdit: () => void;
-}
 
-const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onDeleteSuccess, isEditing, onToggleEdit }) => {
+const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserId, onDeleteSuccess, isEditing, onToggleEdit, likes, dislikes, likedUsers, dislikedUsers }) => {
   
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [userLiked, setUserLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes || 0);
+  const [userDisliked, setUserDisliked] = useState(false);
+  const [dislikeCount, setDislikeCount] = useState(dislikes || 0);
+  const [posterData, setPosterData] = useState({
+    firstName: "",
+    lastName: "",
+    subscriber: 0
+  });
+
+  const navigate = useNavigate();
+
   const handleDelete = async () => {
     const confirmed = window.confirm("Are you sure you want to delete this post?");
     if (!confirmed) return;
@@ -58,18 +68,62 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
     }
   };
 
-  const [showSidebar, setShowSidebar] = useState(false);
-
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  const [posterData, setPosterData] = useState({
-    firstName: "",
-    lastName: "",
-    subscriber: 0
-  });
-
-  const navigate = useNavigate(); //TODO : Link to User Account
-
+  const handleLikeClick = async () => {
+    try {
+      if (userLiked) {
+        // Undo like
+        await likePostApi(postId, currentUserId);
+        setLikeCount((prev) => prev - 1);
+        setUserLiked(false);
+      } else {
+        // If previously disliked, undo it
+        if (userDisliked) {
+          await dislikePostApi(postId, currentUserId);
+          setDislikeCount((prev) => prev - 1);
+          setUserDisliked(false);
+        }
+  
+        // Like the post
+        await likePostApi(postId, currentUserId);
+        setLikeCount((prev) => prev + 1);
+        setUserLiked(true);
+      }
+    } catch (err) {
+      console.error("Like action failed:", err);
+      alert("Something went wrong.");
+    }
+  };
+  
+  const handleDislikeClick = async () => {
+    try {
+      if (userDisliked) {
+        // Undo dislike
+        await dislikePostApi(postId, currentUserId);
+        setDislikeCount((prev) => prev - 1);
+        setUserDisliked(false);
+      } else {
+        // If previously liked, undo it
+        if (userLiked) {
+          await likePostApi(postId, currentUserId);
+          setLikeCount((prev) => prev - 1);
+          setUserLiked(false);
+        }
+  
+        // Dislike the post
+        await dislikePostApi(postId, currentUserId);
+        setUserDisliked(true);
+      }
+    } catch (err) {
+      console.error("Dislike action failed:", err);
+      setLikeCount((prev) => prev - 1);
+      alert("Something went wrong.");
+    }
+  };
+  
+  useEffect(() => {
+    setUserLiked(likedUsers.includes(currentUserId));
+    setUserDisliked(dislikedUsers.includes(currentUserId));
+  }, [likedUsers, dislikedUsers, currentUserId]);
 
   // Fetch poster's user info
   useEffect(() => {
@@ -117,8 +171,13 @@ const SubscriberTab: React.FC<Props> = ({ postId, postUserId, currentUserId, onD
       <div className="sub_right">
         <div className='sub_other'>
           <div className='like_dislike_group'>
-            <button className="like_button">Like</button> 
-            <button className="dislike_button">DisLike</button>
+            <button className={`like_button ${userLiked ? "active" : ""}`} onClick={handleLikeClick}>
+              {likeCount} Like
+            </button> 
+
+            <button className={`dislike_button ${userDisliked ? "active" : ""}`} onClick={handleDislikeClick}>
+              DisLike
+            </button>
           </div>
           <button className="share_button">Share</button>
           {postUserId === currentUserId && (

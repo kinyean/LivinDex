@@ -20,3 +20,13 @@ export const getFollowers = async (uid: string): Promise<string[]> => {
   const res = await BaseAPI.get(`/subscription/followers/${uid}`);
   return res.data.followers;
 };
+
+export const likePost = async (postId: string, userId: string) => {
+  const res = await BaseAPI.post(`/posts/${postId}/like`, { userId });
+  return res.data;
+};
+
+export const dislikePost = async (postId: string, userId: string) => {
+  const res = await BaseAPI.post(`/posts/${postId}/dislike`, { userId });
+  return res.data;
+};

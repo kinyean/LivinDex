@@ -40,7 +40,6 @@ const Display: React.FC = () => {
           console.log("No postId in URL");
           return;
         }
-        console.log("Fetching post with ID:", postId);
         const data = await getPostById(postId);
         setEditedTitle(data.header);
         setEditedDesc(data.text);
@@ -108,6 +107,10 @@ const Display: React.FC = () => {
               onDeleteSuccess={() => navigate("/")} 
               isEditing={isEditing}
               onToggleEdit={isEditing ? handleSave : () => setIsEditing(true)}
+              likes={post.like ?? 0}
+              dislikes={post.dislike ?? 0}    
+              likedUsers={post.likedUsers ?? []}
+              dislikedUsers={post.dislikedUsers ?? []}
             />
           </div>
           {isEditing ? (
