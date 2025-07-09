@@ -13,6 +13,8 @@ import BaseAPI from '../API/BaseAPI';
 export default function ContentTab() {
   const [text, setText] = useState("");
   const [header, setHeader] = useState("");
+  const [thumbnail, setThumbnail] = useState<File | null >(null);
+  const thumbnailInputRef = React.useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [uploadType, setUploadType] = useState<"image" | "video">("video");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -56,6 +58,11 @@ export default function ContentTab() {
       return;
     }
 
+    if (!thumbnail) {
+      alert("Please upload a thumbnail.");
+      return;
+    }
+
     const user = auth.currentUser;
     if (!user) {
       alert("You must be logged in to upload.");
@@ -64,6 +71,7 @@ export default function ContentTab() {
 
     const formData = new FormData();
     files.forEach(file => formData.append("files", file));
+    formData.append("thumbnail", thumbnail);
     formData.append("header", header);
     formData.append("text", text);
     formData.append("userId", user.uid);
@@ -94,6 +102,38 @@ export default function ContentTab() {
       setSelectedTags([...selectedTags, tag]);
     }
   };
+
+  const renderThumbnail = () => {
+    if (!thumbnail) return null;
+    return (
+      <div style={{ marginTop: '10px' }}>
+        <img
+          src={URL.createObjectURL(thumbnail)}
+          alt="Thumbnail Preview"
+          style={{ maxHeight: '150px', borderRadius: '6px' }}
+        />
+        <br />
+        <button
+          type="button"
+          onClick={() => {
+            setThumbnail(null);
+            if (thumbnailInputRef.current) {
+              thumbnailInputRef.current.value = "";
+            }
+          }}
+          style={{
+            marginTop: '10px',
+            backgroundColor: '#f44336',
+            color: 'white',
+            border: 'none',
+            padding: '6px 12px',
+            borderRadius: '4px'
+          }}
+        >
+          Remove Thumbnail
+        </button>
+      </div>
+    )}
 
   const renderPreviews = () =>
     files.map((file, index) => (
@@ -132,6 +172,29 @@ export default function ContentTab() {
 
   const renderForm = () => (
     <form onSubmit={handleSubmit}>
+      <h3>Upload Thumbnail</h3>
+      <div className="upload-box-wrapper" style={{ marginTop: "20px" }}>
+      <label className="upload-box">
+        <CloudUpload className="upload-icon" />
+        <div className="upload-text">Upload Thumbnail (required)</div>
+        <input
+          ref={thumbnailInputRef}
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              setThumbnail(file);
+            }
+          }}
+          style={{ display: 'none' }}
+        />
+      </label>
+    </div>
+
+    <div>{renderThumbnail()}</div>
+
+    <h3>Drag/drop to upload </h3>
       <div className="upload-box-wrapper">
         <label
           className="upload-box"
@@ -232,11 +295,9 @@ export default function ContentTab() {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <h3>Upload Videos</h3>
           {renderForm()}
         </TabPanel>
         <TabPanel value="2">
-          <h3>Upload Images</h3>
           {renderForm()}
         </TabPanel>
       </TabContext>
