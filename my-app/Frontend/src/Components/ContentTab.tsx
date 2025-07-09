@@ -65,6 +65,8 @@ export default function ContentTab() {
     const formData = new FormData();
     files.forEach(file => formData.append("files", file));
     formData.append("header", header);
+    formData.append("like", "0");
+    formData.append("dislike", "0");
     formData.append("text", text);
     formData.append("userId", user.uid);
     formData.append("tags", JSON.stringify(selectedTags));
@@ -78,7 +80,7 @@ export default function ContentTab() {
       });
       alert("Post created successfully");
       setText("");
-      setHeader("")
+      setHeader("");
       setFiles([]);
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
