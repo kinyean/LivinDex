@@ -32,7 +32,7 @@ import Cards from './Cards';
               sx={{ display: 'flex', minWidth: 300 }} 
             >
               <Cards               
-                image={post.media?.[0]?.mediaURL}
+                image={post?.thumbnailURL ?? ""}
                 alt={post.header}
                 title={post.header}
                 description={post.text} 

@@ -8,6 +8,7 @@ export interface Post {
     mediaType: string;
     mediaURL: string;
   }[];
+  thumbnailURL: string;
   tags: string[];
   text: string;
   userId: string;
