@@ -5,6 +5,7 @@ import { getPostById, Post } from "../Components/Posts/GetPosts";
 import Navbar from "../Components/Navbar";
 import Comments from "../Components/Comment/Comments";
 import SubscriberTab from "../Components/Posts/SubTab";
+import ImageSlider from "../Components/Posts/ImageSlider";
 import { auth } from "../index";
 import "../Styles/Display.css";
 import BaseAPI from "../API/BaseAPI";
@@ -57,23 +58,40 @@ const Display: React.FC = () => {
     fetchPost();
   }, [postId]);
 
-  const displayThumbnail = () => {
+  const displayContent = () => {
     try {
-      if (post == null) return ;
-      return (
-        <div>
-          <img 
-              src={post.thumbnailURL} 
-              alt={post.header}
-              className="bounded-image"
-              />
-        </div>
-      )
+      if (!post) return;
+
+      if (mediaType === "video") {
+        return (
+          <div className="flex justify-center items-center w-full max-w-2xl mx-auto my-6">
+            <video
+              controls
+              className="w-full h-auto rounded-lg shadow-md border border-gray-200"
+            >
+              <source src={post?.media?.[0]?.mediaURL ?? ""} />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        );
+      }
+
+      if (mediaType === "image") {
+        const imageURLs: string[] = post.media.map((item) => item.mediaURL);
+
+        return (
+          <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+            <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+              Image Slider
+            </h1>
+            <ImageSlider images={imageURLs} />
+          </div>
+        );
+      }
     } catch (err) {
       console.error(err);
     }
-    
-  }
+  };
 
   const handleSave = async () => {
     try {
@@ -100,7 +118,7 @@ const Display: React.FC = () => {
       <div className="note-scroller">
         <div className="image-section">
           <div className="image-wrapper">
-            {displayThumbnail()}  
+            {displayContent()}  
             </div>
         </div>
 
