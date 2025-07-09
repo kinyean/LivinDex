@@ -7,6 +7,11 @@ exports.uploadMedia = async (req, res) => {
   try {
     const { header, text, userId, tags, uploadType } = req.body;
     const files = req.files; // Array of files
+    const thumbnail = req.files?.thumbnail?.[0]; // expect single thumbnail
+
+    if (!thumbnail) {
+      return res.status(400).json({ error: "Thumbnail is required" });
+    }
 
     if (!files || files.length === 0) {
       return res.status(400).json({ error: "No files uploaded" });
@@ -47,6 +52,22 @@ exports.uploadMedia = async (req, res) => {
         mediaType: file.mimetype.startsWith("image") ? "image" : "video",
       });
     }
+
+    const thumbExt = thumbnail.originalname.split(".").pop();
+    const thumbFilename = `thumbnails/${Date.now()}-${uuidv4()}.${thumbExt}`;
+    const thumbBlob = bucket.file(thumbFilename);
+
+    await thumbBlob.save(thumbnail.buffer, {
+      metadata: {
+        contentType: thumbnail.mimetype,
+        metadata: {
+          firebaseStorageDownloadTokens: uuidv4(),
+        },
+      },
+    });
+
+    const thumbnailURL = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(thumbBlob.name)}?alt=media&token=${thumbBlob.metadata.metadata.firebaseStorageDownloadTokens}`;
+
 
     const docRef = await db.collection("posts").add({
       header,
