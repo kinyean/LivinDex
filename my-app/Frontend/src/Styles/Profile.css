@@ -130,3 +130,7 @@
     gap: 1.5rem;
     color: #ccc;
   }
+
+  .tab_heading{
+    color: var(--title_color); 
+  }

@@ -139,31 +139,31 @@ exports.likePost = async (req, res) => {
     const postRef = db.collection("posts").doc(postId);
     const postSnap = await postRef.get();
 
-    if (!postSnap.exists) {
-      return res.status(404).json({ error: "Post not found" });
-    }
+    if (!postSnap.exists) return res.status(404).json({ error: "Post not found" });
 
     const postData = postSnap.data();
     const likedUsers = postData.likedUsers || [];
+    const postOwnerId = postData.userId;
+
+    const userDocRef = db.collection("users").doc(postOwnerId);
+
+    const updateData = {};
+    const userUpdate = {};
 
     if (likedUsers.includes(userId)) {
-      const updateData = {
-        likedUsers: admin.firestore.FieldValue.arrayRemove(userId),
-      };
-    
+      updateData.likedUsers = admin.firestore.FieldValue.arrayRemove(userId);
       if ((postData.like || 0) > 0) {
         updateData.like = admin.firestore.FieldValue.increment(-1);
+        userUpdate.like = admin.firestore.FieldValue.increment(-1); 
       }
-    
       await postRef.update(updateData);
+      await userDocRef.update(userUpdate);
       return res.status(200).json({ message: "Like removed" });
     }
-    
 
-    const updateData = {
-      likedUsers: admin.firestore.FieldValue.arrayUnion(userId),
-      like: admin.firestore.FieldValue.increment(1),
-    };
+    updateData.likedUsers = admin.firestore.FieldValue.arrayUnion(userId);
+    updateData.like = admin.firestore.FieldValue.increment(1);
+    userUpdate.like = admin.firestore.FieldValue.increment(1); 
 
     if (postData.dislikedUsers?.includes(userId)) {
       updateData.dislikedUsers = admin.firestore.FieldValue.arrayRemove(userId);
@@ -171,7 +171,10 @@ exports.likePost = async (req, res) => {
     }
 
     await postRef.update(updateData);
+    await userDocRef.update(userUpdate);
+
     res.status(200).json({ message: "Post liked" });
+
   } catch (err) {
     console.error("Error liking post:", err);
     res.status(500).json({ error: "Failed to like post" });
@@ -186,34 +189,44 @@ exports.dislikePost = async (req, res) => {
     const postRef = db.collection("posts").doc(postId);
     const postSnap = await postRef.get();
 
-    if (!postSnap.exists) {
-      return res.status(404).json({ error: "Post not found" });
-    }
+    if (!postSnap.exists) return res.status(404).json({ error: "Post not found" });
 
     const postData = postSnap.data();
     const dislikedUsers = postData.dislikedUsers || [];
-   
+    const postOwnerId = postData.userId;
+
+    const postOwnerRef = db.collection("users").doc(postOwnerId);
+    const dislikerRef = db.collection("users").doc(userId);
+
+    const updateData = {};
+
     if (dislikedUsers.includes(userId)) {
-      const updateData = {
-        dislikedUsers: admin.firestore.FieldValue.arrayRemove(userId),
-      };
-    
+      updateData.dislikedUsers = admin.firestore.FieldValue.arrayRemove(userId);
       if ((postData.dislike || 0) > 0) {
         updateData.dislike = admin.firestore.FieldValue.increment(-1);
+        await dislikerRef.update({
+          dislike: admin.firestore.FieldValue.increment(-1),
+        });
       }
-    
+
       await postRef.update(updateData);
       return res.status(200).json({ message: "Dislike removed" });
     }
 
-    const updateData = {
-      dislikedUsers: admin.firestore.FieldValue.arrayUnion(userId),
+    updateData.dislikedUsers = admin.firestore.FieldValue.arrayUnion(userId);
+    updateData.dislike = admin.firestore.FieldValue.increment(1);
+
+    await dislikerRef.update({
       dislike: admin.firestore.FieldValue.increment(1),
-    };
+    });
 
     if (postData.likedUsers?.includes(userId)) {
       updateData.likedUsers = admin.firestore.FieldValue.arrayRemove(userId);
       updateData.like = admin.firestore.FieldValue.increment(-1);
+
+      await postOwnerRef.update({
+        like: admin.firestore.FieldValue.increment(-1),
+      });
     }
 
     await postRef.update(updateData);
