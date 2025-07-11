@@ -1,21 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import '../Styles/Profile.css';
-import { getUserProfile } from '../Pages/Profile/GetProfile';
-import { getSubs } from '../Components/Posts/GetSubs'; 
-import defaultAvatar from '../Assets/UnknownUser.jpg';
-import { UserDataProps as UserData } from '../Types/ProfileNavbar';
+import { useParams } from "react-router-dom";
+import '../../Styles/Profile.css';
+import { getUserProfile } from '../../Pages/Profile/GetProfile';
+import { getSubs } from '../Posts/GetSubs'; 
+import { UserDataProps as UserData } from '../../Types/ProfileNavbar';
+import SubscribersList from "./SubscriberList";
 
-const currentUserId = localStorage.getItem("uid") || ""; 
 
 const ProfileNavbar: React.FC = () => {
   const [activeTab, setActiveTab] = useState('subscriber');
   const [subscribedUsers, setSubscribedUsers] = useState<UserData[]>([]);
+  const [viewerUserId, setViewerUserId] = useState<string | null>(null);
+
+  const { userId: profileUserId } = useParams(); 
+
+  useEffect(() => {
+    const storedId = localStorage.getItem("uid");
+    if (!storedId) {
+      console.error("No userId found in localStorage.");
+      return;
+    }
+    setViewerUserId(storedId);
+  }, []);
 
   useEffect(() => {
     const fetchSubscribers = async () => {
+      if (!profileUserId || viewerUserId !== profileUserId) return;
+
       try {
-        console.log("Fetching subs for:", currentUserId);
-        const subs = await getSubs(currentUserId);
+        console.log("Fetching subs for:", profileUserId);
+        const subs = await getSubs(profileUserId);
         console.log("Subscribed to:", subs);
 
         const usersData = await Promise.all(
@@ -34,7 +48,7 @@ const ProfileNavbar: React.FC = () => {
     if (activeTab === 'subscriber') {
       fetchSubscribers();
     }
-  }, [activeTab]);
+  }, [activeTab, profileUserId, viewerUserId]);
 
   return (
     <>
@@ -61,22 +75,14 @@ const ProfileNavbar: React.FC = () => {
         </ul>
       </nav>
 
-      {activeTab === 'subscriber' && (
-        <>
-          <h1 className="tab_heading">Subscribers</h1>
-          <div className="subscribers-list">
-            {subscribedUsers.map((user) => (
-              <div key={user.uid} className="subscriber-card">
-                <img
-                  src={user.profileImg || defaultAvatar}
-                  alt="avatar"
-                  className="avatar"
-                />
-                <p>{(user.firstName || user.lastName) ? `${user.firstName} ${user.lastName}` : "Anonymous"}</p>
-              </div>
-            ))}
-          </div>
-        </>
+      {activeTab === 'subscriber' && viewerUserId === profileUserId && (
+        <SubscribersList users={subscribedUsers} />
+      )}
+
+      {activeTab === 'subscriber' && viewerUserId !== profileUserId && (
+        <p style={{ padding: "20px", fontStyle: "italic" }}>
+          You have not authorized to view the user's subscriber list.
+        </p>
       )}
     </>
   );

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { getUserProfile as getUserProfileApi} from "./Profile/GetProfile";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../index";
-import ProfileNavbar from "../Components/ProfileNavbar";
+import ProfileNavbar from "../Components/Profile/ProfileNavbar";
 import '../Styles/Profile.css';
 
 const Profile: React.FC = () => {
