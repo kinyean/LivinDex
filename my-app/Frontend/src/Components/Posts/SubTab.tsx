@@ -146,13 +146,13 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
         <img className="sub_avatar" 
               src={Logo} 
               alt="Logo" 
-              onClick={() => navigate(`/profile/${postUserId}`)}
+              onClick={() => navigate(`/creator/${postUserId}`)}
               style={{ cursor: 'pointer' }}/>
         <div className='sub_info'>
           <div className='profile_name_row'>
             <h1 
                 className="UserProfile_name"
-                onClick={() => navigate(`/profile/${postUserId}`)}
+                onClick={() => navigate(`/creator/${postUserId}`)}
                 style={{ cursor: 'pointer' }}
               >
                 {posterData.firstName} {posterData.lastName}     

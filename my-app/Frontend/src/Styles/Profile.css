@@ -5,7 +5,7 @@
     cursor: pointer;
     color: var(--body_color); 
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 1.25rem;
     opacity: 1;
     
   }
@@ -135,12 +135,19 @@
     color: var(--title_color); 
   }
 
-  .subscribers-list {
+  .subscribers_list {
     display: flex;
     justify-content: flex-start;  
     align-items: flex-start;
     gap: 20px;                   
     flex-wrap: wrap;
     padding-left: 32px;           
+  }
+  
+  .profile_subTitle {
+    font-size: 1.5rem;
+    color: var(--body_color);
+    margin-left: 16px;
+    margin-top: 20px;    
   }
   

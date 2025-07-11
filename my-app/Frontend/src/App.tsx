@@ -1,6 +1,7 @@
 import React from 'react';
 import CashOut from './Pages/Wallet/Cash_Out';
 import Content from './Pages/Content';
+import Creator from './Pages/Creator';
 import CreateComment from './Pages/Create_Section/CreateComment';
 import EditProfile from './Pages/Profile/EditProfile';
 import Display from './Pages/Display';
@@ -29,6 +30,8 @@ function App() {
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Home />} />
+          <Route path="/create/posts" element={<Posts />} />
+          <Route path="/creator/:userId" element={<Creator />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/logout" element = {<Logout />} />
           <Route path="/wallet" element={<Wallet />} />
@@ -39,7 +42,6 @@ function App() {
           <Route path="/create/comment/:postId" element={<CreateComment />} />
           <Route path="/post/:postId" element={<Display />} />
           <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/create/posts" element={<Posts />} />
         </Route>                     
       </Routes>
     </Router>
