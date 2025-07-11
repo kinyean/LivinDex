@@ -8,48 +8,37 @@ import Box from '@mui/material/Box';
 import { GridLegacy as Grid } from '@mui/material';
 import PostsCards from './PostsCards';
 
-  export default function NestedGridColumns() {
+interface PostCardGridProps {
+  userId: string;
+}
 
-    const [posts, setPosts] = React.useState<Post[]>([]);
-    const [user, setUser] = useState<User | null>(null);
+export default function NestedGridColumns({ userId }: PostCardGridProps) {
+  const [posts, setPosts] = useState<Post[]>([]);
 
-    useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-        setUser(firebaseUser);
-      });
-      return () => unsubscribe();
-    }, []);
-
-    useEffect(() => {
-      if (!user) return;
+  useEffect(() => {
+    if (!userId) return;
     
-      const fetchPosts = async () => {
-        try {
-          const data = await getPostsApi(user.uid);
-          setPosts(data);
-        } catch (error) {
-        }
-      };
-    
-      fetchPosts();
-    }, [user]);
+    const fetchPosts = async () => {
+      try {
+        const data = await getPostsApi(userId); 
+        setPosts(data);
+      } catch (error) {
+        console.error("Failed to fetch posts", error);
+      }
+    };
 
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'left', mt: 5, px: 2 }}>
-        <Grid container spacing={2} sx={{ maxWidth: 1500, width: '100%' }}>
-          {posts.map((post, index) => (
-            <Grid
-              item
-              xs={12}
-              md={6}
-              key={index}
-              sx={{ display: 'flex' }} 
-            >
-              <PostsCards post={post} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    );
-  }
-  
+    fetchPosts();
+  }, [userId]);
+
+  return (
+    <Box sx={{ display: 'flex', justifyContent: 'left', mt: 5, px: 2 }}>
+      <Grid container spacing={2} sx={{ maxWidth: 1500, width: '100%' }}>
+        {posts.map((post, index) => (
+          <Grid item xs={12} md={6} key={index} sx={{ display: 'flex' }}>
+            <PostsCards post={post} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+}
