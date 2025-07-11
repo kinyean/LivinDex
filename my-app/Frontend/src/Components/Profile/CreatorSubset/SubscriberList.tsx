@@ -18,7 +18,7 @@ const SubscribersList: React.FC<Props> = ({ users }) => {
             <img
               src={user.profileImg || defaultAvatar}
               alt="avatar"
-              className="avatar"
+              className="profile_avatar"
               onClick={() => navigate(`/creator/${user.uid}`)}
             />
             <p 

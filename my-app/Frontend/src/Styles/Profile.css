@@ -59,6 +59,23 @@
   }
 
   /* Profile CSS */
+  .profile_avatar {
+    width: 56px;
+    height: 100%;
+    border-radius: 50%;
+    background-color: white;
+    object-fit: cover;
+    padding: 3px;
+  }
+  .creatorSubscribe_button {
+    padding: 6px 16px;
+    background-color: var(--sub_button_color);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
 
   .edit-profile-btn {
     cursor: pointer;
