@@ -17,6 +17,7 @@ const SubscribersList: React.FC<Props> = ({ users }) => {
           <div key={user.uid} className="subscriber-card" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <img
               src={user.profileImg || defaultAvatar}
+              style={{ cursor: 'pointer' }}
               alt="avatar"
               className="profile_avatar"
               onClick={() => navigate(`/creator/${user.uid}`)}
