@@ -4,10 +4,12 @@ import '../../Styles/Profile.css';
 import { getUserProfile } from '../../Pages/Profile/GetProfile';
 import { getSubs } from '../Posts/GetSubs'; 
 import { UserDataProps as UserData } from '../../Types/ProfileNavbar';
-import SubscribersList from "./CreatorSubset/SubscriberList";
+import CreatorPosts from './CreatorSubset/CreatorPosts';
+import CreatorChallenge from './CreatorSubset/CreatorChallenge';
+import CreatorHome from './CreatorSubset/CreatorHome';
 
 
-const ProfileNavbar: React.FC = () => {
+const CreatorNavbar: React.FC = () => {
   const [activeTab, setActiveTab] = useState('subscriber');
   const [subscribedUsers, setSubscribedUsers] = useState<UserData[]>([]);
   const [viewerUserId, setViewerUserId] = useState<string | null>(null);
@@ -58,34 +60,36 @@ const ProfileNavbar: React.FC = () => {
             className={`profileHover-underline ${activeTab === 'subscriber' ? 'active' : ''}`}
             onClick={() => setActiveTab('subscriber')}
           >
-            Subscriber
+            Home
           </li>
           <li
             className={`profileHover-underline ${activeTab === 'favorites' ? 'active' : ''}`}
             onClick={() => setActiveTab('favorites')}
           >
-            Favorites
+            Posts
           </li>
           <li
             className={`profileHover-underline ${activeTab === 'liked' ? 'active' : ''}`}
             onClick={() => setActiveTab('liked')}
           >
-            Liked
+            Community Challenge
           </li>
         </ul>
       </nav>
 
-      {activeTab === 'subscriber' && viewerUserId === profileUserId && (
-        <SubscribersList users={subscribedUsers} />
+      {activeTab === 'subscriber' && (
+        <CreatorHome />
       )}
 
-      {activeTab === 'subscriber' && viewerUserId !== profileUserId && (
-        <p style={{ padding: "20px", fontStyle: "italic" }}>
-          You have not authorized to view the user's subscriber list.
-        </p>
+      {activeTab === 'favorites' && (
+        <CreatorPosts />
+      )}
+
+      {activeTab === 'liked' && (
+        <CreatorChallenge />
       )}
     </>
   );
 };
 
-export default ProfileNavbar;
+export default CreatorNavbar;
