@@ -62,6 +62,7 @@ const CreatorList: React.FC<Props> = ({ users }) => {
               <img
                 src={user.profileImg || defaultAvatar}
                 alt="avatar"
+                style={{ cursor: 'pointer' }}
                 className="profile_avatar"
                 onClick={() => navigate(`/creator/${user.uid}`)}
               />
