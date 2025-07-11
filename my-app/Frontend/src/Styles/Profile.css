@@ -134,3 +134,13 @@
   .tab_heading{
     color: var(--title_color); 
   }
+
+  .subscribers-list {
+    display: flex;
+    justify-content: flex-start;  
+    align-items: flex-start;
+    gap: 20px;                   
+    flex-wrap: wrap;
+    padding-left: 32px;           
+  }
+  

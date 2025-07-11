@@ -3,4 +3,5 @@ export interface  UserDataProps {
     firstName: string;
     lastName: string;
     profileImg?: string;
+    username?: string;
   }  
