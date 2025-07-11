@@ -22,7 +22,10 @@ const SubscribersList: React.FC<Props> = ({ users }) => {
               onClick={() => navigate(`/creator/${user.uid}`)}
             />
             <p 
-              style={{ fontWeight: "bold", margin: "8px 0 4px 0",  cursor: 'pointer' }} 
+              style={{ fontWeight: "bold",
+                       color: "var(--body_color)" ,
+                       margin: "8px 0 4px 0",  
+                       cursor: 'pointer' }} 
               onClick={() => navigate(`/creator/${user.uid}`)}
             >
               {(user.firstName || user.lastName)
