@@ -24,6 +24,7 @@ const Login: React.FC = () => {
               // Logged in successfully
               console.log("Logged in");
               const user = userCredential.user;
+              localStorage.setItem("uid", user.uid);
               navigate("/");
               // ...
           })
