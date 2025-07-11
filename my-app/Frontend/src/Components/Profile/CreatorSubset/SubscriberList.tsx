@@ -11,7 +11,7 @@ const SubscribersList: React.FC<Props> = ({ users }) => {
   const navigate = useNavigate();
   return (
     <>
-      <h1 className="tab_heading">Subscribers</h1>
+      <h1 className="tab_heading">People who you follow</h1>
       <div className="subscribers_list">
         {users.map((user) => (
           <div key={user.uid} className="subscriber-card" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>

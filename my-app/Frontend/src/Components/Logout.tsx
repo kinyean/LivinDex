@@ -11,7 +11,8 @@ const Logout: React.FC = () => {
     useEffect(() => {
       signOut(auth)
         .then(() => {
-            console.log("Logged out!");
+          console.log("Logged out!");
+          localStorage.removeItem("uid");
           setSignedOut(true);
         })
         .catch((err) => {

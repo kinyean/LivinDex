@@ -8,12 +8,13 @@ import SubscribersList from "./CreatorSubset/SubscriberList";
 
 
 const ProfileNavbar: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('subscriber');
+  const [activeTab, setActiveTab] = useState('Subscriptions');
   const [subscribedUsers, setSubscribedUsers] = useState<UserData[]>([]);
   const [viewerUserId, setViewerUserId] = useState<string | null>(null);
 
-  const { userId: profileUserId } = useParams(); 
-
+  const { userId: paramId } = useParams();
+  const [profileUserId, setProfileUserId] = useState<string | null>(paramId || null);
+  
   useEffect(() => {
     const storedId = localStorage.getItem("uid");
     if (!storedId) {
@@ -22,6 +23,15 @@ const ProfileNavbar: React.FC = () => {
     }
     setViewerUserId(storedId);
   }, []);
+
+  useEffect(() => {
+    if (paramId) {
+      setProfileUserId(paramId);
+    } else {
+      const uid = localStorage.getItem("uid");
+      if (uid) setProfileUserId(uid);
+    }
+  }, [paramId]);  
 
   useEffect(() => {
     const fetchSubscribers = async () => {
@@ -45,7 +55,7 @@ const ProfileNavbar: React.FC = () => {
       }
     };
 
-    if (activeTab === 'subscriber') {
+    if (activeTab === 'Subscriptions') {
       fetchSubscribers();
     }
   }, [activeTab, profileUserId, viewerUserId]);
@@ -54,11 +64,11 @@ const ProfileNavbar: React.FC = () => {
     <>
       <nav className='profileNav-wrapper'>
         <ul className="profileNavbar">
-          <li
-            className={`profileHover-underline ${activeTab === 'subscriber' ? 'active' : ''}`}
-            onClick={() => setActiveTab('subscriber')}
+          <li 
+            className={`profileHover-underline ${activeTab === 'Subscriptions' ? 'active' : ''}`}
+            onClick={() => setActiveTab('Subscriptions')}
           >
-            Subscriber
+            Subscriptions
           </li>
           <li
             className={`profileHover-underline ${activeTab === 'favorites' ? 'active' : ''}`}
@@ -75,11 +85,11 @@ const ProfileNavbar: React.FC = () => {
         </ul>
       </nav>
 
-      {activeTab === 'subscriber' && viewerUserId === profileUserId && (
+      {activeTab === 'Subscriptions' && viewerUserId === profileUserId && (
         <SubscribersList users={subscribedUsers} />
       )}
 
-      {activeTab === 'subscriber' && viewerUserId !== profileUserId && (
+      {activeTab === 'Subscriptions' && viewerUserId !== profileUserId && (
         <p style={{ padding: "20px", fontStyle: "italic" }}>
           You have not authorized to view the user's subscriber list.
         </p>
