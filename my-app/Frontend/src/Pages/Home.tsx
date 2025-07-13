@@ -1,4 +1,4 @@
-import CardGrid from "../Components/Posts/CardGrid";
+import HomeCardGrid from "../Components/Posts/HomeCardGrid";
 import FilterNavbar from "../Components/FilterNavbar";
 import Navbar from "../Components/Navbar"; 
 import React, { useEffect, useState } from 'react';
@@ -11,6 +11,8 @@ import '../Styles/Home.css';
 
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -23,7 +25,11 @@ const Home = () => {
     };
 
     fetchPosts();
+
+
   }, []);
+
+
   return ( 
     <>
     <Navbar/>
@@ -44,7 +50,8 @@ const Home = () => {
           )}
         />
       </div>
-          <FilterNavbar />
+          <FilterNavbar selectedTags={selectedTags} setSelectedTags={setSelectedTags}/>
+
           <div className = "userProfile">
           </div>
           <div className="slide_section">
@@ -57,7 +64,13 @@ const Home = () => {
             <p className="home-subtitle">
               From critical skills to technical topics, LivinDex supports your professional development.
             </p>
-            <CardGrid />
+            <HomeCardGrid posts={
+              selectedTags.length === 0
+                ? posts
+                : posts.filter(post =>
+                    post.tags?.some(tag => selectedTags.includes(tag))
+                  )
+            } />
           </div>
           
         </div>
