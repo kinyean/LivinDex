@@ -1,5 +1,7 @@
 import AddIcon from '../Assets/Add_icon.png'; 
 import Logo from '../Assets/UnknownUser.jpg'
+import NotificationDropdown from "./Notification";
+import { Notifications } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
@@ -9,10 +11,12 @@ import DarkMode from "./DarkMode/DarkMode";
 
 const Navbar: React.FC = () => {
 
+  const [open, setOpen] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const navigate = useNavigate();
 
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const ref = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -43,7 +47,18 @@ const Navbar: React.FC = () => {
           <span className="create-label" onClick={() => navigate("/content")}>Create</span>
         </li>
         <li className="hover-underline">About</li>
-        <li className="hover-underline">Notification</li>
+        <div style={{ position: 'relative' }}>  
+          <div
+            ref={ref}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}
+            onClick={() => setOpen(!open)}
+          >
+            <Notifications style={{ color: 'var(--body_color)' }} />
+            <li className="hover-underline">Notification</li>
+            {open && <NotificationDropdown />}
+          </div>
+        </div>
+
         <DarkMode />
         <img className="avatar" 
              src={Logo} 
