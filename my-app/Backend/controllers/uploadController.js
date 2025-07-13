@@ -7,12 +7,17 @@ exports.uploadMedia = async (req, res) => {
   try {
 
     const { header, text, userId, tags, uploadType, like, dislike } = req.body;
-    const files = req.files; // Array of files
+    const files = req.files?.files; // Array of files
 
     const thumbnail = req.files?.thumbnail?.[0]; // expect single thumbnail
 
     if (!thumbnail) {
       return res.status(400).json({ error: "Thumbnail is required" });
+    }
+    
+    
+    if (!Array.isArray(files)) {
+      return res.status(400).json({ error: "No valid files uploaded" });
     }
 
     if (!files || files.length === 0) {
