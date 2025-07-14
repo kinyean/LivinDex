@@ -63,7 +63,7 @@ const Home = () => {
           <div className="slide_section">
             <h2 className="slide_title">Find what's right for you</h2>
             <p className="slide_subtitle">Get the latest insights and trends</p>
-            <SlideCards slides={posts} />
+            <SlideCards slides={posts.slice(0, 6)} />
           </div>
           <div className = "home-section">
             <h2 className="home-title">All the skills you need in one place</h2>

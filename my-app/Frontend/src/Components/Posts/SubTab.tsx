@@ -45,6 +45,16 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
     }
   };
 
+  const handleShareClick = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy link:", err);
+      alert("Failed to copy link.");
+    }
+  };  
+
   const handleSubscribeClick = async () => {
     try {
       if (isSubscribed) {
@@ -179,7 +189,7 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
               DisLike
             </button>
           </div>
-          <button className="share_button">Share</button>
+          <button className="share_button" onClick={handleShareClick}>Share</button>
           {postUserId === currentUserId && (
             <button onClick={onToggleEdit} className="edit_button">
               {isEditing ? "Save" : "Edit"}

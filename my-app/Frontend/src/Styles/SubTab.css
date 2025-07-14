@@ -87,6 +87,18 @@
   background-color: var(--sub_hover);
 }
 
+.like_button.active {
+  background-color: #c8f7c5;
+  color: #1b5e20;
+  font-weight: 700;
+}
+
+.dislike_button.active {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+  font-weight: 700;
+}
+
 .edit_button {
   display: inline-flex;
   align-items: center;
