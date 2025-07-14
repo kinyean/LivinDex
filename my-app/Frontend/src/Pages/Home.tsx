@@ -12,7 +12,7 @@ import '../Styles/Home.css';
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -37,18 +37,25 @@ const Home = () => {
         <div className="top">
         <div className="search">
         <Autocomplete
-          options={listData.map((item) => item.name)} 
+          options={posts
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            .slice(0, 4)
+            .map((post) => post.header)}
           fullWidth
           freeSolo
+          value={searchQuery}
+          onInputChange={(_, newInputValue) => setSearchQuery(newInputValue)}
           filterOptions={(options, state) =>
             options.filter(option =>
-              option.toLowerCase().startsWith(state.inputValue.toLowerCase())
+              option.toLowerCase().includes(state.inputValue.toLowerCase())
             )
           }
           renderInput={(params) => (
             <TextField {...params} className="home_search_bar" label="Search" variant="outlined" />
           )}
         />
+
+
       </div>
           <FilterNavbar selectedTags={selectedTags} setSelectedTags={setSelectedTags}/>
 
@@ -65,11 +72,14 @@ const Home = () => {
               From critical skills to technical topics, LivinDex supports your professional development.
             </p>
             <HomeCardGrid posts={
-              selectedTags.length === 0
-                ? posts
-                : posts.filter(post =>
-                    post.tags?.some(tag => selectedTags.includes(tag))
-                  )
+              posts
+                .filter(post =>
+                  post.header.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .filter(post =>
+                  selectedTags.length === 0 ||
+                  post.tags?.some(tag => selectedTags.includes(tag))
+                )
             } />
           </div>
           
