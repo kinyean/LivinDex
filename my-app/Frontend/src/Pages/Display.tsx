@@ -64,10 +64,10 @@ const Display: React.FC = () => {
 
       if (mediaType === "video") {
         return (
-          <div className="flex justify-center items-center w-full max-w-2xl mx-auto my-6">
+          <div className="media-container">
             <video
               controls
-              className="w-full h-auto rounded-lg shadow-md border border-gray-200"
+              className="media-element"
             >
               <source src={post?.media?.[0]?.mediaURL ?? ""} />
               Your browser does not support the video tag.
@@ -81,9 +81,7 @@ const Display: React.FC = () => {
 
         return (
           <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-              Image Slider
-            </h1>
+            <div></div>
             <ImageSlider images={imageURLs} />
           </div>
         );

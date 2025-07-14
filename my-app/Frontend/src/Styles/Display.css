@@ -79,3 +79,23 @@
     margin-top: 12px;
     display: flex;
   }
+
+  .media-container {
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9; /* keeps a consistent shape */
+  background-color: black;
+  margin: 20px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.media-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* crop to fill area */
+  display: block;
+  border: none;
+}
