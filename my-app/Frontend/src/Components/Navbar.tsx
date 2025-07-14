@@ -46,7 +46,6 @@ const Navbar: React.FC = () => {
           <img src={AddIcon} alt="Add" className="create-icon" onClick={() => navigate("/content")}/>
           <span className="create-label" onClick={() => navigate("/content")}>Create</span>
         </li>
-        <li className="hover-underline">About</li>
         <div style={{ position: 'relative' }}>  
           <div
             ref={ref}

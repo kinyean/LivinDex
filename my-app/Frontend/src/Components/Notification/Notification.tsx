@@ -59,10 +59,20 @@ export default function NotificationDropdown() {
             There is no notification.
           </Typography>
         ) : (
-          notifications.map((item) => (
-            <MenuItem key={item.id} sx={{ alignItems: 'flex-start' }}>
+          notifications.slice(0, 5).map((item, index) => (
+            <MenuItem
+              key={item.id}
+              sx={{
+                alignItems: 'flex-start',
+                mb: index !== 4 ? 1 : 0,
+                borderRadius: 1,
+              }}
+            >
               <ListItemIcon>
-                <Avatar src={item.avatar || UserProfile} sx={{ width: 48, height: 48, marginRight: 2 }} />
+                <Avatar
+                  src={item.avatar || UserProfile}
+                  sx={{ width: 48, height: 48, marginRight: 2 }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary={item.title}
