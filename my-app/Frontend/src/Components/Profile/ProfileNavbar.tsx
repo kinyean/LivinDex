@@ -6,13 +6,14 @@ import { getSubs } from '../Posts/GetSubs';
 import { UserDataProps as UserData } from '../../Types/ProfileNavbar';
 import SubscribersList from "./CreatorSubset/SubscriberList";
 import SubscribersPost from "./CreatorSubset/SubscriberPosts";
-
+import { getLikedPosts } from '../Posts/GetSubs';
+import LikedPosts from "../Posts/LikePosts";
 
 const ProfileNavbar: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Subscriptions');
   const [subscribedUsers, setSubscribedUsers] = useState<UserData[]>([]);
   const [viewerUserId, setViewerUserId] = useState<string | null>(null);
-
+  const [likedPostIds, setLikedPostIds] = useState<string[]>([]);
   const { userId: paramId } = useParams();
   const [profileUserId, setProfileUserId] = useState<string | null>(paramId || null);
   
@@ -34,6 +35,23 @@ const ProfileNavbar: React.FC = () => {
     }
   }, [paramId]);  
 
+  useEffect(() => {
+    const fetchLiked = async () => {
+      if (!profileUserId || viewerUserId !== profileUserId) return;
+      try {
+        const liked = await getLikedPosts(profileUserId);
+        setLikedPostIds(liked);
+      } catch (err) {
+        console.error("Failed to fetch liked posts", err);
+      }
+    };
+  
+    if (activeTab === 'liked') {
+      fetchLiked();
+    }
+  }, [activeTab, profileUserId, viewerUserId]);
+
+  
   useEffect(() => {
     const fetchSubscribers = async () => {
       if (!profileUserId || viewerUserId !== profileUserId) return;
@@ -71,12 +89,12 @@ const ProfileNavbar: React.FC = () => {
           >
             Subscriptions
           </li>
-          <li
+          {/* <li
             className={`profileHover-underline ${activeTab === 'favorites' ? 'active' : ''}`}
             onClick={() => setActiveTab('favorites')}
           >
             Favorites
-          </li>
+          </li> */}
           <li
             className={`profileHover-underline ${activeTab === 'liked' ? 'active' : ''}`}
             onClick={() => setActiveTab('liked')}
@@ -93,6 +111,9 @@ const ProfileNavbar: React.FC = () => {
         </>
       )}
 
+      {activeTab === 'liked' && viewerUserId === profileUserId && (
+        <LikedPosts postIds={likedPostIds} />
+      )}
 
       {activeTab === 'Subscriptions' && viewerUserId !== profileUserId && (
         <p style={{ padding: "20px", fontStyle: "italic" }}>

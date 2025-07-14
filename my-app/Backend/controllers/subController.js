@@ -88,3 +88,67 @@ exports.getFollowers = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+// Like a post
+exports.likePost = async (req, res) => {
+  const { postId, userId } = req.body;
+
+  if (!postId || !userId) return res.status(400).json({ error: "Missing fields" });
+
+  try {
+    const existing = await db.collection("likes")
+      .where("postId", "==", postId)
+      .where("userId", "==", userId)
+      .get();
+
+    if (existing.empty) {
+      await db.collection("likes").add({
+        postId,
+        userId,
+        createdAt: new Date()
+      });
+    }
+
+    res.status(200).json({ message: "Post liked" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Dislike (undo like)
+exports.dislikePost = async (req, res) => {
+  const { postId, userId } = req.body;
+
+  if (!postId || !userId) return res.status(400).json({ error: "Missing fields" });
+
+  try {
+    const snapshot = await db.collection("likes")
+      .where("postId", "==", postId)
+      .where("userId", "==", userId)
+      .get();
+
+    const batch = db.batch();
+    snapshot.docs.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+
+    res.status(200).json({ message: "Post unliked" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Get liked post IDs
+exports.getLikedPosts = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const snapshot = await db.collection("likes").where("userId", "==", userId).get();
+    const likedPosts = snapshot.docs.map(doc => doc.data().postId);
+    res.status(200).json({ likedPosts });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
