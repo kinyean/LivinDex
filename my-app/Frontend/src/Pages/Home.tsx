@@ -19,8 +19,7 @@ const Home = () => {
       const allPosts = await getAllPostsApi();
       // Sort by date and take latest 6
       const sorted = allPosts
-        .sort((a: Post, b: Post) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-        .slice(0, 6);
+        .sort((a: Post, b: Post) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       setPosts(sorted);
     };
 
