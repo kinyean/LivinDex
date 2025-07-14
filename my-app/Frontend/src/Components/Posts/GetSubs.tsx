@@ -21,12 +21,17 @@ export const getFollowers = async (uid: string): Promise<string[]> => {
   return res.data.followers;
 };
 
+export const getLikedPosts = async (uid: string): Promise<string[]> => {
+  const res = await BaseAPI.get(`/subscription/liked/${uid}`);
+  return res.data.likedPosts; 
+};
+
 export const likePost = async (postId: string, userId: string) => {
-  const res = await BaseAPI.post(`/posts/${postId}/like`, { userId });
+  const res = await BaseAPI.post('/subscription/like', { postId, userId });
   return res.data;
 };
 
 export const dislikePost = async (postId: string, userId: string) => {
-  const res = await BaseAPI.post(`/posts/${postId}/dislike`, { userId });
+  const res = await BaseAPI.post('/subscription/dislike', { postId, userId });
   return res.data;
 };
