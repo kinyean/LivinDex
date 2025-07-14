@@ -26,6 +26,7 @@ const Registration: React.FC = () => {
             console.log("signed up");
             const user = userCredential.user;
             const apiUrl = process.env.REACT_APP_API_URL;
+            localStorage.setItem("uid", user.uid);
 
             if (!apiUrl) {
               throw new Error('REACT_APP_API_URL is not defined');

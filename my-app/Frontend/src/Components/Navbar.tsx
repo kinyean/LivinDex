@@ -1,6 +1,6 @@
 import AddIcon from '../Assets/Add_icon.png'; 
 import Logo from '../Assets/UnknownUser.jpg'
-import NotificationDropdown from "./Notification";
+import NotificationDropdown from "./Notification/Notification";
 import { Notifications } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";

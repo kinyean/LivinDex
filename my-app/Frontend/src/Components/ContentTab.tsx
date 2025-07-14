@@ -9,6 +9,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import { CloudUpload } from '@mui/icons-material';
 import '../Styles/Content.css';
 import BaseAPI from '../API/BaseAPI';
+import { getFollowers as getFollowersAPI} from "../Components/Posts/GetSubs";
 
 export default function ContentTab() {
   const [text, setText] = useState("");
@@ -81,12 +82,34 @@ export default function ContentTab() {
     formData.append("uploadType", uploadType);
 
     try {
-      await BaseAPI.post(`/upload?uploadType=${uploadType}`, formData, {
+      const res = await BaseAPI.post(`/upload?uploadType=${uploadType}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+    
       alert("Post created successfully");
+    
+      const createdPostId = res.data?.postId;
+      if (!createdPostId) {
+        console.warn("No postId returned. Skipping notifications.");
+      } else {
+        const followersRes = await getFollowersAPI(user.uid);
+        const followers = followersRes;
+    
+        for (const followerId of followers) {
+          await BaseAPI.post("/notifications", {
+            fromUserId: user.uid,
+            toUserId: followerId,
+            postId: createdPostId,
+            title: `${user.displayName || "Someone"} has posted: "${header}"`,
+            time: new Date().toISOString(),
+            read: false,
+            avatar: user.photoURL || ""
+          });
+        }
+      }
+      
       setText("");
       setHeader("");
       setFiles([]);
