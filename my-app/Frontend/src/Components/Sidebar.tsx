@@ -17,17 +17,17 @@ const Sidebar: React.FC = () => {
       <ul>
         <li>Home</li>
         <li onClick={() => navigate("/create/posts")}>Posts</li>
-        <li>Analytics</li>
-        <li onClick={() => navigate("/create/comment")}>Comments</li>
+        {/* <li>Analystics</li> */}
+        {/* <li onClick={() => navigate("/create/comment")}>Comments</li> */}
       </ul>
     </div>
 
-    <div className="section">
+    {/* <div className="section">
       <h4>Others</h4>
       <ul>
         <li>Feedback</li>
       </ul>
-    </div>
+    </div> */}
   </div>
 
   <div className="bottom-section" onClick={() => navigate("/")}>

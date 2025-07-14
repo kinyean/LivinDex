@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar";
-import PostCardGrid from "../../Components/Posts/PostCardGrid";
+import MyPostCardGrid from "../../Components/Posts/MyPostCardGrid";
 import Sidebar from "../../Components/Sidebar"; 
-import { useParams } from "react-router-dom";
 import "../../Styles/Posts.css";
 
 const Posts: React.FC = () => {
-  const { userId } = useParams();
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const uid = localStorage.getItem("uid");
+    if (uid) setUserId(uid);
+  }, []);
 
   if (!userId) return <p>User ID not found.</p>;
 
@@ -17,8 +21,8 @@ const Posts: React.FC = () => {
       <main className="main-content">
         <div className="content-area">
           <h3 className="posts_title">My Posts</h3>
-          <PostCardGrid userId={userId} />
-          </div>
+          <MyPostCardGrid userId={userId} />
+        </div>
       </main>
     </div>
   );
