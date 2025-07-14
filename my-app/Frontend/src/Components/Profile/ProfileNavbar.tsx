@@ -5,6 +5,7 @@ import { getUserProfile } from '../../Pages/Profile/GetProfile';
 import { getSubs } from '../Posts/GetSubs'; 
 import { UserDataProps as UserData } from '../../Types/ProfileNavbar';
 import SubscribersList from "./CreatorSubset/SubscriberList";
+import SubscribersPost from "./CreatorSubset/SubscriberPosts";
 
 
 const ProfileNavbar: React.FC = () => {
@@ -86,8 +87,12 @@ const ProfileNavbar: React.FC = () => {
       </nav>
 
       {activeTab === 'Subscriptions' && viewerUserId === profileUserId && (
-        <SubscribersList users={subscribedUsers} />
+        <>
+          <SubscribersList users={subscribedUsers} />
+          <SubscribersPost userIds={subscribedUsers.map(user => user.uid)} />
+        </>
       )}
+
 
       {activeTab === 'Subscriptions' && viewerUserId !== profileUserId && (
         <p style={{ padding: "20px", fontStyle: "italic" }}>

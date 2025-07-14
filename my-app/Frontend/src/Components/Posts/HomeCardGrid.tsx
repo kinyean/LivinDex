@@ -11,7 +11,7 @@ type Props = {
 const CardGrid: React.FC<Props> = ({ posts }) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5, width: '100%' }}>
-      <Grid container spacing={2} sx={{ width: '100%', px: 4 }}>
+      <Grid container spacing={2} sx={{ width: '100%', px: 0 }}>
         {posts.map((post, index) => (
           <Grid
             item
