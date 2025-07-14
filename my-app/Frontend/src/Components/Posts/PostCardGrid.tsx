@@ -9,32 +9,43 @@ import { GridLegacy as Grid } from '@mui/material';
 import PostsCards from './PostsCards';
 
 interface PostCardGridProps {
-  userId: string;
+  userId?: string;
+  userPosts?: Post[];
 }
 
-export default function NestedGridColumns({ userId }: PostCardGridProps) {
+export default function NestedGridColumns({ userId, userPosts }: PostCardGridProps) {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    if (!userId) return;
-    
-    const fetchPosts = async () => {
-      try {
-        const data = await getPostsApi(userId); 
-        setPosts(data);
-      } catch (error) {
-        console.error("Failed to fetch posts", error);
+    const load = async () => {
+      if (userPosts && userPosts.length > 0) {
+        setPosts(userPosts);
+      } else if (userId) {
+        try {
+          const data = await getPostsApi(userId); 
+          setPosts(data);
+        } catch (error) {
+          console.error("Failed to fetch posts", error);
+        }
       }
     };
 
-    fetchPosts();
-  }, [userId]);
+    load();
+  }, [userId, userPosts]);
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'left', mt: 5, px: 2 }}>
       <Grid container spacing={2} sx={{ maxWidth: 1500, width: '100%' }}>
         {posts.map((post, index) => (
-          <Grid item xs={12} md={6} key={index} sx={{ display: 'flex' }}>
+          <Grid 
+              item  
+              sx={{ display: 'flex' }}
+              key={index}
+              xs={12}     
+              sm={6}      
+              md={4}     
+              lg={3}      
+              >
             <PostsCards post={post} />
           </Grid>
         ))}

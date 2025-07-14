@@ -47,7 +47,7 @@
 }
 
 .filter_item.active {
-  color: black;
+  color: var(--filter_hover);; 
 }
 
 .show_switch {
