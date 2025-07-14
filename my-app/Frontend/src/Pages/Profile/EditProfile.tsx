@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Grid from '@mui/material/Grid';
+import { GridLegacy as Grid } from '@mui/material';
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -122,8 +122,8 @@ const EditProfile: React.FC = () => {
       <Box sx={{ backgroundColor: 'var(--body_background)', minHeight: "100vh", p: 4, mt: 7 }}>
         <Grid container spacing={4} justifyContent="center" alignItems="stretch">
           {/* Left Profile Card */}
-          <Grid >
-            <Card sx={{ backgroundColor: 'var(--reg_background)', height: "100%", borderRadius: 3, p: 3, textAlign: "center" }}>
+          <Grid item xs={12} md={4}>
+            <Card elevation={3} sx={{ backgroundColor: 'var(--reg_background)', height: "100%", borderRadius: 3, p: 3, textAlign: "center" }}>
               <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
                 <img
                   src={UserImage}
@@ -155,7 +155,7 @@ const EditProfile: React.FC = () => {
           </Grid>
 
           {/* Right Form Card */}
-          <Grid>
+          <Grid item xs={12} md={8}>
           <Card sx={{ backgroundColor: 'var(--reg_background)', height: "100%", borderRadius: 3, p: 3 }}>
             <Typography
               variant="h6"
@@ -170,7 +170,7 @@ const EditProfile: React.FC = () => {
               </Typography>
 
               <Grid container spacing={2}>
-                <Grid size={6}>
+                <Grid item xs={12} md={6}>
                   <Typography variant="subtitle1" sx={{ mb: 1 }}>
                     First Name
                   </Typography>
@@ -185,7 +185,7 @@ const EditProfile: React.FC = () => {
                   />
                 </Grid>
 
-                <Grid size={6}>
+                <Grid item xs={12} md={6}>
                   <Typography variant="subtitle1" sx={{ mb: 1 }}>
                     Last Name (Optional)
                   </Typography>
@@ -200,7 +200,7 @@ const EditProfile: React.FC = () => {
                   />
                 </Grid>
 
-                <Grid size={6}>
+                <Grid item xs={12} md={6}>
                   <Typography variant="subtitle1" sx={{ mb: 1 }}>
                     Email
                   </Typography>
@@ -220,7 +220,7 @@ const EditProfile: React.FC = () => {
                   />
                 </Grid>
 
-                <Grid size={6}>
+                <Grid item xs={12} md={6}>
                   <Typography variant="subtitle1" sx={{ mb: 1 }}>
                     Phone (Optional)
                   </Typography>
@@ -251,7 +251,7 @@ const EditProfile: React.FC = () => {
                 >
                   Bio
                 </Typography>
-                <Grid size={12}>
+                <Grid item xs={12} md={6}>
                   <Typography variant="subtitle1" sx={{ mb: 1 }}>
                     User Bio
                   </Typography>
