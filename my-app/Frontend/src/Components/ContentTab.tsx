@@ -10,6 +10,7 @@ import { CloudUpload } from '@mui/icons-material';
 import '../Styles/Content.css';
 import BaseAPI from '../API/BaseAPI';
 import { getFollowers as getFollowersAPI} from "../Components/Posts/GetSubs";
+import { useNavigate } from "react-router-dom";
 
 export default function ContentTab() {
   const [text, setText] = useState("");
@@ -21,6 +22,8 @@ export default function ContentTab() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [value, setValue] = useState('1');
+
+  const navigate = useNavigate();
 
   const handleChange = (_: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -89,7 +92,7 @@ export default function ContentTab() {
       });
     
       alert("Post created successfully");
-    
+      
       const createdPostId = res.data?.postId;
       if (!createdPostId) {
         console.warn("No postId returned. Skipping notifications.");
@@ -113,6 +116,8 @@ export default function ContentTab() {
       setText("");
       setHeader("");
       setFiles([]);
+      setThumbnail(null);
+      navigate("/");
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
       console.error("Upload error:", error);
