@@ -3,6 +3,7 @@ import CashOut from './Pages/Wallet/Cash_Out';
 import Content from './Pages/Content';
 import Creator from './Pages/Creator';
 import CreateComment from './Pages/Create_Section/CreateComment';
+import CreateHome from './Pages/Create_Section/CreateHome';
 import EditProfile from './Pages/Profile/EditProfile';
 import Display from './Pages/Display';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -19,6 +20,7 @@ import TopUp from './Pages/Wallet/Top_Up';
 import Wallet from './Pages/Wallet/Wallet';
 import './Styles/App.css';
 
+
 function App() {
   
   return (
@@ -31,6 +33,7 @@ function App() {
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Home />} />
           <Route path="/create/posts" element={<Posts />} />
+          <Route path="/create/home" element={<CreateHome />} />
           <Route path="/creator/:userId" element={<Creator />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/logout" element = {<Logout />} />

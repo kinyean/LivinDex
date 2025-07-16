@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
     <div className="section">
       <h4>Manage</h4>
       <ul>
-        <li>Home</li>
+        <li onClick={() => navigate("/create/home")}>Home</li>
         <li onClick={() => navigate("/create/posts")}>Posts</li>
         {/* <li>Analystics</li> */}
         {/* <li onClick={() => navigate("/create/comment")}>Comments</li> */}
