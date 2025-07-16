@@ -9,7 +9,7 @@
   background: #2D2F36;
 }
 .login-body {
-  background: white;
+  color: var(--body_background);
   font-family: 'Inter UI', sans-serif;
   margin: 0;
   padding: 20px;
@@ -94,6 +94,7 @@
   }
 }
 .login {
+  color: #000;
   font-size: 50px;
   font-weight: 900;
   margin: 50px 40px 40px;

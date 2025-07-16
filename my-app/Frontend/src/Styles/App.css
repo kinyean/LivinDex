@@ -26,6 +26,7 @@
     --sub_delete_hover:rgb(221, 20, 20);
     --sub_edit_hover:rgb(29, 206, 47);
     --filter_hover: rgb(251, 255, 184);
+    --graph:#b0b0b0;
 
     --card-bg: #ffffff;
     --card-text: #000000;
@@ -54,6 +55,7 @@
     --sub_delete_hover:rgb(140, 11, 11);
     --sub_edit_hover:rgb(11, 140, 15);
     --filter_hover: rgb(0, 0, 0);
+    --graph:#717171;
 
     --card-bg: #1e1e1e;
     --card-text: #f0f0f0;
