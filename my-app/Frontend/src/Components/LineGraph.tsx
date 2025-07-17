@@ -47,9 +47,13 @@ interface LineGraphProps {
           },
           
           
-        yaxis: {
-          labels: { style: { colors: "var(--body_color)" } },
-        },
+          yaxis: {
+            labels: {
+              style: { colors: "var(--body_color)" },
+              formatter: (value: number) => Math.floor(value).toString(), // 👈 forces whole numbers
+            },
+            tickAmount: Math.max(...data), // 👈 adjusts number of ticks to match the max value
+          },
         grid: {
           row: {
             colors: ["#444", "transparent"],

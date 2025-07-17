@@ -28,6 +28,7 @@ const uploadRoutes = require('./routes/upload');
 const walletRoutes = require('./routes/walletRoutes');
 const subRoutes = require('./routes/subRoutes');
 const notificationRoutes = require("./routes/notificationRoutes");
+const analyticsRoutes = require('./routes/analyticsRoutes');
 
 // Use routes
 app.use('/auth', authRoutes);
@@ -38,6 +39,7 @@ app.use('/upload', uploadRoutes);
 app.use('/wallet', walletRoutes);
 app.use('/subscription', subRoutes);
 app.use("/notifications", notificationRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 const port = process.env.PORT || 3001; // You can use environment variables for port configuration
 
