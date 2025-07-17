@@ -140,3 +140,24 @@ exports.getTransactions = async (req, res) => {
   }
 };
 
+exports.addTransaction = async (req, res) => {
+  const { uid, type, amount } = req.body;
+
+  if (!uid || typeof type !== "string" || typeof amount !== "number") {
+    return res.status(400).json({ error: "Invalid transaction data" });
+  }
+
+  try {
+    await admin.firestore().collection("transactions").add({
+      uid,
+      type,
+      amount,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    res.status(200).json({ message: "Transaction added successfully" });
+  } catch (err) {
+    console.error("Add transaction error:", err);
+    res.status(500).json({ error: err.message });
+  }
+};

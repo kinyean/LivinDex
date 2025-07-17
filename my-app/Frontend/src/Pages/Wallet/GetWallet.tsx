@@ -19,3 +19,12 @@ export const getUserTransactions = async (uid: string) => {
   const res = await BaseAPI.get(`/wallet/transactions/${uid}`);
   return res.data;
 };
+
+export const addTransaction = async (uid: string, type: string, amount: number) => {
+  const res = await BaseAPI.post('/wallet/transactions', {
+    uid,
+    type,
+    amount,
+  });
+  return res.data;
+};
