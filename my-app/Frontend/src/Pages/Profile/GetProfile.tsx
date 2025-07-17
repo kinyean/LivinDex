@@ -10,6 +10,7 @@ export const createUserApi = async (uid: string, userData: {
   like: number;
   following: number;
   subscriber: number;
+  firstRewardUsed: boolean;
 }) => {
     const res = await BaseAPI.post(`/users`, {
         uid,

@@ -41,12 +41,14 @@ export default function WalletList() {
           secondaryAction={
             <Typography
               sx={{
-                color: (tx.type === 'Top Up' || tx.type === 'Daily Earnings') ? 'green' : 'red',
+                color: (tx.type === 'Top Up' || tx.type === 'Daily Earnings'|| tx.type === 'LCoin Reward') ? 'green' : 'red',
                 fontWeight: 'bold',
               }}
             >
               {tx.type === 'Daily Earnings'
                 ? `+${Math.round(tx.amount)} pts`
+                : tx.type === 'LCoin Reward'
+                ? `+${Math.round(tx.amount)} LCoins`
                 : `${tx.type === 'Top Up' ? '+' : '-'}$${Math.abs(tx.amount / 100).toFixed(2)}`
               }
             </Typography>

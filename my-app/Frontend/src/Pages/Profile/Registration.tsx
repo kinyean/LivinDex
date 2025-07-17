@@ -42,7 +42,8 @@ const Registration: React.FC = () => {
               LCoin: 0,
               like: 0,
               following: 0,
-              subscriber: 0
+              subscriber: 0,
+              firstRewardUsed: false
             });
 
             await BaseAPI.post("/auth/register", {

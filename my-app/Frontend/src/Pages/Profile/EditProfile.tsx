@@ -30,7 +30,8 @@ const EditProfile: React.FC = () => {
     bio: "",
     like: 0,
     following: 0,
-    subscriber: 0
+    subscriber: 0,
+    firstRewardUsed: false 
   });
   
   const uid = auth.currentUser?.uid;

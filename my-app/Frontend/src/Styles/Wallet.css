@@ -43,6 +43,14 @@
     color: var(--empty_reward_txt_color);
   }
 
+  .empty_reward_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
   .TopUp_btn {
     background-color: #24ab67;
     border: none;
