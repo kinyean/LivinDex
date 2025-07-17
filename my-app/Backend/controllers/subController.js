@@ -1,5 +1,5 @@
 const { db } = require('../firebase');
-const { FieldValue } = require('firebase-admin/firestore');
+const { Timestamp, FieldValue } = require('firebase-admin/firestore');
 
 // Follow a user
 exports.subscribe = async (req, res) => {
@@ -14,7 +14,7 @@ exports.subscribe = async (req, res) => {
     await subRef.set({
       userId,
       targetUserId,
-      createdAt: new Date()
+      createdAt: Timestamp.now(),
     });
 
     const userRef = db.collection("users").doc(targetUserId);
