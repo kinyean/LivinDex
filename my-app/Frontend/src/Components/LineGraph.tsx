@@ -9,6 +9,8 @@ interface LineGraphProps {
   }
   
   const LineGraph: React.FC<LineGraphProps> = ({ title, categories, data }) => {
+    
+    const maxY = Math.max(...data, 1);
     const options: ApexOptions = {
         chart: {
           type: "line",
@@ -46,15 +48,14 @@ interface LineGraphProps {
             axisBorder: { show: true },
           },
           
-          
           yaxis: {
+            min: 0,
+            max: maxY <= 5 ? 5 : Math.ceil(maxY * 1.1),
+            tickAmount: maxY <= 5 ? maxY : 5,
             labels: {
               style: { colors: "var(--body_color)" },
               formatter: (value: number) => Math.floor(value).toString(),
             },
-            tickAmount: 6,
-            min: 0,
-            max: Math.max(...data) * 1.1, 
           },
           
         grid: {
