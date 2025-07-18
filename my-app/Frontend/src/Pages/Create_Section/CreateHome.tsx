@@ -46,7 +46,7 @@ const CreateHome: React.FC = () => {
   
   
   const chartData = tab === "1" ? viewsData : subscribersData;
-  const chartLabel = tab === "1" ? "Views" : "How many Subscribers you gain in the Past 15 Days";
+  const chartLabel = tab === "1" ? "How many Views you gain in the Past 15 Days" : "How many Subscribers you gain in the Past 15 Days";
   return (
     <div className="content-layout">
       <Sidebar />
