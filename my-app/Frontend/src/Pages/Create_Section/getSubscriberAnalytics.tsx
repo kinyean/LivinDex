@@ -1,3 +1,5 @@
+import BaseAPI from "../../API/BaseAPI";
+
 export const getSubscriberAnalytics = async (creatorId: string) => {
     console.log("🎯 Creator ID used for fetch:", creatorId); 
   
@@ -6,3 +8,7 @@ export const getSubscriberAnalytics = async (creatorId: string) => {
     return res.json();
   };
   
+export const getViewsAnalytics = async (userId: string) => {
+  const res = await BaseAPI.get(`/api/analytics/views/${userId}`);
+  return res.data; 
+};
