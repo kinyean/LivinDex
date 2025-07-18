@@ -31,7 +31,8 @@ const EditProfile: React.FC = () => {
     like: 0,
     following: 0,
     subscriber: 0,
-    firstRewardUsed: false 
+    firstRewardUsed: false,
+    view: 0
   });
   
   const uid = auth.currentUser?.uid;

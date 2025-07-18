@@ -6,12 +6,19 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import { CardProps } from '../../Types/CardProps';
 import { useNavigate } from 'react-router-dom';
+import { recordPostView as recordPostViewApi} from './GetView';
 
 export default function Cards({ post, image, alt, title, description, width = '100%'}: CardProps) {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/post/${post.id}`);
+  const handleClick = async () => {
+    try {
+      await recordPostViewApi(post.id);
+    } catch (err) {
+      console.error("Failed to increment view", err);
+    } finally {
+      navigate(`/post/${post.id}`);
+    }
   };
 
   return (

@@ -43,7 +43,8 @@ const Registration: React.FC = () => {
               like: 0,
               following: 0,
               subscriber: 0,
-              firstRewardUsed: false
+              firstRewardUsed: false,
+              view: 0
             });
 
             await BaseAPI.post("/auth/register", {

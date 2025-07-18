@@ -11,6 +11,7 @@ export const createUserApi = async (uid: string, userData: {
   following: number;
   subscriber: number;
   firstRewardUsed: boolean;
+  view: number;
 }) => {
     const res = await BaseAPI.post(`/users`, {
         uid,
