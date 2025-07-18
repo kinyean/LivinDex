@@ -50,10 +50,13 @@ interface LineGraphProps {
           yaxis: {
             labels: {
               style: { colors: "var(--body_color)" },
-              formatter: (value: number) => Math.floor(value).toString(), // 👈 forces whole numbers
+              formatter: (value: number) => Math.floor(value).toString(),
             },
-            tickAmount: Math.max(...data), // 👈 adjusts number of ticks to match the max value
+            tickAmount: 6,
+            min: 0,
+            max: Math.max(...data) * 1.1, 
           },
+          
         grid: {
           row: {
             colors: ["#444", "transparent"],
