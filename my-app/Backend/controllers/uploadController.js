@@ -15,7 +15,6 @@ exports.uploadMedia = async (req, res) => {
       return res.status(400).json({ error: "Thumbnail is required" });
     }
     
-    
     if (!Array.isArray(files)) {
       return res.status(400).json({ error: "No valid files uploaded" });
     }

@@ -45,7 +45,6 @@ const Display: React.FC = () => {
         const data = await getPostById(postId);
         setEditedTitle(data.header);
         setEditedDesc(data.text);
-        console.log("Fetched post data:", data);
         setPost(data);
         setMediaType(data.media?.[0]?.mediaType)
       } catch (error) {

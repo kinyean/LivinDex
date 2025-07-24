@@ -75,7 +75,6 @@ exports.getSubscriptions = async (req, res) => {
   }
 };
 
-
 // Get all followers of a user
 exports.getFollowers = async (req, res) => {
   const { userId } = req.params;
@@ -179,7 +178,6 @@ exports.dislikePost = async (req, res) => {
   }
 };
 
-
 // Get liked post IDs
 exports.getLikedPosts = async (req, res) => {
   const { userId } = req.params;
@@ -197,9 +195,6 @@ exports.getLikedPosts = async (req, res) => {
     res.status(500).json({ error: "Failed to get liked posts" });
   }
 };
-
-
-
 
 exports.hasUserLiked = async (req, res) => {
   const { postId, userId } = req.params;
@@ -251,7 +246,6 @@ exports.removeLike = async (req, res) => {
       likes: FieldValue.increment(-1),
     });
 
-    // 👇 Decrease like count on post owner's profile
     const postDoc = await postRef.get();
     const postData = postDoc.data();
 

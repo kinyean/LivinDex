@@ -66,8 +66,6 @@ interface LineGraphProps {
         },
       };
       
-      
-  
     const series = [{ name: title, data }];
   
     return (
