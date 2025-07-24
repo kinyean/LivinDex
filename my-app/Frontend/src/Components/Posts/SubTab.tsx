@@ -31,6 +31,16 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
 
   const navigate = useNavigate();
 
+  const fetchPostData = async () => {
+    try {
+      const res = await BaseAPI.get(`/posts/${postId}`);
+      setLikeCount(Number(res.data.likes) || 0);
+      setDislikeCount(Number(res.data.dislikes) || 0);
+    } catch (err) {
+      console.error("Failed to fetch post data", err);
+    }
+  };
+
   const handleDelete = async () => {
     const confirmed = window.confirm("Are you sure you want to delete this post?");
     if (!confirmed) return;
@@ -81,22 +91,22 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
   const handleLikeClick = async () => {
     try {
       if (userLiked) {
-        // Undo like
-        await likePostApi(postId, currentUserId);
+        // ✅ undo like using dedicated endpoint
+        await BaseAPI.post("/subscription/removeLike", { postId, userId: currentUserId });
         setLikeCount((prev) => prev - 1);
         setUserLiked(false);
       } else {
-        // If previously disliked, undo it
+        // 👍 like
+        await BaseAPI.post("/subscription/like", { postId, userId: currentUserId });
+        setLikeCount((prev) => prev + 1);
+        setUserLiked(true);
+  
+        // 🧹 remove dislike if previously disliked
         if (userDisliked) {
-          await dislikePostApi(postId, currentUserId);
+          await BaseAPI.post("/subscription/removeDislike", { postId, userId: currentUserId });
           setDislikeCount((prev) => prev - 1);
           setUserDisliked(false);
         }
-  
-        // Like the post
-        await likePostApi(postId, currentUserId);
-        setLikeCount((prev) => prev + 1);
-        setUserLiked(true);
       }
     } catch (err) {
       console.error("Like action failed:", err);
@@ -108,32 +118,55 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
     try {
       if (userDisliked) {
         // Undo dislike
-        await dislikePostApi(postId, currentUserId);
+        await BaseAPI.post("/subscription/removeDislike", { postId, userId: currentUserId });
         setDislikeCount((prev) => prev - 1);
         setUserDisliked(false);
       } else {
-        // If previously liked, undo it
+        // Add dislike
+        await BaseAPI.post("/subscription/addDislike", { postId, userId: currentUserId });
+        setDislikeCount((prev) => prev + 1);
+        setUserDisliked(true);
+  
+        // If previously liked, remove like ✅ (corrected here)
         if (userLiked) {
-          await likePostApi(postId, currentUserId);
+          await BaseAPI.post("/subscription/removeLike", { postId, userId: currentUserId });
           setLikeCount((prev) => prev - 1);
           setUserLiked(false);
         }
-  
-        // Dislike the post
-        await dislikePostApi(postId, currentUserId);
-        setUserDisliked(true);
       }
     } catch (err) {
       console.error("Dislike action failed:", err);
-      setLikeCount((prev) => prev - 1);
       alert("Something went wrong.");
     }
   };
+
+  useEffect(() => {
+    if (postId) {
+      fetchPostData();
+    }
+  }, [postId]);
   
   useEffect(() => {
-    setUserLiked(likedUsers.includes(currentUserId));
-    setUserDisliked(dislikedUsers.includes(currentUserId));
-  }, [likedUsers, dislikedUsers, currentUserId]);
+    const fetchUserLikeStatus = async () => {
+      if (!postId || !currentUserId) return;
+  
+      try {
+        const res = await BaseAPI.get(`/subscription/likes/${postId}/${currentUserId}`);
+        setUserLiked(res.data.liked); 
+  
+        
+        const res2 = await BaseAPI.get(`/subscription/dislikes/${postId}/${currentUserId}`);
+        setUserDisliked(res2.data.disliked);
+  
+      } catch (err) {
+        console.error("Failed to fetch like/dislike status", err);
+      }
+    };
+  
+    fetchUserLikeStatus();
+  }, [postId, currentUserId]);
+  
+  
 
   // Fetch poster's user info
   useEffect(() => {
