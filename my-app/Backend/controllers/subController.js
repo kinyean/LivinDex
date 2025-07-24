@@ -108,6 +108,11 @@ exports.likePost = async (req, res) => {
         userId,
         createdAt: new Date()
       });
+
+      const postRef = db.collection("posts").doc(postId);
+      await postRef.update({
+        likes: FieldValue.increment(1)
+      });
     }
 
     res.status(200).json({ message: "Post liked" });
@@ -115,6 +120,7 @@ exports.likePost = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // Dislike (undo like)
 exports.dislikePost = async (req, res) => {
@@ -132,6 +138,11 @@ exports.dislikePost = async (req, res) => {
     snapshot.docs.forEach(doc => batch.delete(doc.ref));
     await batch.commit();
 
+    const postRef = db.collection("posts").doc(postId);
+    await postRef.update({
+      likes: FieldValue.increment(-1)
+    });
+    
     res.status(200).json({ message: "Post unliked" });
   } catch (err) {
     res.status(500).json({ error: err.message });
