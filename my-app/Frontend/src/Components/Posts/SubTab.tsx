@@ -1,23 +1,16 @@
 import Logo from '../../Assets/UnknownUser.jpg'
 import React, { useEffect, useState } from 'react';
-import { onAuthStateChanged } from "firebase/auth";
 import { getUserProfile as getUserProfileApi} from "../../Pages/Profile/GetProfile";
 import { getSubs as getSubsApi,
          subscribe as subscribeApi,
-         unsubscribe as unsubscribeApi,
-         likePost as likePostApi,
-         dislikePost as dislikePostApi } from "../../Components/Posts/GetSubs";
+         unsubscribe as unsubscribeApi} from "../../Components/Posts/GetSubs";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../index";
 import '../../Styles/SubTab.css';
 import BaseAPI from "../../API/BaseAPI";
 import { SubTabProps } from '../../Types/SubTab';
 
 
 const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserId, onDeleteSuccess, isEditing, onToggleEdit, likes, dislikes, likedUsers, dislikedUsers }) => {
-  
-  const [showSidebar, setShowSidebar] = useState(false);
-
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [userLiked, setUserLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes || 0);
@@ -91,17 +84,16 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
   const handleLikeClick = async () => {
     try {
       if (userLiked) {
-        // ✅ undo like using dedicated endpoint
+
         await BaseAPI.post("/subscription/removeLike", { postId, userId: currentUserId });
         setLikeCount((prev) => prev - 1);
         setUserLiked(false);
       } else {
-        // 👍 like
+
         await BaseAPI.post("/subscription/like", { postId, userId: currentUserId });
         setLikeCount((prev) => prev + 1);
         setUserLiked(true);
   
-        // 🧹 remove dislike if previously disliked
         if (userDisliked) {
           await BaseAPI.post("/subscription/removeDislike", { postId, userId: currentUserId });
           setDislikeCount((prev) => prev - 1);
@@ -127,7 +119,6 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
         setDislikeCount((prev) => prev + 1);
         setUserDisliked(true);
   
-        // If previously liked, remove like ✅ (corrected here)
         if (userLiked) {
           await BaseAPI.post("/subscription/removeLike", { postId, userId: currentUserId });
           setLikeCount((prev) => prev - 1);
@@ -166,9 +157,6 @@ const SubscriberTab: React.FC<SubTabProps> = ({ postId, postUserId, currentUserI
     fetchUserLikeStatus();
   }, [postId, currentUserId]);
   
-  
-
-  // Fetch poster's user info
   useEffect(() => {
     getUserProfileApi(postUserId)
       .then((data) => {

@@ -57,10 +57,7 @@ const ProfileNavbar: React.FC = () => {
       if (!profileUserId || viewerUserId !== profileUserId) return;
 
       try {
-        console.log("Fetching subs for:", profileUserId);
         const subs = await getSubs(profileUserId);
-        console.log("Subscribed to:", subs);
-
         const usersData = await Promise.all(
           subs.map(async (uid: string) => {
             const res = await getUserProfile(uid);

@@ -5,7 +5,6 @@ interface ListProps {
     input: string;
   }
   
-
 const List: React.FC<ListProps> = (props) => {
 const filteredData = data.filter((el) => {
     //if no input the return the nothing

@@ -1,7 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { auth } from "../../index";
-import { onAuthStateChanged, User } from "firebase/auth";
 import { getPosts as getPostsApi } from './GetPosts';
 import { Post } from './GetPosts'; 
 import Box from '@mui/material/Box';

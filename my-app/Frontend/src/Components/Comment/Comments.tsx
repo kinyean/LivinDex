@@ -92,21 +92,19 @@ const Comments: React.FC<CommentsProps>  = ({currentUserId ,postId}) => {
       getUserProfileApi(user.uid)
         .then((profileData) => {
           setUserData(profileData);
-          console.log("Loaded user profile:", profileData);
         })
         .catch((e) => {
           console.error("Failed to load user profile:", e);
         });
     });
   
-    return () => unsubscribe(); // Clean up listener
+    return () => unsubscribe(); 
   }, []);
   
   return (
     <div className="comments">
       <h3 className="comments-title">Comments</h3>
       <div className="comment-form-title">Write comment</div>
-      {/* TODO: configure proper parentId  */}
       <CommentForm 
         submitLabel="Write" 
         hasCancelButton={false}

@@ -216,7 +216,7 @@
 
   body[data-theme="dark"] .MuiDivider-root,
   body[data-theme="dark"] .MuiListItem-root {
-    border-color: rgba(255, 255, 255, 0.208); /* or a soft white line */
+    border-color: rgba(255, 255, 255, 0.208);
   }
 
   /* CashOut CSS */

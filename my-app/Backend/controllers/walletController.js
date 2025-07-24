@@ -79,7 +79,6 @@ exports.updateCashOut = async (req, res) => {
   }
 };
 
-
 exports.updateLCoin = async (req, res) => {
   const { uid, delta } = req.body;
 
