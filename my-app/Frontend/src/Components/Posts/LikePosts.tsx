@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getPostById, Post } from './GetPosts';
 import PostsCards from './PostsCards';
-import Cards from './Cards'
+
 interface Props {
   postIds: string[];
 }
@@ -11,8 +11,18 @@ const LikedPosts: React.FC<Props> = ({ postIds }) => {
 
   useEffect(() => {
     const load = async () => {
-      const data = await Promise.all(postIds.map(id => getPostById(id)));
-      setPosts(data.filter(Boolean)); 
+      const data = await Promise.all(
+        postIds.map(async (id) => {
+          try {
+            return await getPostById(id);
+          } catch (err) {
+            console.warn(`Failed to fetch post ID ${id}`, err);
+            return null;
+          }
+        })
+      );
+
+      setPosts(data.filter((post): post is Post => post !== null));
     };
 
     load();
@@ -29,10 +39,6 @@ const LikedPosts: React.FC<Props> = ({ postIds }) => {
       ))}
     </div>
   );
-  
-  
 };
-
-
 
 export default LikedPosts;
